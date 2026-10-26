@@ -1,0 +1,42 @@
+# Credenciales y configuración privada
+.env
+.env.*
+!.env.example
+provider.env
+secrets.yaml
+secrets.yml
+!secrets.example.yaml
+!provider.env.example
+*token*.private*
+*.pem
+*.key
+*.p12
+*.pfx
+# Datos operativos
+.storage/
+sessions/
+logs/
+backups/
+*-private.json
+*.db
+*.db-wal
+*.db-shm
+*.sqlite
+*.sqlite3
+.backend.lock
+# Firmware y entornos de compilación
+.esphome/
+.pioenvs/
+.piolibdeps/
+firmware.ota.bin
+firmware.factory.bin
+*.elf
+*.dSYM/
+build/
+dist/
+venv/
+.venv/
+node_modules/
+__pycache__/
+*.py[cod]
+.DS_Store

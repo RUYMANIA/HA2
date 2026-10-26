@@ -1,0 +1,212 @@
+# Local-only UI: no duplicate persisted volume and no audio pipeline control.
+esphome:
+  includes:
+    - system_menu.h
+    - gif_demo.h
+    - ui_v3.h
+    - textScroll.h
+    - <esp_heap_caps.h>
+    - <esp_timer.h>
+
+button:
+  # Base 1.3.0 exposes only factory_reset_btn: never reuse it.
+  - platform: restart
+    id: ha2_restart_button
+    internal: true
+
+globals:
+  - id: system_menu_ha_clients
+    type: uint32_t
+    restore_value: false
+    initial_value: '0'
+
+api:
+  actions:
+    - action: menu_open
+      then:
+        - lambda: id(menu_open_local).execute();
+    - action: menu_swipe
+      variables:
+        direction: int
+      then:
+        - lambda: |-
+            ui_v3::power().wake(millis(),"touch"); id(ui_power_sync).execute();
+            id(menu_handle_event).execute(static_cast<int>(system_menu::state().swipe(direction,millis())));
+    - action: menu_close
+      then:
+        - lambda: id(menu_close_local).execute();
+    - action: menu_tap
+      variables:
+        x: int
+        y: int
+      then:
+        - lambda: |-
+            if (!system_menu::state().active) return;
+            ui_v3::power().wake(millis(),"touch");id(ui_power_sync).execute();
+            id(menu_handle_event).execute(static_cast<int>(system_menu::state().tap(x,y,millis())));
+
+binary_sensor:
+  - platform: template
+    id: system_menu_active
+    name: System Menu Active
+    entity_category: diagnostic
+    lambda: return system_menu::state().active;
+
+text_sensor:
+  - platform: template
+    id: system_menu_page
+    name: System Menu Page
+    entity_category: diagnostic
+    update_interval: never
+  - platform: template
+    id: system_menu_summary
+    name: System Menu Summary
+    entity_category: diagnostic
+    update_interval: never
+
+script:
+  - id: menu_navigation_cues
+    then:
+      - lambda: |-
+          auto &it=*id(main_display);
+          it.line(22,113,15,120,Color::WHITE);it.line(15,120,22,127,Color::WHITE);
+          it.line(218,113,225,120,Color::WHITE);it.line(225,120,218,127,Color::WHITE);
+  - id: refresh_live_display
+    then:
+      - lambda: |-
+          // Preserve component.update's native readiness gate during setup callbacks.
+          if (!system_menu::state().active && !temporary_cards::state().visible() && id(main_display).is_ready() && ui_v3::power().awake) id(main_display).update();
+
+  - id: menu_publish
+    then:
+      - lambda: |-
+          const auto &m=system_menu::state();
+          id(system_menu_active).publish_state(m.active);
+          id(system_menu_page).publish_state(!m.active ? "closed" : ui_v3::page_name(m.page));
+          char summary[96];
+          const float volume=id(external_media_player).volume;
+          snprintf(summary,sizeof(summary),"%s;volume=%.0f%%;pending=%s;HA=%s",
+              !m.active ? "closed" : ui_v3::page_name(m.page),
+              volume*100.0f,m.pending ? "yes" : "no",
+              id(system_menu_ha_clients)>0 ? "connected" : "disconnected");
+          id(system_menu_summary).publish_state(summary);
+
+  - id: menu_render
+    then:
+      - lambda: |-
+          if (!system_menu::state().active || system_menu::state().demo_active) return;
+          // Rendering is a silent query. The 100ms card interval owns lifecycle ticks.
+          esphome::display::DisplayPage* pages[]={id(menu_volume_page),id(menu_info_page),id(menu_history_page),id(menu_sleep_page),id(menu_wake_page),id(menu_project_page),id(menu_night_page),id(menu_language_page),id(menu_exit_page)};
+          if(system_menu::state().page==2) id(ui_history_layout).execute();
+          id(main_display).show_page(pages[system_menu::state().page]);
+          if (id(main_display).is_ready() && ui_v3::power().awake) id(main_display).update();
+      - script.execute: card_publish
+      - script.execute: menu_publish
+
+  - id: menu_open_local
+    then:
+      - lambda: |-
+          if (!system_menu::can_open(id(init_in_progress),id(timer_ringing).state,id(voice_assistant_phase))) return;
+          ui_v3::power().wake(millis(),"menu");id(ui_power_sync).execute();
+          system_menu::state().open(millis());
+          id(menu_handle_event).execute(static_cast<int>(system_menu::Event::Open));
+
+  - id: menu_close_local
+    then:
+      - lambda: |-
+          if (!system_menu::state().active) return;
+          system_menu::state().close();
+          id(menu_handle_event).execute(static_cast<int>(system_menu::Event::Close));
+
+  - id: menu_handle_event
+    parameters:
+      event: int
+    then:
+      - lambda: |-
+          const auto action=static_cast<system_menu::Event>(event);
+          auto &m=system_menu::state();
+          if(action==system_menu::Event::Restart) { id(ha2_restart_button).press(); return; }
+          if(action==system_menu::Event::DemoStart) { id(menu_demo_start).execute(); return; }
+          if(action==system_menu::Event::DemoCancel) { id(menu_demo_end).execute(false); return; }
+          if(action>=system_menu::Event::NightToggle && action<=system_menu::Event::NightEndPlus){
+            ui_v3::night_edit()=true;
+            if(action==system_menu::Event::NightToggle)id(screen_night_enabled).toggle();
+            if(action==system_menu::Event::NightStartMinus || action==system_menu::Event::NightStartPlus){
+              const int current=id(screen_night_start).active_index().value_or(92);
+              id(screen_night_start).make_call().set_index((current+(action==system_menu::Event::NightStartPlus?1:95))%96).perform();
+            }
+            if(action==system_menu::Event::NightEndMinus || action==system_menu::Event::NightEndPlus){
+              const int current=id(screen_night_end).active_index().value_or(28);
+              id(screen_night_end).make_call().set_index((current+(action==system_menu::Event::NightEndPlus?1:95))%96).perform();
+            }
+            ui_v3::night_edit()=false;
+          }
+          if (action==system_menu::Event::Open) {
+            id(avatar_preview_state)=-1;
+            hermes_avatar::timeline().update(millis(),-1,nullptr,0);
+            id(reset_screensaver).execute();
+          }
+          if (action==system_menu::Event::Close) {
+            id(reset_screensaver).execute();
+            id(menu_publish).execute();
+            id(draw_display).execute();
+            return;
+          }
+          if (action==system_menu::Event::Minus || action==system_menu::Event::Plus) {
+            float target;
+            if (m.request_volume(action==system_menu::Event::Plus ? 1 : -1,
+                id(external_media_player).volume,millis(),target)) {
+              id(external_media_player).make_call().set_volume(target).perform();
+            }
+          }
+          if(action==system_menu::Event::Page && m.page==2) { ui_v3::view().invalidate();id(ui_history_layout).execute(); }
+          auto &c=temporary_cards::state();
+          if(action==system_menu::Event::Previous || action==system_menu::Event::Next) {
+            if(c.history_count) {
+              c.history_step(action==system_menu::Event::Next?1:-1);
+              ui_v3::view().invalidate();id(ui_history_layout).execute();
+            }
+          }
+          if(action>=system_menu::Event::Select0 && action<=system_menu::Event::Select3) {
+            const int choice=static_cast<int>(action)-static_cast<int>(system_menu::Event::Select0);
+            if(m.page==3) id(screen_sleep).make_call().set_index(choice).perform();
+            if(m.page==4) id(screen_auto_wake).make_call().set_index(choice).perform();
+            if(m.page==7 && choice<2) id(ui_language).make_call().set_index(choice).perform();
+          }
+          if (m.active && action!=system_menu::Event::Consumed) id(menu_render).execute();
+
+  - id: menu_demo_start
+    then:
+      - lambda: |-
+          auto &m=system_menu::state();
+          if(!m.active || m.page!=8 || id(init_in_progress) || id(va).is_running() || id(timer_ringing).state
+              || id(box_speaker).is_running() || temporary_cards::state().exists()
+              || id(external_media_player).state==media_player::MEDIA_PLAYER_STATE_ANNOUNCING
+              || id(external_media_player).state==media_player::MEDIA_PLAYER_STATE_PLAYING
+              || (id(voice_assistant_phase)!=1 && id(voice_assistant_phase)!=12)) return;
+          id(avatar_preview_state)=-1;
+          hermes_avatar::timeline().update(millis(),-1,nullptr,0);
+          hermes_avatar::demo().start();m.demo_active=true;
+  - id: menu_demo_end
+    parameters:
+      preempted: bool
+    then:
+      - lambda: |-
+          hermes_avatar::demo().cancel();
+          hermes_avatar::timeline().update(millis(),-1,nullptr,0);
+          auto &m=system_menu::state();m.demo_active=false;m.page=8;m.touched_at=millis();
+          if(preempted) { m.close();id(menu_publish).execute();id(draw_display).execute(); }
+          else if(m.active) id(menu_render).execute();
+
+interval:
+  - interval: 100ms
+    then:
+      - lambda: |-
+          auto &m=system_menu::state();
+          // Observe the player's confirmed logical state, never optimistically display a request.
+          m.confirm_volume(id(external_media_player).volume);
+          if (m.tick(millis())) id(menu_handle_event).execute(static_cast<int>(system_menu::Event::Close));
+  - interval: 1s
+    then:
+      - lambda: |-
+          if (system_menu::state().active && system_menu::state().page==1) id(menu_render).execute();

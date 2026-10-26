@@ -1,0 +1,178 @@
+{
+  "scope": "Standalone host C++ only; no historical runner adaptations; no production build, network, device or Python tests executed",
+  "summary": {
+    "copied_files": 68,
+    "headers": 11,
+    "gif": 11,
+    "cpp_sources": 18,
+    "python_sources": 4,
+    "redacted_files": 6,
+    "cpp_compile_pass": 18,
+    "cpp_run_pass": 17,
+    "cpp_run_fail": 1
+  },
+  "results": [
+    {
+      "path": "release-tools/cue_test.cpp",
+      "compile_returncode": 0,
+      "command": "clang++ -std=c++17 -Wall -Wextra -fsanitize=address,undefined -g -I . release-tools/cue_test.cpp -o \"$SCRATCH/cue_test\"",
+      "compile_output": "",
+      "run_command": "\"$SCRATCH/cue_test\"",
+      "run_returncode": 0,
+      "run_output": ""
+    },
+    {
+      "path": "release-tools/exit_test.cpp",
+      "compile_returncode": 0,
+      "command": "clang++ -std=c++17 -Wall -Wextra -fsanitize=address,undefined -g -I . release-tools/exit_test.cpp -o \"$SCRATCH/exit_test\"",
+      "compile_output": "",
+      "run_command": "\"$SCRATCH/exit_test\"",
+      "run_returncode": 0,
+      "run_output": "only Exit closes, arrows retained, resized control hitboxes PASS\n"
+    },
+    {
+      "path": "release-tools/i18n_catalogue_test.cpp",
+      "compile_returncode": 0,
+      "command": "clang++ -std=c++17 -Wall -Wextra -fsanitize=address,undefined -g -I . release-tools/i18n_catalogue_test.cpp -o \"$SCRATCH/i18n_catalogue_test\"",
+      "compile_output": "",
+      "run_command": "\"$SCRATCH/i18n_catalogue_test\"",
+      "run_returncode": 0,
+      "run_output": ""
+    },
+    {
+      "path": "release-tools/i18n_controller_test.cpp",
+      "compile_returncode": 0,
+      "command": "clang++ -std=c++17 -Wall -Wextra -fsanitize=address,undefined -g -I . release-tools/i18n_controller_test.cpp -o \"$SCRATCH/i18n_controller_test\"",
+      "compile_output": "",
+      "run_command": "\"$SCRATCH/i18n_controller_test\"",
+      "run_returncode": 0,
+      "run_output": ""
+    },
+    {
+      "path": "release-tools/menu_test.cpp",
+      "compile_returncode": 0,
+      "command": "clang++ -std=c++17 -Wall -Wextra -fsanitize=address,undefined -g -I . release-tools/menu_test.cpp -o \"$SCRATCH/menu_test\"",
+      "compile_output": "",
+      "run_command": "\"$SCRATCH/menu_test\"",
+      "run_returncode": 0,
+      "run_output": "nine-page ring/reverse/wrap, hold Project, real finger coordinates and arrows PASS\n"
+    },
+    {
+      "path": "release-tools/night_audio_test.cpp",
+      "compile_returncode": 0,
+      "command": "clang++ -std=c++17 -Wall -Wextra -fsanitize=address,undefined -g -I . release-tools/night_audio_test.cpp -o \"$SCRATCH/night_audio_test\"",
+      "compile_output": "",
+      "run_command": "\"$SCRATCH/night_audio_test\"",
+      "run_returncode": 0,
+      "run_output": ""
+    },
+    {
+      "path": "release-tools/night_boundaries_test.cpp",
+      "compile_returncode": 0,
+      "command": "clang++ -std=c++17 -Wall -Wextra -fsanitize=address,undefined -g -I . release-tools/night_boundaries_test.cpp -o \"$SCRATCH/night_boundaries_test\"",
+      "compile_output": "",
+      "run_command": "\"$SCRATCH/night_boundaries_test\"",
+      "run_returncode": 0,
+      "run_output": "all-minute boundaries/daytime/equal/invalid/DST local slots, dark first touch, no automatic count, wrap timeout PASS\n"
+    },
+    {
+      "path": "release-tools/night_buttons_test.cpp",
+      "compile_returncode": 0,
+      "command": "clang++ -std=c++17 -Wall -Wextra -fsanitize=address,undefined -g -I . release-tools/night_buttons_test.cpp -o \"$SCRATCH/night_buttons_test\"",
+      "compile_output": "",
+      "run_command": "\"$SCRATCH/night_buttons_test\"",
+      "run_returncode": 0,
+      "run_output": ""
+    },
+    {
+      "path": "release-tools/night_pending_test.cpp",
+      "compile_returncode": 0,
+      "command": "clang++ -std=c++17 -Wall -Wextra -fsanitize=address,undefined -g -I . release-tools/night_pending_test.cpp -o \"$SCRATCH/night_pending_test\"",
+      "compile_output": "",
+      "run_command": "\"$SCRATCH/night_pending_test\"",
+      "run_returncode": 0,
+      "run_output": ""
+    },
+    {
+      "path": "release-tools/night_power_test.cpp",
+      "compile_returncode": 0,
+      "command": "clang++ -std=c++17 -Wall -Wextra -fsanitize=address,undefined -g -I . release-tools/night_power_test.cpp -o \"$SCRATCH/night_power_test\"",
+      "compile_output": "",
+      "run_command": "\"$SCRATCH/night_power_test\"",
+      "run_returncode": 0,
+      "run_output": "central night block, explicit bounded manual, no busy/audio bypass, invalid clock fail open PASS\n"
+    },
+    {
+      "path": "release-tools/viewport_test.cpp",
+      "compile_returncode": 0,
+      "command": "clang++ -std=c++17 -Wall -Wextra -fsanitize=address,undefined -g -I . release-tools/viewport_test.cpp -o \"$SCRATCH/viewport_test\"",
+      "compile_output": "",
+      "run_command": "\"$SCRATCH/viewport_test\"",
+      "run_returncode": 0,
+      "run_output": "actual HistoryView parity UTF8/98px viewport/2s hold/16px per second PASS\n"
+    },
+    {
+      "path": "tests/temporary_cards_test.cpp",
+      "compile_returncode": 0,
+      "command": "clang++ -std=c++17 -Wall -Wextra -fsanitize=address,undefined -g -I . tests/temporary_cards_test.cpp -o \"$SCRATCH/temporary_cards_test\"",
+      "compile_output": "",
+      "run_command": "\"$SCRATCH/temporary_cards_test\"",
+      "run_returncode": -6,
+      "run_output": "tracer 1 state/TTL: PASS\nAssertion failed: (s.show(A,std::string(40,'T'),std::string(511,'a')+\"á\",\"reminder\",0,false,0)), function main, file temporary_cards_test.cpp, line 26.\n"
+    },
+    {
+      "path": "tests/ui_history_test.cpp",
+      "compile_returncode": 0,
+      "command": "clang++ -std=c++17 -Wall -Wextra -fsanitize=address,undefined -g -I . tests/ui_history_test.cpp -o \"$SCRATCH/ui_history_test\"",
+      "compile_output": "",
+      "run_command": "\"$SCRATCH/ui_history_test\"",
+      "run_returncode": 0,
+      "run_output": "history bounded five; UTF8 cap 4096 bytes/4000 chars; full layout PASS\n"
+    },
+    {
+      "path": "tests/ui_memory_probe.cpp",
+      "compile_returncode": 0,
+      "command": "clang++ -std=c++17 -Wall -Wextra -fsanitize=address,undefined -g -I . tests/ui_memory_probe.cpp -o \"$SCRATCH/ui_memory_probe\"",
+      "compile_output": "",
+      "run_command": "\"$SCRATCH/ui_memory_probe\"",
+      "run_returncode": 0,
+      "run_output": "{\"basis\":\"host sizeof and retained string/vector capacities; not ESP32 heap\",\"history_count\":5,\"history_capacity_bytes\":21304,\"active_pending_status_capacity_bytes\":8768,\"timing_capacity_bytes\":16380,\"transcript_capacity_bytes\":8709,\"playback_capacity_bytes\":10246,\"line_views_capacity_bytes\":22571,\"objects_sizeof_bytes\":2332,\"capacity_sum_bytes\":87978,\"note\":\"capacity sum includes small-string inline storage already counted in sizeof and omits allocator overhead; not an exact allocation total\"}\n"
+    },
+    {
+      "path": "tests/ui_power_test.cpp",
+      "compile_returncode": 0,
+      "command": "clang++ -std=c++17 -Wall -Wextra -fsanitize=address,undefined -g -I . tests/ui_power_test.cpp -o \"$SCRATCH/ui_power_test\"",
+      "compile_output": "",
+      "run_command": "\"$SCRATCH/ui_power_test\"",
+      "run_returncode": 0,
+      "run_output": "power combinations, wrap, clock slots PASS\n"
+    },
+    {
+      "path": "tests/ui_scroll_test.cpp",
+      "compile_returncode": 0,
+      "command": "clang++ -std=c++17 -Wall -Wextra -fsanitize=address,undefined -g -I . tests/ui_scroll_test.cpp -o \"$SCRATCH/ui_scroll_test\"",
+      "compile_output": "",
+      "run_command": "\"$SCRATCH/ui_scroll_test\"",
+      "run_returncode": 0,
+      "run_output": "vertical/horizontal pause 2s; final hold; real duration, pause, bounded metadata TTL/generation PASS\\n"
+    },
+    {
+      "path": "tests/ui_transcript_test.cpp",
+      "compile_returncode": 0,
+      "command": "clang++ -std=c++17 -Wall -Wextra -fsanitize=address,undefined -g -I . tests/ui_transcript_test.cpp -o \"$SCRATCH/ui_transcript_test\"",
+      "compile_output": "",
+      "run_command": "\"$SCRATCH/ui_transcript_test\"",
+      "run_returncode": 0,
+      "run_output": "STT exact/prefix; pending 5s and new-turn clearing; TTS pending-prefix consume PASS\n"
+    },
+    {
+      "path": "tests/ui_v3_test.cpp",
+      "compile_returncode": 0,
+      "command": "clang++ -std=c++17 -Wall -Wextra -fsanitize=address,undefined -g -I . tests/ui_v3_test.cpp -o \"$SCRATCH/ui_v3_test\"",
+      "compile_output": "",
+      "run_command": "\"$SCRATCH/ui_v3_test\"",
+      "run_returncode": 0,
+      "run_output": "menu navigation PASS\n"
+    }
+  ]
+}

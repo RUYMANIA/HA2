@@ -1,0 +1,13 @@
+{
+  "domain": "ha2_notifications",
+  "name": "HA² Notifications",
+  "version": "0.3.0",
+  "config_flow": true,
+  "single_config_entry": true,
+  "integration_type": "service",
+  "iot_class": "local_push",
+  "dependencies": ["http", "websocket_api", "frontend", "panel_custom", "assist_pipeline", "tts", "esphome"],
+  "requirements": [],
+  "codeowners": [],
+  "documentation": "https://linktr.ee/ruymania"
+}

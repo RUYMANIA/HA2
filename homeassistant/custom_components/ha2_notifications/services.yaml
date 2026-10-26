@@ -1,0 +1,33 @@
+send:
+  name: Enviar aviso HA²
+  description: Encola una petición; no confirma entrega ni audición. Una regla o contenido manual, nunca ambos. Sin reglas de ejemplo.
+  fields:
+    rule_id:
+      name: ID de regla
+      description: ID hex32 de una regla guardada (puede estar deshabilitada).
+      selector:
+        text:
+    title:
+      name: Título manual
+      selector:
+        text:
+    body:
+      name: Texto manual
+      selector:
+        text:
+          multiline: true
+    kind:
+      name: Tipo
+      selector:
+        select:
+          options: [notice, reminder, result, weather]
+    mode:
+      name: Modo
+      selector:
+        select:
+          options: [cue, voice]
+    request_id:
+      name: ID idempotente
+      description: Hex32 opcional. Retención de deduplicación 48 horas; no reutilizar IDs.
+      selector:
+        text:

@@ -1,0 +1,676 @@
+{
+  "source_release": "ha2-menu-1.3.1",
+  "scope": "closed allowlist; source and copy hashes, not an installed binary equivalence claim",
+  "self_excluded": "SHA256-MANIFEST.json",
+  "files": [
+    {
+      "path": "assets/ha2/notification.wav",
+      "source_release": "ha2-menu-1.3.1",
+      "source_sha256": "1e6c7111d380aeba3472f1f6d95d4879e409df78a6b3e10585b72a96111e8d5b",
+      "copy_sha256": "1e6c7111d380aeba3472f1f6d95d4879e409df78a6b3e10585b72a96111e8d5b",
+      "source_bytes": 90284,
+      "copy_bytes": 90284,
+      "redactions": {}
+    },
+    {
+      "path": "assets/ha2/qr-140-nearest.png",
+      "source_release": "ha2-menu-1.3.1",
+      "source_sha256": "0d898e511559a2219523cd4c94f6662ef44e691f5fd46a99a1a5be97abf0045a",
+      "copy_sha256": "0d898e511559a2219523cd4c94f6662ef44e691f5fd46a99a1a5be97abf0045a",
+      "source_bytes": 2530,
+      "copy_bytes": 2530,
+      "redactions": {}
+    },
+    {
+      "path": "assets/ha2/qr-140-opaque-rgb.png",
+      "source_release": "ha2-menu-1.3.1",
+      "source_sha256": "0fd0ef3e5f24f387b2774d80a49837a642e17d54471225cbb692fcff330ebd15",
+      "copy_sha256": "0fd0ef3e5f24f387b2774d80a49837a642e17d54471225cbb692fcff330ebd15",
+      "source_bytes": 4082,
+      "copy_bytes": 4082,
+      "redactions": {}
+    },
+    {
+      "path": "assets/ha2/startup-cori-v2.mp3",
+      "source_release": "ha2-menu-1.3.1",
+      "source_sha256": "8bf1f576f59c9efe91abfbeabffdd365e24cb32d1afcf0b2600cee3a28e130f4",
+      "copy_sha256": "8bf1f576f59c9efe91abfbeabffdd365e24cb32d1afcf0b2600cee3a28e130f4",
+      "source_bytes": 111962,
+      "copy_bytes": 111962,
+      "redactions": {}
+    },
+    {
+      "path": "assets/hermes-avatar/casita_error.gif",
+      "source_release": "ha2-menu-1.3.1",
+      "source_sha256": "0b04b328e6343e29dd0a584c5ba185d5d84088001e12f12bd0c0688871fc2726",
+      "copy_sha256": "0b04b328e6343e29dd0a584c5ba185d5d84088001e12f12bd0c0688871fc2726",
+      "source_bytes": 13535,
+      "copy_bytes": 13535,
+      "redactions": {}
+    },
+    {
+      "path": "assets/hermes-avatar/casita_idle.gif",
+      "source_release": "ha2-menu-1.3.1",
+      "source_sha256": "661ba04c7e0a54635f306572e6171c5c60e09391aa021ccf29cacd1bc8788a30",
+      "copy_sha256": "661ba04c7e0a54635f306572e6171c5c60e09391aa021ccf29cacd1bc8788a30",
+      "source_bytes": 30044,
+      "copy_bytes": 30044,
+      "redactions": {}
+    },
+    {
+      "path": "assets/hermes-avatar/casita_initializing.gif",
+      "source_release": "ha2-menu-1.3.1",
+      "source_sha256": "e8fda48a5b0b23fbb60833b39840371823df7f908d3a75c4a22de26e42149f18",
+      "copy_sha256": "e8fda48a5b0b23fbb60833b39840371823df7f908d3a75c4a22de26e42149f18",
+      "source_bytes": 12034,
+      "copy_bytes": 12034,
+      "redactions": {}
+    },
+    {
+      "path": "assets/hermes-avatar/casita_listening.gif",
+      "source_release": "ha2-menu-1.3.1",
+      "source_sha256": "154ddb12a95a850e6fda8535660a3b3ab2164c542ba6b712f5d58e6ba5e561bb",
+      "copy_sha256": "154ddb12a95a850e6fda8535660a3b3ab2164c542ba6b712f5d58e6ba5e561bb",
+      "source_bytes": 13565,
+      "copy_bytes": 13565,
+      "redactions": {}
+    },
+    {
+      "path": "assets/hermes-avatar/casita_muted.gif",
+      "source_release": "ha2-menu-1.3.1",
+      "source_sha256": "f8fb3e282c58f9c073beaca8bb7f99ebbf0d612dab841821287b66568d29efd6",
+      "copy_sha256": "f8fb3e282c58f9c073beaca8bb7f99ebbf0d612dab841821287b66568d29efd6",
+      "source_bytes": 12578,
+      "copy_bytes": 12578,
+      "redactions": {}
+    },
+    {
+      "path": "assets/hermes-avatar/casita_playing.gif",
+      "source_release": "ha2-menu-1.3.1",
+      "source_sha256": "ae1ffabf5af33d5f7c34d68e311012be59d5c6f50a9eb1cf68cc2ff2921549e5",
+      "copy_sha256": "ae1ffabf5af33d5f7c34d68e311012be59d5c6f50a9eb1cf68cc2ff2921549e5",
+      "source_bytes": 13141,
+      "copy_bytes": 13141,
+      "redactions": {}
+    },
+    {
+      "path": "assets/hermes-avatar/casita_replying.gif",
+      "source_release": "ha2-menu-1.3.1",
+      "source_sha256": "2a58565511a9a34f2c8af529a15d6faa4de288975a52d664a9979107256a4384",
+      "copy_sha256": "2a58565511a9a34f2c8af529a15d6faa4de288975a52d664a9979107256a4384",
+      "source_bytes": 11376,
+      "copy_bytes": 11376,
+      "redactions": {}
+    },
+    {
+      "path": "assets/hermes-avatar/casita_thinking.gif",
+      "source_release": "ha2-menu-1.3.1",
+      "source_sha256": "afb70eccda9658185e338d061528c8d66ef2aa64e207ba59aafb1c159093361f",
+      "copy_sha256": "afb70eccda9658185e338d061528c8d66ef2aa64e207ba59aafb1c159093361f",
+      "source_bytes": 10796,
+      "copy_bytes": 10796,
+      "redactions": {}
+    },
+    {
+      "path": "assets/hermes-avatar/casita_timer_finished.gif",
+      "source_release": "ha2-menu-1.3.1",
+      "source_sha256": "86c058f89d59266b2e59ec743e633aa1ac6e5f6e31a5c609dcdcef660e56002e",
+      "copy_sha256": "86c058f89d59266b2e59ec743e633aa1ac6e5f6e31a5c609dcdcef660e56002e",
+      "source_bytes": 14412,
+      "copy_bytes": 14412,
+      "redactions": {}
+    },
+    {
+      "path": "assets/hermes-avatar/error_no_ha.gif",
+      "source_release": "ha2-menu-1.3.1",
+      "source_sha256": "0f08b11ccaf8a13531e42d736dfb7507b8b33513c94db146e40513fc74abc25f",
+      "copy_sha256": "0f08b11ccaf8a13531e42d736dfb7507b8b33513c94db146e40513fc74abc25f",
+      "source_bytes": 9937,
+      "copy_bytes": 9937,
+      "redactions": {}
+    },
+    {
+      "path": "assets/hermes-avatar/error_no_wifi.gif",
+      "source_release": "ha2-menu-1.3.1",
+      "source_sha256": "5b24cef3e121843641b52866f7c418206188ee26b406ce3e102c472132076e60",
+      "copy_sha256": "5b24cef3e121843641b52866f7c418206188ee26b406ce3e102c472132076e60",
+      "source_bytes": 11955,
+      "copy_bytes": 11955,
+      "redactions": {}
+    },
+    {
+      "path": "avatar_damage.h",
+      "source_release": "ha2-menu-1.3.1",
+      "source_sha256": "37fba39aab441facba2dc43a8a49f1db868b79de36bc72b1d1dfd5f04d5d1aff",
+      "copy_sha256": "37fba39aab441facba2dc43a8a49f1db868b79de36bc72b1d1dfd5f04d5d1aff",
+      "source_bytes": 12230,
+      "copy_bytes": 12230,
+      "redactions": {}
+    },
+    {
+      "path": "avatar_timeline.h",
+      "source_release": "ha2-menu-1.3.1",
+      "source_sha256": "3ef2fae2278863b6635433bff453aacb70eb7290ee6c344fc7b226aef44d8334",
+      "copy_sha256": "3ef2fae2278863b6635433bff453aacb70eb7290ee6c344fc7b226aef44d8334",
+      "source_bytes": 1079,
+      "copy_bytes": 1079,
+      "redactions": {}
+    },
+    {
+      "path": "config/HW/ball_v2_hw.yaml",
+      "source_release": "ha2-menu-1.3.1",
+      "source_sha256": "fc1ad2050cc51e80328e417b923ec73f00e2bd60e86d315f85732debe9a0dec4",
+      "copy_sha256": "fc1ad2050cc51e80328e417b923ec73f00e2bd60e86d315f85732debe9a0dec4",
+      "source_bytes": 11349,
+      "copy_bytes": 11349,
+      "redactions": {}
+    },
+    {
+      "path": "config/clocks-standard.yaml",
+      "source_release": "ha2-menu-1.3.1",
+      "source_sha256": "516904f6eb795283dffefaeedea2207f7fc74090fb688f5fa61383eafc5fb86b",
+      "copy_sha256": "516904f6eb795283dffefaeedea2207f7fc74090fb688f5fa61383eafc5fb86b",
+      "source_bytes": 3191,
+      "copy_bytes": 3191,
+      "redactions": {}
+    },
+    {
+      "path": "config/core.yaml",
+      "source_release": "ha2-menu-1.3.1",
+      "source_sha256": "da85c4077e13cf5aea3fdb8e5cef5cc5a2e276934894e4c204652613e7b60b9f",
+      "copy_sha256": "da85c4077e13cf5aea3fdb8e5cef5cc5a2e276934894e4c204652613e7b60b9f",
+      "source_bytes": 54370,
+      "copy_bytes": 54370,
+      "redactions": {}
+    },
+    {
+      "path": "config/display_pages.yaml",
+      "source_release": "ha2-menu-1.3.1",
+      "source_sha256": "bfdd1b557b539894132778ea83df75f4c83defe3ac75c50d6c21773d41b46035",
+      "copy_sha256": "bfdd1b557b539894132778ea83df75f4c83defe3ac75c50d6c21773d41b46035",
+      "source_bytes": 67515,
+      "copy_bytes": 67515,
+      "redactions": {}
+    },
+    {
+      "path": "config/ha2.yaml",
+      "source_release": "ha2-menu-1.3.1",
+      "source_sha256": "8744d2142b08bcbe5e8ef93f3212990a256c6df488a6b87890fdf21e04a817bb",
+      "copy_sha256": "8744d2142b08bcbe5e8ef93f3212990a256c6df488a6b87890fdf21e04a817bb",
+      "source_bytes": 7521,
+      "copy_bytes": 7521,
+      "redactions": {}
+    },
+    {
+      "path": "config/hermes_avatar.yaml",
+      "source_release": "ha2-menu-1.3.1",
+      "source_sha256": "d75b60b0b40156f411423432770b2291704ae799e95424e6c15475cb818580c7",
+      "copy_sha256": "d75b60b0b40156f411423432770b2291704ae799e95424e6c15475cb818580c7",
+      "source_bytes": 9573,
+      "copy_bytes": 9573,
+      "redactions": {}
+    },
+    {
+      "path": "config/system_menu.yaml",
+      "source_release": "ha2-menu-1.3.1",
+      "source_sha256": "f9884c05444518a9575a6d932f802eaceaed4b7869e1b1f15a32a36b6631978f",
+      "copy_sha256": "f9884c05444518a9575a6d932f802eaceaed4b7869e1b1f15a32a36b6631978f",
+      "source_bytes": 9312,
+      "copy_bytes": 9312,
+      "redactions": {}
+    },
+    {
+      "path": "config/temporary_cards.yaml",
+      "source_release": "ha2-menu-1.3.1",
+      "source_sha256": "62197768ece372fc9273a28741ccb75e4545eb7eda5206b05a6981f19d4d99ee",
+      "copy_sha256": "62197768ece372fc9273a28741ccb75e4545eb7eda5206b05a6981f19d4d99ee",
+      "source_bytes": 5765,
+      "copy_bytes": 5765,
+      "redactions": {}
+    },
+    {
+      "path": "config/ui_v3.yaml",
+      "source_release": "ha2-menu-1.3.1",
+      "source_sha256": "6ea5819adce941c5e55a06cd02988ce9fc54549cee493f72eae480b65bf7093b",
+      "copy_sha256": "6ea5819adce941c5e55a06cd02988ce9fc54549cee493f72eae480b65bf7093b",
+      "source_bytes": 11928,
+      "copy_bytes": 11928,
+      "redactions": {}
+    },
+    {
+      "path": "gif_demo.h",
+      "source_release": "ha2-menu-1.3.1",
+      "source_sha256": "53db62c707ecc3568612bed6ab84e1c81b75ac6b65db1698ad650dac07ef1ea1",
+      "copy_sha256": "53db62c707ecc3568612bed6ab84e1c81b75ac6b65db1698ad650dac07ef1ea1",
+      "source_bytes": 838,
+      "copy_bytes": 838,
+      "redactions": {}
+    },
+    {
+      "path": "ha2_cue.h",
+      "source_release": "ha2-menu-1.3.1",
+      "source_sha256": "69622eb07d7926808ff0ead04798184189ed8746b13ad9b25d210a0e068a99ef",
+      "copy_sha256": "69622eb07d7926808ff0ead04798184189ed8746b13ad9b25d210a0e068a99ef",
+      "source_bytes": 1402,
+      "copy_bytes": 1402,
+      "redactions": {}
+    },
+    {
+      "path": "ha2_startup.h",
+      "source_release": "ha2-menu-1.3.1",
+      "source_sha256": "8405aa501b5ccd9ce364fcc1f29d735646d01fd41fbfbdf30fc452f4e056f687",
+      "copy_sha256": "8405aa501b5ccd9ce364fcc1f29d735646d01fd41fbfbdf30fc452f4e056f687",
+      "source_bytes": 1542,
+      "copy_bytes": 1542,
+      "redactions": {}
+    },
+    {
+      "path": "models/hey-hermes/LICENSE",
+      "source_release": "ha2-menu-1.3.1",
+      "source_sha256": "847615d9d85c14317347bf848e0d0a431aa0889043d95babaa76cee42f141923",
+      "copy_sha256": "847615d9d85c14317347bf848e0d0a431aa0889043d95babaa76cee42f141923",
+      "source_bytes": 1069,
+      "copy_bytes": 1069,
+      "redactions": {}
+    },
+    {
+      "path": "models/hey-hermes/MODEL_CARD.md",
+      "source_release": "ha2-menu-1.3.1",
+      "source_sha256": "d7a7ba48e6c60f88f78b41fb6c1b3ec3cce6b4ac4120eca533c044abae40394a",
+      "copy_sha256": "d7a7ba48e6c60f88f78b41fb6c1b3ec3cce6b4ac4120eca533c044abae40394a",
+      "source_bytes": 4703,
+      "copy_bytes": 4703,
+      "redactions": {}
+    },
+    {
+      "path": "models/hey-hermes/SHA256SUMS",
+      "source_release": "ha2-menu-1.3.1",
+      "source_sha256": "18b94df412b45bf4c0094b4469174161004cdc8ba8c80fc45d0d72ae88e6576e",
+      "copy_sha256": "18b94df412b45bf4c0094b4469174161004cdc8ba8c80fc45d0d72ae88e6576e",
+      "source_bytes": 166,
+      "copy_bytes": 166,
+      "redactions": {}
+    },
+    {
+      "path": "models/hey-hermes/hey-hermes.json",
+      "source_release": "ha2-menu-1.3.1",
+      "source_sha256": "05403983188aa04829c475f4dcdd1ede7df7946001e6e9cb48fefab01fa43c1a",
+      "copy_sha256": "05403983188aa04829c475f4dcdd1ede7df7946001e6e9cb48fefab01fa43c1a",
+      "source_bytes": 414,
+      "copy_bytes": 414,
+      "redactions": {}
+    },
+    {
+      "path": "models/hey-hermes/hey-hermes.tflite",
+      "source_release": "ha2-menu-1.3.1",
+      "source_sha256": "2073e984de30b7cd004428930e6363fe58b9158823f888cc269168b62597f995",
+      "copy_sha256": "2073e984de30b7cd004428930e6363fe58b9158823f888cc269168b62597f995",
+      "source_bytes": 62304,
+      "copy_bytes": 62304,
+      "redactions": {}
+    },
+    {
+      "path": "night_mode.h",
+      "source_release": "ha2-menu-1.3.1",
+      "source_sha256": "9384c9246156dc375b6a5a41e5c23fdb215bc79424a42508016151f2ade49bd1",
+      "copy_sha256": "9384c9246156dc375b6a5a41e5c23fdb215bc79424a42508016151f2ade49bd1",
+      "source_bytes": 530,
+      "copy_bytes": 530,
+      "redactions": {}
+    },
+    {
+      "path": "release-tools/cue_test.cpp",
+      "source_release": "ha2-menu-1.3.1",
+      "source_sha256": "2cb7e3057f430dcdd877fba9f226c59403cbde5c1a661b8f66934a321f421420",
+      "copy_sha256": "2cb7e3057f430dcdd877fba9f226c59403cbde5c1a661b8f66934a321f421420",
+      "source_bytes": 796,
+      "copy_bytes": 796,
+      "redactions": {}
+    },
+    {
+      "path": "release-tools/exit_test.cpp",
+      "source_release": "ha2-menu-1.3.1",
+      "source_sha256": "6be944bfb65662e1c244ca94736631377c3aa66825996e9bc2a3dfc75ba5fae5",
+      "copy_sha256": "6be944bfb65662e1c244ca94736631377c3aa66825996e9bc2a3dfc75ba5fae5",
+      "source_bytes": 1013,
+      "copy_bytes": 1013,
+      "redactions": {}
+    },
+    {
+      "path": "release-tools/i18n_catalogue_test.cpp",
+      "source_release": "ha2-menu-1.3.1",
+      "source_sha256": "cbdc89062a4eabe672a69444f5294ab415db2b1178c56ea2c3622cf9db8d41b4",
+      "copy_sha256": "cbdc89062a4eabe672a69444f5294ab415db2b1178c56ea2c3622cf9db8d41b4",
+      "source_bytes": 933,
+      "copy_bytes": 933,
+      "redactions": {}
+    },
+    {
+      "path": "release-tools/i18n_controller_test.cpp",
+      "source_release": "ha2-menu-1.3.1",
+      "source_sha256": "f16719625268b086aed2d4165d6a04b3658d6c873b3ddb9d93164a87c5850529",
+      "copy_sha256": "f16719625268b086aed2d4165d6a04b3658d6c873b3ddb9d93164a87c5850529",
+      "source_bytes": 577,
+      "copy_bytes": 577,
+      "redactions": {}
+    },
+    {
+      "path": "release-tools/menu_test.cpp",
+      "source_release": "ha2-menu-1.3.1",
+      "source_sha256": "cf6df0a2c6725e1a56341adf3a7ab668ad59ae20725d0546c0412be099233a72",
+      "copy_sha256": "cf6df0a2c6725e1a56341adf3a7ab668ad59ae20725d0546c0412be099233a72",
+      "source_bytes": 947,
+      "copy_bytes": 947,
+      "redactions": {}
+    },
+    {
+      "path": "release-tools/night_audio_test.cpp",
+      "source_release": "ha2-menu-1.3.1",
+      "source_sha256": "27fb2fac7ba9a4dc688e8d54a49df02a5033bd827b57867669c507da4ffa43e1",
+      "copy_sha256": "c5f3dfee6a022e5bbe193974d990ce0449d760948d5b06ddab906ca4d25d17dd",
+      "source_bytes": 1178,
+      "copy_bytes": 1175,
+      "redactions": {
+        "private_ipv4": 1
+      }
+    },
+    {
+      "path": "release-tools/night_boundaries_test.cpp",
+      "source_release": "ha2-menu-1.3.1",
+      "source_sha256": "4d99525ca48f357a7b71d9f58ab715353e97c347ad6a12c26245de62e517c8a3",
+      "copy_sha256": "4d99525ca48f357a7b71d9f58ab715353e97c347ad6a12c26245de62e517c8a3",
+      "source_bytes": 1339,
+      "copy_bytes": 1339,
+      "redactions": {}
+    },
+    {
+      "path": "release-tools/night_buttons_test.cpp",
+      "source_release": "ha2-menu-1.3.1",
+      "source_sha256": "93c5c71b6b6e176732af23a767b7d1895d80ca98e6cbe7f515fe743c8e1e4332",
+      "copy_sha256": "93c5c71b6b6e176732af23a767b7d1895d80ca98e6cbe7f515fe743c8e1e4332",
+      "source_bytes": 639,
+      "copy_bytes": 639,
+      "redactions": {}
+    },
+    {
+      "path": "release-tools/night_pending_test.cpp",
+      "source_release": "ha2-menu-1.3.1",
+      "source_sha256": "469d6ab3167fddc94dd9b225bc58c3b656e11ca106a7de4a4edb4a2ee47f0eea",
+      "copy_sha256": "587f1289b54e9ca89cc1978b98ebc1d5cabe881712aec388b7cff52760e17fcf",
+      "source_bytes": 1248,
+      "copy_bytes": 1245,
+      "redactions": {
+        "private_ipv4": 1
+      }
+    },
+    {
+      "path": "release-tools/night_power_test.cpp",
+      "source_release": "ha2-menu-1.3.1",
+      "source_sha256": "675c544908495b2ad8926194263885a2a9bff4d1b58caf0298674569fd5148fc",
+      "copy_sha256": "675c544908495b2ad8926194263885a2a9bff4d1b58caf0298674569fd5148fc",
+      "source_bytes": 762,
+      "copy_bytes": 762,
+      "redactions": {}
+    },
+    {
+      "path": "release-tools/test_actual_lambdas.py",
+      "source_release": "ha2-menu-1.3.1",
+      "source_sha256": "fe50353b17d76e7329a6dcc10776365000521eb379b884d11d707d84b8ce3c43",
+      "copy_sha256": "7a02f72e818b1e749f57ee1c8402dd66ce49b0875f00ca2b92f3da123887e58d",
+      "source_bytes": 6611,
+      "copy_bytes": 6604,
+      "redactions": {
+        "private_ipv4": 1,
+        "personal_home_path": 2
+      }
+    },
+    {
+      "path": "release-tools/test_demo_lambdas.py",
+      "source_release": "ha2-menu-1.3.1",
+      "source_sha256": "ade6ab5ae58ce1ae141f5d9a2647b0ade2b18db1b2127f50a331785ce78d9f0c",
+      "copy_sha256": "f91e703f78ebb1685ec6b2bd5c35cae8bc289bf27a3541ead78ba307d40f0f95",
+      "source_bytes": 4863,
+      "copy_bytes": 4861,
+      "redactions": {
+        "personal_home_path": 1
+      }
+    },
+    {
+      "path": "release-tools/test_menu131.py",
+      "source_release": "ha2-menu-1.3.1",
+      "source_sha256": "d5c732a99e97ab453d41514344fa156aae1414167b95c4930438beff73a3f71b",
+      "copy_sha256": "d5c732a99e97ab453d41514344fa156aae1414167b95c4930438beff73a3f71b",
+      "source_bytes": 2232,
+      "copy_bytes": 2232,
+      "redactions": {}
+    },
+    {
+      "path": "release-tools/test_touch_demo.py",
+      "source_release": "ha2-menu-1.3.1",
+      "source_sha256": "413a841effbe42d76aecb9b41e9f7dea65a8a5044ad96dc3534cb980f3d1a823",
+      "copy_sha256": "413a841effbe42d76aecb9b41e9f7dea65a8a5044ad96dc3534cb980f3d1a823",
+      "source_bytes": 1914,
+      "copy_bytes": 1914,
+      "redactions": {}
+    },
+    {
+      "path": "release-tools/viewport_test.cpp",
+      "source_release": "ha2-menu-1.3.1",
+      "source_sha256": "e372513edde16fba786d9f2affdd135e35eeb80c5d5b3111ff58c78310c27164",
+      "copy_sha256": "e372513edde16fba786d9f2affdd135e35eeb80c5d5b3111ff58c78310c27164",
+      "source_bytes": 751,
+      "copy_bytes": 751,
+      "redactions": {}
+    },
+    {
+      "path": "system_menu.h",
+      "source_release": "ha2-menu-1.3.1",
+      "source_sha256": "af76355c2f32107f8b222e51ca2c683fecc9d87c1c2d33cd2e534a116ed85391",
+      "copy_sha256": "af76355c2f32107f8b222e51ca2c683fecc9d87c1c2d33cd2e534a116ed85391",
+      "source_bytes": 7145,
+      "copy_bytes": 7145,
+      "redactions": {}
+    },
+    {
+      "path": "temporary_cards.h",
+      "source_release": "ha2-menu-1.3.1",
+      "source_sha256": "2d06fb7566251e2dd6c85cde81de0c718d7855b8e419aea1a465a521ffd4a824",
+      "copy_sha256": "ace5eea4feabba278f1828899b6fac1f7e748dbb50909554370750050f4469da",
+      "source_bytes": 12956,
+      "copy_bytes": 12953,
+      "redactions": {
+        "private_ipv4": 1
+      }
+    },
+    {
+      "path": "tests/temporary_cards_test.cpp",
+      "source_release": "ha2-menu-1.3.1",
+      "source_sha256": "97d381c77ac3f13772897357672825bc54482190555e73dcddc9d65b8b4c738f",
+      "copy_sha256": "6ce22ec4afdc18d61e897c9b50a5cb728142da108b764fba0687be1f64a76e0e",
+      "source_bytes": 7545,
+      "copy_bytes": 7530,
+      "redactions": {
+        "private_ipv4": 5
+      }
+    },
+    {
+      "path": "tests/ui_history_test.cpp",
+      "source_release": "ha2-menu-1.3.1",
+      "source_sha256": "f7e444cbdffff0f5324130d0f86b45bd13778b8d66e4eb11d6abc682c4e3049a",
+      "copy_sha256": "f7e444cbdffff0f5324130d0f86b45bd13778b8d66e4eb11d6abc682c4e3049a",
+      "source_bytes": 2177,
+      "copy_bytes": 2177,
+      "redactions": {}
+    },
+    {
+      "path": "tests/ui_memory_probe.cpp",
+      "source_release": "ha2-menu-1.3.1",
+      "source_sha256": "3518fcebaa038eefaca592d3b9543b617476ea494ff021bed7258712cd0c8be9",
+      "copy_sha256": "3518fcebaa038eefaca592d3b9543b617476ea494ff021bed7258712cd0c8be9",
+      "source_bytes": 2636,
+      "copy_bytes": 2636,
+      "redactions": {}
+    },
+    {
+      "path": "tests/ui_power_test.cpp",
+      "source_release": "ha2-menu-1.3.1",
+      "source_sha256": "fec630cb21b992aed88d9f3115a17ab112a3e47d4b4cd31411bf0aa2f05a9ae4",
+      "copy_sha256": "fec630cb21b992aed88d9f3115a17ab112a3e47d4b4cd31411bf0aa2f05a9ae4",
+      "source_bytes": 1698,
+      "copy_bytes": 1698,
+      "redactions": {}
+    },
+    {
+      "path": "tests/ui_scroll_test.cpp",
+      "source_release": "ha2-menu-1.3.1",
+      "source_sha256": "242c58372d18912f1eb1bc3f7d463fe6468fbe194f843cd5d1ed59cbda4b4ab7",
+      "copy_sha256": "242c58372d18912f1eb1bc3f7d463fe6468fbe194f843cd5d1ed59cbda4b4ab7",
+      "source_bytes": 1892,
+      "copy_bytes": 1892,
+      "redactions": {}
+    },
+    {
+      "path": "tests/ui_transcript_test.cpp",
+      "source_release": "ha2-menu-1.3.1",
+      "source_sha256": "c327accfd6bb5c6f2a3da05d5c6e683976cd8067bd0593c6aef3acda04c6188e",
+      "copy_sha256": "c327accfd6bb5c6f2a3da05d5c6e683976cd8067bd0593c6aef3acda04c6188e",
+      "source_bytes": 1182,
+      "copy_bytes": 1182,
+      "redactions": {}
+    },
+    {
+      "path": "tests/ui_v3_test.cpp",
+      "source_release": "ha2-menu-1.3.1",
+      "source_sha256": "07534a3de465d98ad40848997462c2ae48b72c48f313af4e3219b9a9d8044914",
+      "copy_sha256": "07534a3de465d98ad40848997462c2ae48b72c48f313af4e3219b9a9d8044914",
+      "source_bytes": 1108,
+      "copy_bytes": 1108,
+      "redactions": {}
+    },
+    {
+      "path": "textScroll.h",
+      "source_release": "ha2-menu-1.3.1",
+      "source_sha256": "697ee8f01296175b4ea52b843eb7c8c69a22e4d806d0f0bd47385762e5b8c12b",
+      "copy_sha256": "697ee8f01296175b4ea52b843eb7c8c69a22e4d806d0f0bd47385762e5b8c12b",
+      "source_bytes": 7339,
+      "copy_bytes": 7339,
+      "redactions": {}
+    },
+    {
+      "path": "ui_catalogue.h",
+      "source_release": "ha2-menu-1.3.1",
+      "source_sha256": "63cea1bec89740f3f7a1634aa01b5ddc87b0a121c38d3625ba5608814f67b5b9",
+      "copy_sha256": "63cea1bec89740f3f7a1634aa01b5ddc87b0a121c38d3625ba5608814f67b5b9",
+      "source_bytes": 2567,
+      "copy_bytes": 2567,
+      "redactions": {}
+    },
+    {
+      "path": "ui_v3.h",
+      "source_release": "ha2-menu-1.3.1",
+      "source_sha256": "c00dff0c32a382aa0b415aa56f964cc2eba042132c9bddbcc96d8d253032b66b",
+      "copy_sha256": "c00dff0c32a382aa0b415aa56f964cc2eba042132c9bddbcc96d8d253032b66b",
+      "source_bytes": 4576,
+      "copy_bytes": 4576,
+      "redactions": {}
+    },
+    {
+      "path": "vendor/Ball_v2.yaml",
+      "source_release": "ha2-menu-1.3.1",
+      "source_sha256": "a4c23056dfce5fc3ad8c7119335e4fa4e4f9bdd2b70d9e87f1298a92330032d7",
+      "copy_sha256": "a4c23056dfce5fc3ad8c7119335e4fa4e4f9bdd2b70d9e87f1298a92330032d7",
+      "source_bytes": 4848,
+      "copy_bytes": 4848,
+      "redactions": {}
+    },
+    {
+      "path": "vendor/HW/ball_v2_hw.yaml",
+      "source_release": "ha2-menu-1.3.1",
+      "source_sha256": "57974f8c53da582ef8d18d4440a0086ff59bf5e40a1c8a9876379b5ef19449bc",
+      "copy_sha256": "57974f8c53da582ef8d18d4440a0086ff59bf5e40a1c8a9876379b5ef19449bc",
+      "source_bytes": 8646,
+      "copy_bytes": 8646,
+      "redactions": {}
+    },
+    {
+      "path": "vendor/clocks-standard.yaml",
+      "source_release": "ha2-menu-1.3.1",
+      "source_sha256": "e5c65c3410c8e831a1bad320743afdff0e02c69713c2c1860c3b86e4560e4fff",
+      "copy_sha256": "e5c65c3410c8e831a1bad320743afdff0e02c69713c2c1860c3b86e4560e4fff",
+      "source_bytes": 4318,
+      "copy_bytes": 4318,
+      "redactions": {}
+    },
+    {
+      "path": "vendor/core.yaml",
+      "source_release": "ha2-menu-1.3.1",
+      "source_sha256": "e45514fe7c753d98452412748df62ca70f173fbf296561a9f489205908b5d66f",
+      "copy_sha256": "e45514fe7c753d98452412748df62ca70f173fbf296561a9f489205908b5d66f",
+      "source_bytes": 50380,
+      "copy_bytes": 50380,
+      "redactions": {}
+    },
+    {
+      "path": "vendor/display_pages.yaml",
+      "source_release": "ha2-menu-1.3.1",
+      "source_sha256": "298d406d3fe2444526eb63071d50a42c25e350181c88a32f1fc18e0f6a01dea3",
+      "copy_sha256": "298d406d3fe2444526eb63071d50a42c25e350181c88a32f1fc18e0f6a01dea3",
+      "source_bytes": 145391,
+      "copy_bytes": 145391,
+      "redactions": {}
+    },
+    {
+      "path": "xiaozhi-ball-v2.yaml",
+      "source_release": "ha2-menu-1.3.1",
+      "source_sha256": "fbb74c8214f1c93e35e50a8cfe9c18454e236729cc29b88497c66ebfb4b2e063",
+      "copy_sha256": "fbb74c8214f1c93e35e50a8cfe9c18454e236729cc29b88497c66ebfb4b2e063",
+      "source_bytes": 3526,
+      "copy_bytes": 3526,
+      "redactions": {}
+    }
+  ],
+  "generated_files": [
+    {
+      "path": ".gitignore",
+      "copy_sha256": "7f53cd9cce9cbd830c7cc7ee0a5b586462fdace43c51f304240bfdd85491b911",
+      "copy_bytes": 67,
+      "origin": "generated_documentation_or_retrieved_upstream_license"
+    },
+    {
+      "path": "README.md",
+      "copy_sha256": "0a0062fee1924dbd112e38fd17651521880e79a9a6342780fc56f7747a3ad4aa",
+      "copy_bytes": 3555,
+      "origin": "generated_documentation_or_retrieved_upstream_license"
+    },
+    {
+      "path": "SNAPSHOT.md",
+      "copy_sha256": "b617084519f18accf092069c7801bb897bb78d10254bc403ea2ceb5d95eeba94",
+      "copy_bytes": 2004,
+      "origin": "generated_documentation_or_retrieved_upstream_license"
+    },
+    {
+      "path": "TEST-RESULTS.json",
+      "copy_sha256": "25b3591d8c5d830231cdebd63e540e408dfe5d9f1d6c1805c57434e1ea807373",
+      "copy_bytes": 8634,
+      "origin": "generated_documentation_or_retrieved_upstream_license"
+    },
+    {
+      "path": "THIRD_PARTY/PROVENANCE.md",
+      "copy_sha256": "f734c9bd34145aa8f111edf1985121c78e37044fde647d506fb0fe9852e165f3",
+      "copy_bytes": 1657,
+      "origin": "generated_documentation_or_retrieved_upstream_license"
+    },
+    {
+      "path": "THIRD_PARTY/RealDeco-LICENSE",
+      "copy_sha256": "8efdee371d9062fa9c15ceb9ea66fbd6b805d52ac559e4182202beedaff1240e",
+      "copy_bytes": 1065,
+      "origin": "generated_documentation_or_retrieved_upstream_license"
+    },
+    {
+      "path": "secrets.example.yaml",
+      "copy_sha256": "3b65cb1179ac8cbfc3692d62b26f24c6bbabfd16dd124b32c5f69c871fe0eb62",
+      "copy_bytes": 321,
+      "origin": "generated_documentation_or_retrieved_upstream_license"
+    }
+  ]
+}

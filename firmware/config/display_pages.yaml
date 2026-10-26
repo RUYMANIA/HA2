@@ -1,0 +1,1476 @@
+# display_pages v1.08
+
+      - id: temporary_card_page
+        lambda: |-
+          const auto &c=temporary_cards::state();
+          const int language=id(ui_language).active_index().value_or(0);
+          auto tr=[&](ui_i18n::Key key){return ui_i18n::text(key,language);};
+          it.fill(Color::BLACK);
+          const char *category=ui_i18n::kind(c.active.kind,language);
+          it.printf(120,28,id(font_battery),Color(100,195,230),TextAlign::TOP_CENTER,"%s",category);
+          it.printf(120,50,id(font_big_date),Color::WHITE,TextAlign::TOP_CENTER,"%s",c.display_title.c_str());
+          const int step=ui_v3::line_height(id(font_request_response).get_height());
+          const int offset=text_scroll::card().offset(millis());
+          it.start_clipping(32,82,208,180);
+          for(size_t i=offset/step;i<c.lines.size() && int(i)*step-offset<98;++i)
+            it.printf(32,82+step*int(i)-offset,id(font_request_response),Color::WHITE,TextAlign::TOP_LEFT,"%s",c.lines[i].c_str());
+          it.end_clipping();
+          it.filled_rectangle(68,190,104,36,Color(35,65,80));
+          it.rectangle(68,190,104,36,Color::WHITE);
+          it.printf(120,208,id(font_big_date),Color::WHITE,TextAlign::CENTER,tr(ui_i18n::Key::Close));
+
+      - id: menu_project_page
+        lambda: |-
+          const int language=id(ui_language).active_index().value_or(0);
+          auto tr=[&](ui_i18n::Key key){return ui_i18n::text(key,language);};
+          it.fill(Color::BLACK);
+          id(menu_navigation_cues).execute();
+          it.print(120,8,id(font_big_date),Color::WHITE,TextAlign::TOP_CENTER,"HA²");
+          it.print(120,32,id(font_project_small),Color::WHITE,TextAlign::TOP_CENTER,"Home Hermes");
+          it.print(120,42,id(font_project_small),Color::WHITE,TextAlign::TOP_CENTER,"Agent Assitant");
+          it.image(50,55,id(ha2_project_qr));
+          it.print(120,199,id(font_project_small),Color::WHITE,TextAlign::TOP_CENTER,tr(ui_i18n::Key::Creator));
+          it.print(120,216,id(font_project_small),Color::WHITE,TextAlign::TOP_CENTER,"linktr.ee/ruymania");
+
+      - id: menu_night_page
+        lambda: |-
+          const int language=id(ui_language).active_index().value_or(0);
+          auto tr=[&](ui_i18n::Key key){return ui_i18n::text(key,language);};
+          it.fill(Color::BLACK);
+          id(menu_navigation_cues).execute();
+          const auto &n=ui_v3::power().night;
+          it.print(120,29,id(font_big_date),Color::WHITE,TextAlign::CENTER,tr(ui_i18n::Key::Night));
+          it.filled_rectangle(52,48,136,30,n.enabled?Color(35,90,110):Color::BLACK);
+          it.rectangle(52,48,136,30,Color::WHITE);
+          it.print(120,63,id(font_request_response),Color::WHITE,TextAlign::CENTER,n.enabled?tr(ui_i18n::Key::Enabled):tr(ui_i18n::Key::Disabled));
+          for(int i=0;i<2;++i){
+            const int y=96+52*i;const unsigned slot=i?n.end:n.start;
+            it.rectangle(42,y,38,36,Color::WHITE);it.rectangle(160,y,38,36,Color::WHITE);
+            it.print(61,y+18,id(font_big_date),Color::WHITE,TextAlign::CENTER,"-");
+            it.print(179,y+18,id(font_big_date),Color::WHITE,TextAlign::CENTER,"+");
+            it.print(120,y,id(font_project_small),Color::WHITE,TextAlign::TOP_CENTER,i?tr(ui_i18n::Key::End):tr(ui_i18n::Key::Start));
+            it.printf(120,y+13,id(font_battery),Color::WHITE,TextAlign::TOP_CENTER,"%02u:%02u",slot/4,(slot%4)*15);
+          }
+          it.print(120,198,id(font_battery),Color::WHITE,TextAlign::TOP_CENTER,n.start==n.end?tr(ui_i18n::Key::AllDay):tr(ui_i18n::Key::LocalHATime));
+
+      - id: menu_volume_page
+        lambda: |-
+          const int language=id(ui_language).active_index().value_or(0);
+          auto tr=[&](ui_i18n::Key key){return ui_i18n::text(key,language);};
+          it.fill(Color::BLACK);
+          id(menu_navigation_cues).execute();
+          it.print(120,29,id(font_big_date),Color::WHITE,TextAlign::CENTER,tr(ui_i18n::Key::Volume));
+          it.print(120,47,id(font_battery),Color::WHITE,TextAlign::CENTER,
+              system_menu::state().pending ? tr(ui_i18n::Key::Pending) : tr(ui_i18n::Key::Speaker));
+          for(int i=0;i<2;++i) {
+            const auto &r=system_menu::BUTTONS[i];
+            it.rectangle(r.x,r.y,r.w,r.h,Color::WHITE);
+            it.print(r.x+r.w/2,r.y+r.h/2,id(font_big_clock_mono),Color::WHITE,TextAlign::CENTER,i==0 ? "-" : "+");
+          }
+          const float volume=id(external_media_player).volume;
+          if(std::isfinite(volume)) it.printf(120,105,id(font_big_clock_mono),Color::WHITE,TextAlign::CENTER,"%.0f%%",volume*100.0f);
+          else it.print(120,105,id(font_big_clock_mono),Color::WHITE,TextAlign::CENTER,"--%");
+          auto measure=[&](const std::string &s) {
+            int x1,y1,w,h;
+            it.get_text_bounds(0,0,s.c_str(),id(font_battery),TextAlign::TOP_LEFT,&x1,&y1,&w,&h);
+            return w;
+          };
+          const bool connected=wifi::global_wifi_component->is_connected();
+          std::string ip=tr(ui_i18n::Key::NoWifi);
+          std::string ssid=tr(ui_i18n::Key::WifiDisconnected);
+          if(connected) {
+            char ip_buffer[network::IP_ADDRESS_BUFFER_SIZE];
+            ip=std::string("IP: ")+wifi::global_wifi_component->wifi_sta_ip_addresses()[0].str_to(ip_buffer);
+            char ssid_buffer[wifi::SSID_BUFFER_SIZE];
+            ssid=std::string("Wi-Fi: ")+wifi::global_wifi_component->wifi_ssid_to(ssid_buffer);
+          }
+          ip=system_menu::ellipsize(ip,196,measure);
+          ssid=system_menu::ellipsize(ssid,174,measure);
+          it.printf(120,149,id(font_battery),Color::WHITE,TextAlign::TOP_CENTER,"%s",ip.c_str());
+          it.printf(120,172,id(font_battery),Color::WHITE,TextAlign::TOP_CENTER,"%s",ssid.c_str());
+          char status[96];
+          if(connected) snprintf(status,sizeof(status),"HA: %s  %d dBm",id(system_menu_ha_clients)>0 ? tr(ui_i18n::Key::Connected) : tr(ui_i18n::Key::NotConnected),wifi::global_wifi_component->wifi_rssi());
+          else snprintf(status,sizeof(status),"HA: %s  RSSI: --",id(system_menu_ha_clients)>0 ? tr(ui_i18n::Key::Connected) : tr(ui_i18n::Key::NotConnected));
+          const auto fitted=system_menu::ellipsize(status,144,measure);
+          it.printf(120,195,id(font_battery),Color::WHITE,TextAlign::TOP_CENTER,"%s",fitted.c_str());
+      - id: menu_info_page
+        lambda: |-
+          const int language=id(ui_language).active_index().value_or(0);
+          auto tr=[&](ui_i18n::Key key){return ui_i18n::text(key,language);};
+          it.fill(Color::BLACK);
+          id(menu_navigation_cues).execute();
+          it.print(120,29,id(font_big_date),Color::WHITE,TextAlign::CENTER,tr(ui_i18n::Key::Info));
+          it.printf(120,50,id(font_battery),Color::WHITE,TextAlign::TOP_CENTER,"ESPHome %s",ESPHOME_VERSION);
+          const uint64_t seconds=esp_timer_get_time()/1000000ULL;
+          char uptime_label[96];
+          snprintf(uptime_label,sizeof(uptime_label),"%s %llud %02llu:%02llu:%02llu",tr(ui_i18n::Key::Uptime),
+              (unsigned long long)(seconds/86400),(unsigned long long)((seconds/3600)%24),
+              (unsigned long long)((seconds/60)%60),(unsigned long long)(seconds%60));
+          auto measure_uptime=[](const std::string &s){int w,x,b,h;id(font_battery).measure(s.c_str(),&w,&x,&b,&h);return w+std::abs(x);};
+          const auto fitted_uptime=system_menu::ellipsize(uptime_label,196,measure_uptime);
+          it.print(120,72,id(font_battery),Color::WHITE,TextAlign::TOP_CENTER,fitted_uptime.c_str());
+          const float battery=id(battery_percentage).state;
+          if(std::isfinite(battery)) it.printf(120,94,id(font_battery),Color::WHITE,TextAlign::TOP_CENTER,"%s %.0f%%  %.2f V",tr(ui_i18n::Key::Battery),battery,id(battery_voltage).state);
+          else it.print(120,94,id(font_battery),Color::WHITE,TextAlign::TOP_CENTER,tr(ui_i18n::Key::BatteryNoData));
+          it.printf(120,116,id(font_battery),Color::WHITE,TextAlign::TOP_CENTER,"%s %u KiB",tr(ui_i18n::Key::FreeHeap),
+              unsigned(heap_caps_get_free_size(MALLOC_CAP_INTERNAL|MALLOC_CAP_8BIT)/1024));
+          it.printf(120,138,id(font_battery),Color::WHITE,TextAlign::TOP_CENTER,"%s %u KiB",tr(ui_i18n::Key::FreePSRAM),
+              unsigned(heap_caps_get_free_size(MALLOC_CAP_SPIRAM)/1024));
+          it.print(120,177,id(font_battery),Color::WHITE,TextAlign::TOP_CENTER,"HA² 1.3.1");
+          it.print(120,204,id(font_project_small),Color::WHITE,TextAlign::TOP_CENTER,"2026-10-25");
+
+      - id: menu_history_page
+        lambda: |-
+          const int language=id(ui_language).active_index().value_or(0);
+          auto tr=[&](ui_i18n::Key key){return ui_i18n::text(key,language);};
+          it.fill(Color::BLACK);
+          id(menu_navigation_cues).execute();
+          const auto &c=temporary_cards::state();const auto &v=ui_v3::view();
+          if(!c.history_count)it.print(120,104,id(font_big_date),Color::WHITE,TextAlign::CENTER,tr(ui_i18n::Key::NoCards));
+          else {
+            const char* category=ui_i18n::kind(c.history[c.history_index].kind,language);
+            it.printf(120,28,id(font_battery),Color(100,195,230),TextAlign::TOP_CENTER,"%s",category);
+            it.printf(120,50,id(font_big_date),Color::WHITE,TextAlign::TOP_CENTER,"%s",v.title.c_str());
+            const int step=ui_v3::line_height(id(font_request_response).get_height());
+            const int offset=text_scroll::history().offset(millis());
+            it.start_clipping(32,82,208,180);
+            for(size_t i=offset/step;i<v.lines.size() && int(i)*step-offset<98;++i)
+              it.printf(32,82+int(i)*step-offset,id(font_request_response),Color::WHITE,TextAlign::TOP_LEFT,"%s",v.lines[i].c_str());
+            it.end_clipping();
+          }
+          for(int i=0;i<2;++i){
+            const int x=51+70*i;it.rectangle(x,188,68,28,Color::WHITE);
+            it.print(x+34,202,id(font_battery),Color::WHITE,TextAlign::CENTER,i==0?tr(ui_i18n::Key::Previous):tr(ui_i18n::Key::Next));
+          }
+          it.printf(120,219,id(font_project_small),Color(100,195,230),TextAlign::TOP_CENTER,"%u/%u",unsigned(c.history_count?c.history_index+1:0),unsigned(c.history_count));
+      - id: menu_sleep_page
+        lambda: |-
+          const int language=id(ui_language).active_index().value_or(0);
+          auto tr=[&](ui_i18n::Key key){return ui_i18n::text(key,language);};
+          it.fill(Color::BLACK);
+          id(menu_navigation_cues).execute();
+          it.print(120,29,id(font_big_date),Color::WHITE,TextAlign::CENTER,tr(ui_i18n::Key::Sleep));
+          for(int i=0;i<4;++i){
+            const int y=54+40*i;
+            const Color color=i==ui_v3::power().sleep_index?Color(35,90,110):Color::BLACK;
+            it.filled_rectangle(46,y,148,36,color);it.rectangle(46,y,148,36,Color::WHITE);
+            it.print(120,y+18,id(font_request_response),Color::WHITE,TextAlign::CENTER,ui_i18n::sleep_option(i,language));
+          }
+      - id: menu_wake_page
+        lambda: |-
+          const int language=id(ui_language).active_index().value_or(0);
+          auto tr=[&](ui_i18n::Key key){return ui_i18n::text(key,language);};
+          it.fill(Color::BLACK);
+          id(menu_navigation_cues).execute();
+          it.print(120,29,id(font_big_date),Color::WHITE,TextAlign::CENTER,tr(ui_i18n::Key::AutoWake));
+          for(int i=0;i<4;++i){
+            const int y=54+40*i;
+            const Color color=i==ui_v3::power().auto_index?Color(35,90,110):Color::BLACK;
+            it.filled_rectangle(46,y,148,36,color);it.rectangle(46,y,148,36,Color::WHITE);
+            it.print(120,y+18,id(font_request_response),Color::WHITE,TextAlign::CENTER,ui_i18n::auto_option(i,language));
+          }
+
+      - id: menu_language_page
+        lambda: |-
+          const int language=id(ui_language).active_index().value_or(0);
+          auto tr=[&](ui_i18n::Key key){return ui_i18n::text(key,language);};
+          it.fill(Color::BLACK);
+          id(menu_navigation_cues).execute();
+          it.print(120,29,id(font_big_date),Color::WHITE,TextAlign::CENTER,tr(ui_i18n::Key::Language));
+          const char* names[]={"English","Español"};
+          for(int i=0;i<2;++i){
+            const int y=72+64*i;
+            it.filled_rectangle(46,y,148,52,i==language?Color(35,90,110):Color::BLACK);
+            it.rectangle(46,y,148,52,Color::WHITE);
+            it.print(120,y+26,id(font_request_response),Color::WHITE,TextAlign::CENTER,names[i]);
+          }
+
+      - id: menu_exit_page
+        lambda: |-
+          const int language=id(ui_language).active_index().value_or(0);
+          it.fill(Color::BLACK);
+          id(menu_navigation_cues).execute();
+          const system_menu::Rect rows[]={system_menu::EXIT_ACTION,system_menu::RESTART_ACTION,system_menu::DEMO_ACTION};
+          const ui_i18n::Key labels[]={ui_i18n::Key::ExitMenu,ui_i18n::Key::Restart,ui_i18n::Key::TestAnimations};
+          for(int i=0;i<3;++i) {
+            const auto &r=rows[i];
+            it.filled_rectangle(r.x,r.y,r.w,r.h,Color(35,65,80));
+            it.rectangle(r.x,r.y,r.w,r.h,Color::WHITE);
+            it.print(120,r.y+r.h/2,id(font_request_response),Color::WHITE,TextAlign::CENTER,ui_i18n::text(labels[i],language));
+          }
+
+      - id: idle_page
+        lambda: |-
+          it.fill(id(idle_color));
+          it.image((it.get_width() / 2), (it.get_height() / 2), id(casita_idle), ImageAlign::CENTER);
+          id(draw_active_timer_widget).execute();
+          id(draw_timer_timeline).execute();
+
+          if (id(show_battery_status).state) {
+            // ---- layout ----
+            const int top = 2;
+            const int w   = 56;     // body width (no cap) - made wider
+            const int h   = 24;     // body height - made taller for 14px font
+            const int capw = 5;     // cap width
+            const int caph = h - 8; // cap height
+            const int pad  = 3;     // inner padding
+
+            // center horizontally
+            const int cx = it.get_width() / 2;
+            const int x  = cx - (w + capw) / 2;
+            const int y  = top;
+
+            // percentage + color
+            float pct = id(battery_percentage).state;
+            if (pct < 0) pct = 0; else if (pct > 100) pct = 100;
+
+            Color lvl = Color(0x00, 0xA8, 0x00);      // green
+            if (pct <= 20)       lvl = Color(0xD0, 0x00, 0x00); // red
+            else if (pct <= 50)  lvl = Color(0xD0, 0x9A, 0x00); // yellow
+
+            // ---- body outline ----
+            it.filled_rectangle(x, y, w, h, id(idle_color));
+            it.rectangle(x, y, w, h, Color::WHITE); // white outline
+
+            // cap
+            const int capx = x + w;
+            const int capy = y + (h - caph) / 2;
+            it.filled_rectangle(capx, capy, capw, caph, Color::BLACK);
+            it.rectangle(capx, capy, capw, caph, Color::WHITE);
+
+            // inner black background
+            const int inx = x + pad;
+            const int iny = y + pad;
+            const int inw = w - 2*pad;
+            const int inh = h - 2*pad;
+            it.filled_rectangle(inx, iny, inw, inh, Color::BLACK);
+
+            // level fill
+            int fw = (int)(inw * (pct / 100.0f));
+            if (fw > 0) it.filled_rectangle(inx, iny, fw, inh, lvl);
+            it.rectangle(inx, iny, inw, inh, Color::WHITE);
+
+            // ---- percentage text INSIDE ----
+            char txt[8];
+            snprintf(txt, sizeof(txt), "%.0f%%", pct);
+
+            // center text in body
+            const int tx = x + w / 2;
+            const int ty = y + h / 2;
+            it.printf(tx+1, ty+1, id(font_battery), Color::BLACK, TextAlign::CENTER, "%s", txt);
+            it.printf(tx,   ty,   id(font_battery), Color::WHITE, TextAlign::CENTER, "%s", txt);
+          }
+      - id: listening_page
+        lambda: |-
+          it.fill(id(listening_color));
+          it.image((it.get_width() / 2), (it.get_height() / 2), id(casita_listening), ImageAlign::CENTER);
+          id(draw_timer_timeline).execute();
+      - id: thinking_page
+        lambda: |-
+          it.fill(id(thinking_color));
+          const int W = it.get_width();
+          const int H = it.get_height();
+          it.image(W / 2, H / 2, id(casita_thinking), ImageAlign::CENTER);
+
+          id(ui_draw_voice_text).execute();
+          id(draw_timer_timeline).execute();
+      - id: replying_page
+        lambda: |-
+          it.fill(id(replying_color));
+          const int W = it.get_width();
+          const int H = it.get_height();
+          it.image(W / 2, H / 2, id(casita_replying), ImageAlign::CENTER);
+
+          id(ui_draw_voice_text).execute();
+          id(draw_timer_timeline).execute();
+      - id: timer_finished_page
+        lambda: |-
+          it.fill(id(idle_color));
+          it.image((it.get_width() / 2), (it.get_height() / 2), id(casita_timer_finished), ImageAlign::CENTER);
+      - id: error_page
+        lambda: |-
+          it.fill(id(error_color));
+          it.image((it.get_width() / 2), (it.get_height() / 2), id(casita_error), ImageAlign::CENTER);
+      - id: no_ha_page
+        lambda: |-
+          it.image((it.get_width() / 2), (it.get_height() / 2), id(error_no_ha), ImageAlign::CENTER);
+      - id: no_wifi_page
+        lambda: |-
+          it.image((it.get_width() / 2), (it.get_height() / 2), id(error_no_wifi), ImageAlign::CENTER);
+      - id: initializing_page
+        lambda: |-
+          it.fill(id(loading_color));
+          it.image((it.get_width() / 2), (it.get_height() / 2), id(casita_initializing), ImageAlign::CENTER);
+      - id: muted_page
+        lambda: |-
+          it.fill(Color::BLACK);
+          it.image((it.get_width() / 2), (it.get_height() / 2), id(casita_muted), ImageAlign::CENTER);
+          id(draw_timer_timeline).execute();
+          id(draw_active_timer_widget).execute();
+      - id: now_playing_page
+        lambda: |-
+          it.fill(Color::BLACK);
+          it.image((it.get_width() / 2), (it.get_height() / 2), id(casita_playing), ImageAlign::CENTER);
+          // Optional: show timer progress while playing
+          id(draw_timer_timeline).execute();
+
+      - id: default_clock
+        lambda: |-
+          // ---------- Geometry (recompute only on size change) ----------
+          const int W = it.get_width();
+          const int H = it.get_height();
+          static int prevW = -1, prevH = -1;
+
+          // Treat big square panels (e.g. 480x480, 720x720) as "large"
+          const bool LARGE_SQUARE = (W >= 400 && H >= 400);
+
+          static int cx = 0, cy = 0;
+          static const int margin = 8;
+          static int r_outer = 0, r_sec = 0, r_min = 0, r_hr = 0;
+
+          static int dot_r_sec_small = 2;
+          static int dot_r_sec_big   = 3;
+          static int dot_r_min       = 5;
+          static int dot_r_hr        = 7;
+
+          static int16_t sec_x[60], sec_y[60];
+          static int16_t min_x[60], min_y[60];
+
+          if (W != prevW || H != prevH) {
+            prevW = W; prevH = H;
+
+            cx = W / 2; cy = H / 2;
+            r_outer = (std::min(W, H) / 2) - margin;
+            r_sec   = r_outer;
+            r_min   = r_outer - 14;
+            r_hr    = r_outer - 28;
+
+            // Scale dot sizes with screen size (once per size change)
+            int min_side = std::min(W, H);
+            dot_r_sec_small = std::max(2, std::min(3, min_side / 180));
+            dot_r_sec_big   = dot_r_sec_small + 1;
+            dot_r_min       = dot_r_sec_big + 2;
+            dot_r_hr        = dot_r_min + 2;
+
+            // On large square displays, bump dot sizes a bit (like flip clock)
+            if (LARGE_SQUARE) {
+              int base = min_side / 90;   // grows with size
+              if (base < 3) base = 3;
+              if (base > 6) base = 6;     // cap so it doesn't get silly
+              if (base > dot_r_sec_small) dot_r_sec_small = base;
+              dot_r_sec_big = dot_r_sec_small + 1;
+              dot_r_min     = dot_r_sec_big + 2;
+              dot_r_hr      = dot_r_min + 2;
+            }
+
+            // Precompute positions
+            const float PI = 3.1415926f;
+            for (int i = 0; i < 60; i++) {
+              float angle = (i / 60.0f) * 2.0f * PI - PI/2.0f;
+              sec_x[i] = cx + (int16_t)(r_sec * cosf(angle));
+              sec_y[i] = cy + (int16_t)(r_sec * sinf(angle));
+              min_x[i] = cx + (int16_t)(r_min * cosf(angle));
+              min_y[i] = cy + (int16_t)(r_min * sinf(angle));
+            }
+          }
+
+          // ---------- Colors ----------
+          static const Color clock_yellow(0xff,0xc1,0x07);
+          float rr = id(clock_color_picker).current_values.get_red();
+          float gg = id(clock_color_picker).current_values.get_green();
+          float bb = id(clock_color_picker).current_values.get_blue();
+          if (rr == 0.0f && gg == 0.0f && bb == 0.0f) { rr = gg = bb = 1.0f; } // default white
+          const Color clock_col((uint8_t)(rr * 255.0f), (uint8_t)(gg * 255.0f), (uint8_t)(bb * 255.0f));
+
+          static const Color minute_palette[10] = {
+            Color(0x3b,0x89,0xe3), Color(0x26,0xed,0x3a), Color(0xff,0xc1,0x07),
+            Color(0xff,0x5a,0x36), Color(0xff,0x3b,0x8d), Color(0x9c,0x27,0xb0),
+            Color(0x00,0xbc,0xd4), Color(0x8b,0xc3,0x4a), Color(0xfe,0x6d,0x73),
+            Color(0x60,0x7d,0x8b)
+          };
+
+          // ---------- Time ----------
+          auto now = id(homeassistant_time).now();
+          const int sec    = now.second;
+          const int minute = now.minute;
+          const int hour12 = now.hour % 12;
+
+          // Smooth hour motion anchor
+          static int last_sec = -1;
+          static uint32_t sec_anchor_ms = 0;
+          if (sec != last_sec) { last_sec = sec; sec_anchor_ms = millis(); }
+          float sec_frac = (millis() - sec_anchor_ms) / 1000.0f;
+          if (sec_frac < 0.0f) sec_frac = 0.0f;
+          if (sec_frac > 0.999f) sec_frac = 0.999f;
+
+          // ---------- Background ----------
+          const bool show_wallpaper = id(clock_show_wallpaper).state;
+          if (show_wallpaper) {
+            // Draw wallpaper each tick so nothing sticks.
+            it.image(cx, cy, id(clock_background), ImageAlign::CENTER);
+          } else {
+            // No wallpaper: clear to black once per tick (cheap and avoids ghosts).
+            it.fill(Color::BLACK);
+          }
+
+          // ---------- Thin black band under seconds (only needed over wallpaper) ----------
+          if (show_wallpaper && id(clock_show_dots).state) {
+            int half_thick = dot_r_sec_big + 2;  // enough to cover markers
+            for (int dr = -half_thick; dr <= half_thick; dr++) {
+              it.circle(cx, cy, r_sec + dr, Color::BLACK);
+            }
+          }
+
+          // ---------- Seconds ring ----------
+          if (id(clock_show_dots).state) {
+            // 5-second markers (white)
+            for (int i = 0; i < 60; i += 5) {
+              it.filled_circle(sec_x[i], sec_y[i], dot_r_sec_big, Color::WHITE);
+            }
+            // Progress dots (skip 5s positions)
+            const Color sec_col = minute_palette[minute % 10];
+            for (int i = 0; i <= sec && i < 60; i++) {
+              if (i % 5 == 0) continue;
+              it.filled_circle(sec_x[i], sec_y[i], dot_r_sec_small, sec_col);
+            }
+          }
+
+          // ---------- Minute dot (yellow) ----------
+          it.filled_circle(min_x[minute], min_y[minute], dot_r_min, clock_yellow);
+
+          // ---------- Hour dot (yellow, smooth with minute+second) ----------
+          {
+            const float PI = 3.1415926f;
+            float h_pos = (hour12 + (minute + sec_frac) / 60.0f) / 12.0f;
+            float h_angle = h_pos * 2.0f * PI - PI/2.0f;
+            int hx = cx + (int)(r_hr * cosf(h_angle));
+            int hy = cy + (int)(r_hr * sinf(h_angle));
+            it.filled_circle(hx, hy, dot_r_hr, clock_yellow);
+          }
+
+          // Choose date font (bigger on large displays)
+          auto date_font = id(font_big_date);
+          if (LARGE_SQUARE) {
+            date_font = id(font_big_clock_mono);
+          }
+
+          // ---------- Time text ----------
+          if (id(clock_show_time).state) {
+            int clock_y;
+            if (id(clock_show_date).state) {
+              // Lift a bit more on large panels to give space for bigger date
+              clock_y = cy - (LARGE_SQUARE ? 30 : 24);
+            } else {
+              clock_y = cy;
+            }
+
+            if (id(clock_24h).state) {
+              if (id(clock_show_seconds).state)
+                it.strftime(cx, clock_y, id(font_big_clock_mono), clock_col, TextAlign::CENTER, "%H:%M:%S", now);
+              else
+                it.strftime(cx, clock_y, id(font_big_clock_mono), clock_col, TextAlign::CENTER, "%H:%M", now);
+            } else {
+              if (id(clock_show_seconds).state)
+                it.strftime(cx, clock_y, id(font_big_clock_mono), clock_col, TextAlign::CENTER, "%I:%M:%S%p", now);
+              else
+                it.strftime(cx, clock_y, id(font_big_clock_mono), clock_col, TextAlign::CENTER, "%I:%M%p", now);
+            }
+          }
+
+          // ---------- Date ----------
+          if (id(clock_show_date).state) {
+            if (id(clock_show_time).state) {
+              // Normal layout: time shown, date below it
+              int date_y = cy + (LARGE_SQUARE ? 22 : 14);
+              if (id(clock_24h).state)
+                it.strftime(cx, date_y, date_font, clock_col, TextAlign::CENTER, "%a, %d %b", now);
+              else
+                it.strftime(cx, date_y, date_font, clock_col, TextAlign::CENTER, "%a, %b %d", now);
+            } else {
+              // Time hidden: center the date where time would normally sit
+              int date_y = cy;
+              if (id(clock_24h).state)
+                it.strftime(cx, date_y, date_font, clock_col, TextAlign::CENTER, "%a, %d %b", now);
+              else
+                it.strftime(cx, date_y, date_font, clock_col, TextAlign::CENTER, "%a, %b %d", now);
+            }
+          }
+
+          if (id(show_battery_status).state) {
+            // ---- layout ----
+            const int top = 2;
+            const int w   = 56;     // body width (no cap) - made wider
+            const int h   = 24;     // body height - made taller for 14px font
+            const int capw = 5;     // cap width
+            const int caph = h - 8; // cap height
+            const int pad  = 3;     // inner padding
+
+            // center horizontally
+            const int cx_batt = it.get_width() / 2;
+            const int x  = cx_batt - (w + capw) / 2;
+            const int y  = top;
+
+            // percentage + color
+            float pct = id(battery_percentage).state;
+            if (pct < 0) pct = 0; else if (pct > 100) pct = 100;
+
+            Color lvl = Color(0x00, 0xA8, 0x00);      // green
+            if (pct <= 20)       lvl = Color(0xD0, 0x00, 0x00); // red
+            else if (pct <= 50)  lvl = Color(0xD0, 0x9A, 0x00); // yellow
+
+            // ---- body outline ----
+            it.filled_rectangle(x, y, w, h, id(idle_color));
+            it.rectangle(x, y, w, h, Color::WHITE); // white outline
+
+            // cap
+            const int capx = x + w;
+            const int capy = y + (h - caph) / 2;
+            it.filled_rectangle(capx, capy, capw, caph, Color::BLACK);
+            it.rectangle(capx, capy, capw, caph, Color::WHITE);
+
+            // inner black background
+            const int inx = x + pad;
+            const int iny = y + pad;
+            const int inw = w - 2*pad;
+            const int inh = h - 2*pad;
+            it.filled_rectangle(inx, iny, inw, inh, Color::BLACK);
+
+            // level fill
+            int fw = (int)(inw * (pct / 100.0f));
+            if (fw > 0) it.filled_rectangle(inx, iny, fw, inh, lvl);
+            it.rectangle(inx, iny, inw, inh, Color::WHITE);
+
+            // ---- percentage text INSIDE ----
+            char txt[8];
+            snprintf(txt, sizeof(txt), "%.0f%%", pct);
+
+            // center text in body
+            const int tx = x + w / 2;
+            const int ty = y + h / 2;
+            it.printf(tx+1, ty+1, id(font_battery), Color::BLACK, TextAlign::CENTER, "%s", txt);
+            it.printf(tx,   ty,   id(font_battery), Color::WHITE, TextAlign::CENTER, "%s", txt);
+          }
+
+      - id: clock_7segment
+        lambda: |-
+          // -------- background / optional wallpaper ----------
+          const int W = it.get_width();
+          const int H = it.get_height();
+          it.fill(Color(0, 0, 0));
+          if (id(clock_show_wallpaper).state) {
+            it.image(W / 2, H / 2, id(clock_background), ImageAlign::CENTER);
+          }
+
+          // Only treat big square panels (e.g. 480x480, 720x720) as "large"
+          const bool LARGE_SQUARE = (W >= 400 && H >= 400);
+
+          // Choose fonts dynamically (using existing IDs; id(...) already returns a Font*)
+          auto moon_font = id(font_battery);      // default: small label
+          auto date_font = id(font_big_date);     // default: current date font
+
+          if (LARGE_SQUARE) {
+            // On 480x480 / 720x720 make text bigger
+            moon_font = id(font_big_date);        // moon labels larger
+            date_font = id(font_big_clock_mono);  // date much larger
+          }
+
+          // -------- colors ----------
+          float rr = id(clock_color_picker).current_values.get_red();
+          float gg = id(clock_color_picker).current_values.get_green();
+          float bb = id(clock_color_picker).current_values.get_blue();
+          if (rr == 0.0f && gg == 0.0f && bb == 0.0f) { rr = gg = bb = 1.0f; }
+          const Color FG((uint8_t)(rr * 255.0f), (uint8_t)(gg * 255.0f), (uint8_t)(bb * 255.0f));
+          const Color OFF(50, 50, 50);  // sweet spot for dormant LEDs
+          const Color MOON_LIT(255, 255, 255);
+          const Color MOON_DARK(60, 60, 60);
+
+          // -------- time ----------
+          auto now = id(homeassistant_time).now();
+          int hour = now.hour;
+          if (!id(clock_24h).state) {
+            hour %= 12;
+            if (hour == 0) hour = 12;
+          }
+          int minute = now.minute;
+          int sec = now.second;
+
+          // ======================= MOON (obeys clock_show_dots) =======================
+          if (id(clock_show_dots).state) {
+            // -------- moon phase calculation ----------
+            auto moon_phase_fraction = [&](int y, int m, int d) -> float {
+              int yy = y;
+              int mm = m;
+              if (mm <= 2) { yy -= 1; mm += 12; }
+              int A = yy / 100;
+              int B = 2 - A + (A / 4);
+              long JD = (long)(365.25 * (yy + 4716)) + (long)(30.6001 * (mm + 1)) + d + B - 1524.5;
+              double days_since_new = JD - 2451549.5;
+              double new_moons = days_since_new / 29.53058867;
+              double phase = new_moons - floor(new_moons);
+              return (float)phase; // 0=new, 0.5=full
+            };
+
+            float phase = moon_phase_fraction(now.year, now.month, now.day_of_month);
+            bool waxing = (phase < 0.5f);
+            float illum = waxing ? phase * 2.0f : (1.0f - phase) * 2.0f; // 0-1 illumination
+
+            // -------- moon phase name ----------
+            const char* phase_names[][2] = {
+              {"New", "Moon"},
+              {"Waxing", "Crescent"},
+              {"First", "Quarter"},
+              {"Waxing", "Gibbous"},
+              {"Full", "Moon"},
+              {"Waning", "Gibbous"},
+              {"Last", "Quarter"},
+              {"Waning", "Crescent"}
+            };
+            int phase_index = 0;
+            if      (phase < 0.03f || phase > 0.97f) phase_index = 0; // New
+            else if (phase < 0.22f)                  phase_index = 1; // Waxing Crescent
+            else if (phase < 0.28f)                  phase_index = 2; // First Quarter
+            else if (phase < 0.47f)                  phase_index = 3; // Waxing Gibbous
+            else if (phase < 0.53f)                  phase_index = 4; // Full
+            else if (phase < 0.72f)                  phase_index = 5; // Waning Gibbous
+            else if (phase < 0.78f)                  phase_index = 6; // Last Quarter
+            else                                     phase_index = 7; // Waning Crescent
+
+            const char* phase_left  = phase_names[phase_index][0];
+            const char* phase_right = phase_names[phase_index][1];
+
+            // -------- layout for moon above clock ----------
+            const int moon_diam = std::min(W / 6, H / 6); // smaller moon
+            const int moon_cx = W / 2;
+            const int moon_cy = H / 2 - (H / 4) - (H / 20); // position above digits
+
+            // Draw dark circle
+            it.filled_circle(moon_cx, moon_cy, moon_diam / 2, MOON_DARK);
+
+            // Draw lit portion
+            for (int x = -moon_diam/2; x <= moon_diam/2; x++) {
+              float norm_x = (float)x / (moon_diam / 2);
+              float edge = sqrtf(1.0f - norm_x * norm_x); // y radius at this x
+              float shade_limit = illum * (waxing ? 1.0f : -1.0f);
+              if ((waxing && norm_x <= shade_limit) || (!waxing && norm_x >= shade_limit)) {
+                it.line(moon_cx + x, moon_cy - (int)(edge * (moon_diam / 2)),
+                        moon_cx + x, moon_cy + (int)(edge * (moon_diam / 2)),
+                        MOON_LIT);
+              }
+            }
+
+            // Phase words beside moon
+            int text_gap = moon_diam / 2 + 4;
+            it.printf(moon_cx - text_gap, moon_cy, moon_font, FG,
+                      TextAlign::CENTER_RIGHT, "%s", phase_left);
+            it.printf(moon_cx + text_gap, moon_cy, moon_font, FG,
+                      TextAlign::CENTER_LEFT, "%s", phase_right);
+          }
+          // ===================== END MOON (obeys clock_show_dots) =====================
+
+          // -------- CLOCK LAYOUT ----------
+          const int cx = W / 2;
+          const int cy = H / 2;
+          const int gap       = std::max(6, W / 80);
+          const int colon_gap = std::max(8, W / 60);
+
+          int dw_guess = (W - 3*gap - 2*colon_gap) / 4;
+          int dh_guess = (int)(dw_guess * 1.9f);
+
+          auto total_size_for = [&](int dw, int dh, int &tw, int &th) {
+            tw = 4*dw + 3*gap + 2*colon_gap;
+            th = dh;
+          };
+
+          int tw, th;
+          total_size_for(dw_guess, dh_guess, tw, th);
+
+          const float sx = (float)(W * 9 / 10) / (float)tw;
+          const float sy = (float)(H / 2)       / (float)dh_guess;
+          const float s  = std::min(1.0f, std::min(sx, sy));
+
+          const int DW = std::max(18, (int)(dw_guess * s));
+          const int DH = std::max(30, (int)(dh_guess * s));
+          total_size_for(DW, DH, tw, th);
+
+          const int left = cx - tw/2;
+          const int top  = cy - DH/2;
+
+          // -------- segment blueprint ----------
+          const int T   = std::max(4, std::min(DW / 5, DH / 7));
+          const int CH  = std::max(2, T / 2);
+          const int PAD = std::max(2, T);
+          const int G   = std::max(2, T / 3);
+
+          auto seg_h = [&](int x, int y, int w, Color col) {
+            int body_w = w - 2*CH; if (body_w < 0) body_w = 0;
+            it.filled_rectangle(x + CH, y - T/2, body_w, T, col);
+            it.filled_triangle(x, y, x + CH, y - T/2, x + CH, y + T/2, col);
+            int xr = x + CH + body_w;
+            it.filled_triangle(xr + CH, y, xr, y - T/2, xr, y + T/2, col);
+          };
+          auto seg_v = [&](int x, int y, int h, Color col) {
+            int body_h = h - 2*CH; if (body_h < 0) body_h = 0;
+            it.filled_rectangle(x - T/2, y + CH, T, body_h, col);
+            it.filled_triangle(x, y, x - T/2, y + CH, x + T/2, y + CH, col);
+            int yb = y + CH + body_h;
+            it.filled_triangle(x, yb + CH, x - T/2, yb, x + T/2, yb, col);
+          };
+
+          static const uint8_t DIG[10] = {
+            0x7E,0x30,0x6D,0x79,0x33,0x5B,0x5F,0x70,0x7F,0x7B
+          };
+
+          struct Geo { int x_left,x_right,y_a,y_g,y_d,Lh,Lv_top,Lv_bot; } G0;
+          {
+            const int L = left + PAD;
+            const int Rr = left + DW - PAD;
+            const int Tt = top  + PAD;
+            const int Bb = top  + DH - PAD;
+            G0.x_left  = L + T/2;
+            G0.x_right = Rr - T/2;
+            G0.y_a = Tt + T/2;
+            G0.y_g = (Tt + Bb) / 2;
+            G0.y_d = Bb - T/2;
+            G0.Lh     = (G0.x_right - G0.x_left);
+            G0.Lv_top = (G0.y_g - G0.y_a);
+            G0.Lv_bot = (G0.y_d - G0.y_g);
+          }
+
+          auto draw_digit = [&](int x, int y, int val, Color on_col, bool draw_off) {
+            const uint8_t mask = DIG[val];
+            const int dx = x - left;
+            const int dy = y - top;
+
+            const int x_left  = G0.x_left  + dx;
+            const int x_right = G0.x_right + dx;
+            const int y_a     = G0.y_a     + dy;
+            const int y_g     = G0.y_g     + dy;
+            const int y_d     = G0.y_d     + dy;
+
+            const int a_x = x_left + G;     const int a_w = G0.Lh - 2*G;
+            const int g_x = x_left + G;     const int g_w = G0.Lh - 2*G;
+            const int d_x = x_left + G;     const int d_w = G0.Lh - 2*G;
+
+            const int f_y = y_a + G;        const int f_h = G0.Lv_top - 2*G;
+            const int b_y = y_a + G;        const int b_h = G0.Lv_top - 2*G;
+            const int e_y = y_g + G;        const int e_h = G0.Lv_bot - 2*G;
+            const int c_y = y_g + G;        const int c_h = G0.Lv_bot - 2*G;
+
+            auto draw_seg = [&](bool on, auto fn, auto... args) {
+              if (on) { fn(args..., on_col); }
+              else if (draw_off) { fn(args..., OFF); }
+            };
+
+            draw_seg(mask & 0x40, seg_h, a_x, y_a, a_w);
+            draw_seg(mask & 0x20, seg_v, x_right, b_y, b_h);
+            draw_seg(mask & 0x10, seg_v, x_right, c_y, c_h);
+            draw_seg(mask & 0x08, seg_h, d_x, y_d, d_w);
+            draw_seg(mask & 0x04, seg_v, x_left,  e_y, e_h);
+            draw_seg(mask & 0x02, seg_v, x_left,  f_y, f_h);
+            draw_seg(mask & 0x01, seg_h, g_x, y_g, g_w);
+          };
+
+          // digit positions
+          int x1 = left;
+          int x2 = x1 + DW + gap;
+          int colon_x_left = x2 + DW;
+          int x3 = colon_x_left + 2*colon_gap;
+          int x4 = x3 + DW + gap;
+
+          // -------- render digits / colon / AM-PM (guarded by Clock Show Time) --------
+          if (id(clock_show_time).state) {
+            // render digits
+            int h1 = (hour / 10) % 10;
+            int h2 = hour % 10;
+            int m1 = (minute / 10) % 10;
+            int m2 = minute % 10;
+            draw_digit(x1, top, h1, FG, true);
+            draw_digit(x2, top, h2, FG, true);
+            draw_digit(x3, top, m1, FG, true);
+            draw_digit(x4, top, m2, FG, true);
+
+            // colon
+            int colon_center_x = (x2 + DW + x3) / 2;
+            int colon_center_y = top + DH / 2;
+            bool blink = id(clock_show_seconds).state && ((sec % 2) == 0);
+            int colon_r = std::max(2, DW / 14);
+            int colon_y_offset = DH / 6;
+            if (!blink) {
+              it.filled_circle(colon_center_x, colon_center_y - colon_y_offset, colon_r, FG);
+              it.filled_circle(colon_center_x, colon_center_y + colon_y_offset, colon_r, FG);
+            }
+
+            // AM/PM
+            if (!id(clock_24h).state) {
+              const char *ampm = (now.hour >= 12) ? "PM" : "AM";
+              int ampm_x = x4 + DW - 4;
+              int ampm_y = top + DH / 2 - 3;
+              Color dim_fg(
+                (uint8_t)(FG.r * 0.7f),
+                (uint8_t)(FG.g * 0.7f),
+                (uint8_t)(FG.b * 0.7f)
+              );
+              it.printf(ampm_x, ampm_y, id(font_battery), dim_fg, TextAlign::CENTER_LEFT, "%s", ampm);
+            }
+          }
+
+          // -------- date (adapts to time shown/hidden) --------
+          if (id(clock_show_date).state) {
+            if (id(clock_show_time).state) {
+              // Normal layout: time shown, date below it
+              const int date_pad     = std::max(10, H / 20);
+              const int extra_offset = std::max(6, H / 32);
+              int date_y = top + DH + date_pad + extra_offset;
+              if (id(clock_24h).state) {
+                it.strftime(cx, date_y, date_font, FG, TextAlign::CENTER, "%a, %d %b", now);
+              } else {
+                it.strftime(cx, date_y, date_font, FG, TextAlign::CENTER, "%a, %b %d", now);
+              }
+            } else {
+              // Time hidden: center the date where the digits would be
+              int date_y = cy;
+              if (id(clock_24h).state) {
+                it.strftime(cx, date_y, date_font, FG, TextAlign::CENTER, "%a, %d %b", now);
+              } else {
+                it.strftime(cx, date_y, date_font, FG, TextAlign::CENTER, "%a, %b %d", now);
+              }
+            }
+          }
+
+          if (id(show_battery_status).state) {
+            // ---- layout ----
+            const int top = 2;
+            const int w   = 56;     // body width (no cap) - made wider
+            const int h   = 24;     // body height - made taller for 14px font
+            const int capw = 5;     // cap width
+            const int caph = h - 8; // cap height
+            const int pad  = 3;     // inner padding
+
+            // center horizontally
+            const int cx_batt = it.get_width() / 2;
+            const int x  = cx_batt - (w + capw) / 2;
+            const int y  = top;
+
+            // percentage + color
+            float pct = id(battery_percentage).state;
+            if (pct < 0) pct = 0; else if (pct > 100) pct = 100;
+
+            Color lvl = Color(0x00, 0xA8, 0x00);      // green
+            if (pct <= 20)       lvl = Color(0xD0, 0x00, 0x00); // red
+            else if (pct <= 50)  lvl = Color(0xD0, 0x9A, 0x00); // yellow
+
+            // ---- body outline ----
+            it.filled_rectangle(x, y, w, h, id(idle_color));
+            it.rectangle(x, y, w, h, Color::WHITE); // white outline
+
+            // cap
+            const int capx = x + w;
+            const int capy = y + (h - caph) / 2;
+            it.filled_rectangle(capx, capy, capw, caph, Color::BLACK);
+            it.rectangle(capx, capy, capw, caph, Color::WHITE);
+
+            // inner black background
+            const int inx = x + pad;
+            const int iny = y + pad;
+            const int inw = w - 2*pad;
+            const int inh = h - 2*pad;
+            it.filled_rectangle(inx, iny, inw, inh, Color::BLACK);
+
+            // level fill
+            int fw = (int)(inw * (pct / 100.0f));
+            if (fw > 0) it.filled_rectangle(inx, iny, fw, inh, lvl);
+            it.rectangle(inx, iny, inw, inh, Color::WHITE);
+
+            // ---- percentage text INSIDE ----
+            char txt[8];
+            snprintf(txt, sizeof(txt), "%.0f%%", pct);
+
+            // center text in body
+            const int tx = x + w / 2;
+            const int ty = y + h / 2;
+            it.printf(tx+1, ty+1, id(font_battery), Color::BLACK, TextAlign::CENTER, "%s", txt);
+            it.printf(tx,   ty,   id(font_battery), Color::WHITE, TextAlign::CENTER, "%s", txt);
+          }
+
+      - id: empty_clock
+        lambda: |-
+          it.fill(Color::BLACK);
+          const int W = it.get_width();
+          const int H = it.get_height();
+          // MUST be temp_fullscreen here:
+          it.image(W / 2, H / 2, id(temp_fullscreen), ImageAlign::CENTER);
+
+      - id: analog_clock
+        lambda: |-
+          // ----- basics & background -----
+          const int W  = it.get_width();
+          const int H  = it.get_height();
+          const int CX = W / 2;
+          const int CY = H / 2;
+
+          if (id(clock_show_wallpaper).state) {
+            it.image(CX, CY, id(clock_background), ImageAlign::CENTER);
+          } else {
+            it.fill(Color::BLACK);
+          }
+
+          // ----- color & fonts -----
+          float rr = id(clock_color_picker).current_values.get_red();
+          float gg = id(clock_color_picker).current_values.get_green();
+          float bb = id(clock_color_picker).current_values.get_blue();
+          if (rr == 0.0f && gg == 0.0f && bb == 0.0f) { rr = gg = bb = 1.0f; }
+          const Color FG((uint8_t)(rr * 255.0f), (uint8_t)(gg * 255.0f), (uint8_t)(bb * 255.0f));
+          const Color FACE_ACC(60,60,60);
+          const Color RING(180,180,180);
+          const Color SEC_COL = id(seconds_dot_color);
+
+          const int MINWH = std::min(W, H);
+          const bool TINY  = (MINWH <= 160);
+          const bool LARGE = (MINWH >= 400);
+
+          // Bigger date font on large displays
+          auto &date_font = LARGE ? id(font_big_clock_mono) : id(font_big_date);
+
+          // ----- geometry -----
+          const int M       = std::max(8, MINWH / 18);
+          const int R       = MINWH / 2 - M;
+          const int R_TICKS = R - std::max(4, R / 18);
+
+          // Number font: bigger on large displays
+          auto &num_font = TINY
+                           ? id(font_battery)
+                           : (LARGE ? id(font_big_clock_mono) : id(font_big_date));
+
+          const bool DRAW_NUMS = id(clock_show_time).state && !TINY;
+
+          const int R_NUMBERS  = R - std::max(16, R / 6);
+          const int NUM_PAD    = TINY ? std::max(2, R / 28) : std::max(4, R / 22);
+
+          // Ring thickness: thicker on large displays
+          const int RING_THICK = LARGE ? std::max(2, R / 60) : 1;
+
+          // ----- LUT -----
+          static bool LUT_INIT = false;
+          static int16_t ux[60], uy[60];
+          if (!LUT_INIT) {
+            const float TWO_PI = 6.2831853f;
+            for (int i = 0; i < 60; i++) {
+              float a = (i / 60.0f) * TWO_PI - (3.1415926f / 2.0f);
+              ux[i] = (int16_t) lroundf(cosf(a) * 10000.0f);
+              uy[i] = (int16_t) lroundf(sinf(a) * 10000.0f);
+            }
+            LUT_INIT = true;
+          }
+          auto rx = [&](int r, int i){ return CX + (int)(( (long)r * ux[i]) / 10000L); };
+          auto ry = [&](int r, int i){ return CY + (int)(( (long)r * uy[i]) / 10000L); };
+
+          // ----- time (smooth sweep) -----
+          auto now = id(homeassistant_time).now();
+          int s = now.second;
+          int m = now.minute;
+          int h = now.hour % 12;
+
+          static int last_sec = -1;
+          static uint32_t sec_anchor_ms = 0;
+          if (s != last_sec) { last_sec = s; sec_anchor_ms = millis(); }
+          float sec_frac = (millis() - sec_anchor_ms) / 1000.0f;
+          if (sec_frac < 0.0f) sec_frac = 0.0f;
+          if (sec_frac > 0.999f) sec_frac = 0.999f;
+
+          float s_pos = (s + sec_frac) / 60.0f;
+          float m_pos = (m + (id(clock_show_seconds).state ? s_pos : 0.0f)) / 60.0f;
+          float h_pos = (h + m_pos) / 12.0f;
+
+          auto polar = [&](float pos, int r, int &ox, int &oy) {
+            const float TWO_PI = 6.2831853f;
+            float a = pos * TWO_PI - (3.1415926f / 2.0f);
+            ox = CX + (int) lroundf(r * cosf(a));
+            oy = CY + (int) lroundf(r * sinf(a));
+          };
+
+          // ----- hand sizes -----
+          const int L_H = (int)(R * 0.52f);
+          const int L_M = (int)(R * 0.72f);
+          const int L_S = (int)(R * 0.82f);
+          const int W_H = std::max(TINY ? 2 : 3, R / 16);
+          const int W_M = std::max(TINY ? 1 : 2, R / 22);
+          const int W_S = std::max(1, R / 50);
+
+          auto thick_hand = [&](int x0, int y0, int x1, int y1, int w, Color col) {
+            if (w <= 1) { it.line(x0, y0, x1, y1, col); return; }
+            float dx = (float)(x1 - x0), dy = (float)(y1 - y0);
+            float L = sqrtf(dx*dx + dy*dy);
+            if (L < 1.0f) { it.line(x0, y0, x1, y1, col); return; }
+            float px = -dy / L, py = dx / L;
+            int half = w / 2;
+            for (int t = -half; t <= half; ++t) {
+              int ox = (int) lroundf(px * t);
+              int oy = (int) lroundf(py * t);
+              it.line(x0 + ox, y0 + oy, x1 + ox, y1 + oy, col);
+            }
+          };
+
+          // ----- dial (if dots shown) -----
+          if (id(clock_show_dots).state) {
+            // Thicker outer / inner rings on large displays
+            for (int dr = 0; dr < RING_THICK; ++dr) {
+              it.circle(CX, CY, R + dr,   RING);
+              it.circle(CX, CY, (R - 2) - dr, FACE_ACC);
+            }
+
+            for (int i = 0; i < 60; i++) {
+              bool major    = (i % 5  == 0);
+              bool quadrant = (i % 15 == 0);
+              int  len_base = quadrant ? std::max(10, R / 6)
+                                       : (major ? std::max(8, R / 10)
+                                                : std::max(4, R / 18));
+              Color col = major ? FG : FACE_ACC;
+
+              int r_outer = R_TICKS;
+              int r_inner = R_TICKS - len_base;
+              if (quadrant && DRAW_NUMS) {
+                r_inner = std::max(r_inner, R_NUMBERS + NUM_PAD);
+              }
+
+              int x1 = rx(r_outer, i), y1 = ry(r_outer, i);
+              int x2 = rx(r_inner, i), y2 = ry(r_inner, i);
+
+              if (quadrant) {
+                // Quadrant ticks thicker, especially on large
+                it.line(x1, y1, x2, y2, col);
+                it.line(x1+1, y1, x2+1, y2, col);
+                if (LARGE) {
+                  it.line(x1-1, y1, x2-1, y2, col);
+                }
+              } else if (major && LARGE) {
+                // Major ticks a bit thicker on large
+                it.line(x1,   y1,   x2,   y2,   col);
+                it.line(x1+1, y1,   x2+1, y2,   col);
+              } else {
+                it.line(x1, y1, x2, y2, col);
+              }
+            }
+
+            if (DRAW_NUMS) {
+              auto print_center = [&](int i, const char* txt) {
+                int tx = rx(R_NUMBERS, i);
+                int ty = ry(R_NUMBERS, i);
+                it.printf(tx, ty, num_font, FG, TextAlign::CENTER, "%s", txt);
+              };
+              print_center(0,  "12");
+              print_center(15, "3");
+              print_center(30, "6");
+              print_center(45, "9");
+            }
+          }
+
+          // ----- hands -----
+          { int hx, hy; polar(h_pos, L_H, hx, hy); thick_hand(CX, CY, hx, hy, W_H, FG); }
+          { int mx, my; polar(m_pos, L_M, mx, my); thick_hand(CX, CY, mx, my, W_M, FG); }
+          if (id(clock_show_seconds).state) {
+            int sx, sy; polar(s_pos, L_S, sx, sy);
+            it.line(CX, CY, sx, sy, SEC_COL);
+            int bwx, bwy; polar(fmodf(s_pos + 0.5f, 1.0f), (int)(R * 0.18f), bwx, bwy);
+            it.line(CX, CY, bwx, bwy, SEC_COL);
+          }
+          it.filled_circle(CX, CY, std::max(3, R / 20), FG);
+
+          // ----- date -----
+          if (id(clock_show_date).state) {
+            const int date_y = CY + (int)(R * 0.55f);
+            if (id(clock_24h).state)
+              it.strftime(CX, date_y, date_font, FG, TextAlign::TOP_CENTER, "%a, %d %b", now);
+            else
+              it.strftime(CX, date_y, date_font, FG, TextAlign::TOP_CENTER, "%a, %b %d", now);
+          }
+
+          // Battery chip
+          if (id(show_battery_status).state) {
+            const int top = 2;
+            const int w   = 56;
+            const int h   = 24;
+            const int capw = 5;
+            const int caph = h - 8;
+            const int pad  = 3;
+
+            const int cx = it.get_width() / 2;
+            const int x  = cx - (w + capw) / 2;
+            const int y  = top;
+
+            float pct = id(battery_percentage).state;
+            if (pct < 0) pct = 0; else if (pct > 100) pct = 100;
+
+            Color lvl = Color(0x00, 0xA8, 0x00);
+            if (pct <= 20)       lvl = Color(0xD0, 0x00, 0x00);
+            else if (pct <= 50)  lvl = Color(0xD0, 0x9A, 0x00);
+
+            it.filled_rectangle(x, y, w, h, Color::BLACK);
+            it.rectangle(x, y, w, h, Color::WHITE);
+
+            const int capx = x + w;
+            const int capy = y + (h - caph) / 2;
+            it.filled_rectangle(capx, capy, capw, caph, Color::BLACK);
+            it.rectangle(capx, capy, capw, caph, Color::WHITE);
+
+            const int inx = x + pad;
+            const int iny = y + pad;
+            const int inw = w - 2*pad;
+            const int inh = h - 2*pad;
+            it.filled_rectangle(inx, iny, inw, inh, Color::BLACK);
+
+            int fw = (int)(inw * (pct / 100.0f));
+            if (fw > 0) it.filled_rectangle(inx, iny, fw, inh, lvl);
+            it.rectangle(x, y, w, h, Color::WHITE);
+
+            char txt[8];
+            snprintf(txt, sizeof(txt), "%.0f%%", pct);
+            it.printf(x + w/2 + 1, y + h/2 + 1, id(font_battery), Color::BLACK, TextAlign::CENTER, "%s", txt);
+            it.printf(x + w/2,     y + h/2,     id(font_battery), Color::WHITE, TextAlign::CENTER, "%s", txt);
+          }
+
+      - id: xiaozhi_clock
+        lambda: |-
+          const int W  = it.get_width();
+          const int H  = it.get_height();
+          const int CX = W / 2;
+
+          // ---- background / wallpaper ----
+          if (id(clock_show_wallpaper).state) {
+            it.image(W / 2, H / 2, id(clock_background), ImageAlign::CENTER);
+          } else {
+            it.fill(Color::BLACK);
+          }
+
+          // ---- fixed colors (per mission) ----
+          const Color YELLOW(0xff, 0xc1, 0x07);
+          const Color WHITE = Color::WHITE;
+          const Color BLUE(0x3b, 0x89, 0xe3);
+
+          // ---- screen class (dynamic sizing) ----
+          const int MINWH = std::min(W, H);
+          const bool TINY  = (MINWH <= 160);
+          const bool SMALL = (MINWH <= 240);
+          const bool LARGE = (MINWH >= 400);
+
+          // Wind/feels handling on small displays
+          const bool WIND_TWO_LINES = SMALL;   // <=240x240 -> split into 2 lines
+
+          // ---- fonts ----
+          auto date_font = (TINY ? id(font_battery) : id(font_big_date));
+
+          // TEMP must be largest available (per mission)
+          auto temp_font = id(font_big_clock_mono);
+
+          // Wind line font: smaller on small screens
+          auto wind_font = WIND_TWO_LINES ? id(font_battery)
+                                          : (TINY ? id(font_battery) : id(font_big_date));
+
+          // ---- optional battery chip (top center) ----
+          int top_reserved = 0;
+          if (id(show_battery_status).state) {
+            const int top = 2;
+            const int bw  = 56;
+            const int bh  = 24;
+            const int capw = 5;
+            const int caph = bh - 8;
+            const int pad  = 3;
+
+            const int bx = (W / 2) - (bw + capw) / 2;
+            const int by = top;
+
+            float pct = id(battery_percentage).state;
+            if (pct < 0) pct = 0; else if (pct > 100) pct = 100;
+
+            Color lvl = Color(0x00, 0xA8, 0x00);
+            if (pct <= 20)       lvl = Color(0xD0, 0x00, 0x00);
+            else if (pct <= 50)  lvl = Color(0xD0, 0x9A, 0x00);
+
+            it.filled_rectangle(bx, by, bw, bh, Color::BLACK);
+            it.rectangle(bx, by, bw, bh, Color::WHITE);
+
+            const int capx = bx + bw;
+            const int capy = by + (bh - caph) / 2;
+            it.filled_rectangle(capx, capy, capw, caph, Color::BLACK);
+            it.rectangle(capx, capy, capw, caph, Color::WHITE);
+
+            const int inx = bx + pad;
+            const int iny = by + pad;
+            const int inw = bw - 2*pad;
+            const int inh = bh - 2*pad;
+            it.filled_rectangle(inx, iny, inw, inh, Color::BLACK);
+
+            int fw = (int)(inw * (pct / 100.0f));
+            if (fw > 0) it.filled_rectangle(inx, iny, fw, inh, lvl);
+            it.rectangle(inx, iny, inw, inh, Color::WHITE);
+
+            char txt[8];
+            snprintf(txt, sizeof(txt), "%.0f%%", pct);
+            it.printf(bx + bw/2 + 1, by + bh/2 + 1, id(font_battery), Color::BLACK, TextAlign::CENTER, "%s", txt);
+            it.printf(bx + bw/2,     by + bh/2,     id(font_battery), Color::WHITE, TextAlign::CENTER, "%s", txt);
+
+            top_reserved = by + bh + (TINY ? 6 : 10);
+          }
+
+          // ---- time ----
+          auto now = id(homeassistant_time).now();
+          int hour = now.hour;
+          if (!id(clock_24h).state) { hour %= 12; if (hour == 0) hour = 12; }
+          const int minute = now.minute;
+          const int sec    = now.second;
+
+          // ============================================================================
+          // Format values first
+          // ============================================================================
+
+          // Date: "16. february"
+          char datebuf[32];
+          {
+            static const char* MONTHS[12] = {
+              "january","february","march","april","may","june",
+              "july","august","september","october","november","december"
+            };
+            const int mm = now.month;
+            const char* mname = (mm >= 1 && mm <= 12) ? MONTHS[mm - 1] : "month";
+            snprintf(datebuf, sizeof(datebuf), "%d. %s", now.day_of_month, mname);
+          }
+
+          // Temperature (big): "-3C" (no °)
+          float temp_raw = NAN;
+          bool  temp_is_f = false;
+          char  tempbuf[16] = "N/A";
+          {
+            std::string tu = id(ha_weather_temperature_unit).has_state() ? id(ha_weather_temperature_unit).state : "°C";
+            temp_is_f = (tu.find("F") != std::string::npos);
+
+            if (id(ha_weather_temperature).has_state()) {
+              temp_raw = id(ha_weather_temperature).state;
+              const char uc = temp_is_f ? 'F' : 'C';
+              if (fabsf(temp_raw - roundf(temp_raw)) < 0.05f) snprintf(tempbuf, sizeof(tempbuf), "%.0f%c", temp_raw, uc);
+              else                                            snprintf(tempbuf, sizeof(tempbuf), "%.1f%c", temp_raw, uc);
+            }
+          }
+
+          // Wind + feels like (wind chill)
+          float wind_kmh = NAN;
+          char windbuf[28]  = "Wind N/A";
+          char feelsbuf[28] = "Feels N/A";
+          {
+            std::string wu = id(ha_weather_wind_speed_unit).has_state() ? id(ha_weather_wind_speed_unit).state : "";
+
+            if (id(ha_weather_wind_speed).has_state()) {
+              float w = id(ha_weather_wind_speed).state;
+
+              if (wu.find("m/s") != std::string::npos || wu.find("mps") != std::string::npos) {
+                wind_kmh = w * 3.6f;
+              } else if (wu.find("mph") != std::string::npos) {
+                wind_kmh = w * 1.609344f;
+              } else {
+                wind_kmh = w;  // assume km/h
+              }
+
+              if (wu.empty()) snprintf(windbuf, sizeof(windbuf), "Wind %.1f km/h", wind_kmh);
+              else            snprintf(windbuf, sizeof(windbuf), "Wind %.1f %s", w, wu.c_str());
+            }
+
+            if (!isnan(temp_raw) && !isnan(wind_kmh)) {
+              float tC = temp_is_f ? ((temp_raw - 32.0f) * (5.0f/9.0f)) : temp_raw;
+
+              float feelsC = tC;
+              if (tC <= 10.0f && wind_kmh > 4.8f) {
+                float v16 = powf(wind_kmh, 0.16f);
+                feelsC = 13.12f + 0.6215f * tC - 11.37f * v16 + 0.3965f * tC * v16;
+              }
+
+              float feels_out = temp_is_f ? (feelsC * (9.0f/5.0f) + 32.0f) : feelsC;
+              const char uc = temp_is_f ? 'F' : 'C';
+
+              if (fabsf(feels_out - roundf(feels_out)) < 0.05f) snprintf(feelsbuf, sizeof(feelsbuf), "Feels %.0f%c", feels_out, uc);
+              else                                              snprintf(feelsbuf, sizeof(feelsbuf), "Feels %.1f%c", feels_out, uc);
+            }
+          }
+
+          // ============================================================================
+          // Dynamic vertical centering (then lift the whole stack up a bit)
+          // ============================================================================
+
+          const int digit_area_h = TINY ? std::max(46, H / 3) : std::max(60, H / 3);
+          const int date_h       = TINY ? 14 : (SMALL ? 22 : 26);
+
+          // TEMP is always font_big_clock_mono -> reserve more height
+          const int temp_h       = TINY ? 40 : (SMALL ? 48 : (LARGE ? 60 : 54));
+
+          // Wind height: 2 lines on <=240
+          const int wind_line_h  = (WIND_TWO_LINES ? (TINY ? 14 : 16) : (TINY ? 14 : (SMALL ? 22 : 26)));
+          const int wind_h       = WIND_TWO_LINES ? (wind_line_h * 2 + (TINY ? 2 : 3)) : wind_line_h;
+
+          // tighter gap so date sits closer to digits
+          const int gap_after_digits = TINY ? 2 : (SMALL ? 3 : 4);
+          const int gap_after_date   = TINY ? 3 : (SMALL ? 4 : 5);
+          const int gap_after_temp   = TINY ? 6 : (SMALL ? 8 : 10);
+
+          const int stack_h =
+            digit_area_h +
+            gap_after_digits +
+            date_h +
+            gap_after_date +
+            temp_h +
+            gap_after_temp +
+            wind_h;
+
+          const int avail_top = top_reserved;
+          const int avail_h   = H - avail_top;
+
+          int y_cursor = avail_top + std::max(0, (avail_h - stack_h) / 2);
+
+          // lift whole stack up a little (but never above avail_top)
+          const int LIFT = TINY ? 2 : (SMALL ? 4 : (LARGE ? 10 : 6));
+          y_cursor -= LIFT;
+          if (y_cursor < avail_top) y_cursor = avail_top;
+
+          // ============================================================================
+          // 7-segment clock — YELLOW, NO "OFF" segments
+          // ============================================================================
+
+          const int digit_top = y_cursor;
+          const int digit_cy  = digit_top + digit_area_h / 2;
+
+          const int gap       = std::max(6, W / 80);
+          const int colon_gap = std::max(8, W / 60);
+
+          int dw_guess = (W - 3*gap - 2*colon_gap) / 4;
+          int dh_guess = (int)(dw_guess * 1.9f);
+
+          auto total_size_for = [&](int dw, int dh, int &tw, int &th) {
+            tw = 4*dw + 3*gap + 2*colon_gap;
+            th = dh;
+          };
+
+          int tw, th;
+          total_size_for(dw_guess, dh_guess, tw, th);
+
+          float sx = (float)(W * 92 / 100) / (float)tw;
+          float sy = (float)(digit_area_h * 92 / 100) / (float)dh_guess;
+          float s  = std::min(1.35f, std::min(sx, sy));
+
+          const int DW = std::max(18, (int)(dw_guess * s));
+          const int DH = std::max(30, (int)(dh_guess * s));
+          total_size_for(DW, DH, tw, th);
+
+          const int left = CX - tw/2;
+          const int top  = digit_cy - DH/2;
+
+          const int T   = std::max(4, std::min(DW / 5, DH / 7));
+          const int CH  = std::max(2, T / 2);
+          const int PAD = std::max(2, T);
+          const int G   = std::max(2, T / 3);
+
+          auto seg_h = [&](int x, int y, int w, Color col) {
+            int body_w = w - 2*CH; if (body_w < 0) body_w = 0;
+            it.filled_rectangle(x + CH, y - T/2, body_w, T, col);
+            it.filled_triangle(x, y, x + CH, y - T/2, x + CH, y + T/2, col);
+            int xr = x + CH + body_w;
+            it.filled_triangle(xr + CH, y, xr, y - T/2, xr, y + T/2, col);
+          };
+          auto seg_v = [&](int x, int y, int h, Color col) {
+            int body_h = h - 2*CH; if (body_h < 0) body_h = 0;
+            it.filled_rectangle(x - T/2, y + CH, T, body_h, col);
+            it.filled_triangle(x, y, x - T/2, y + CH, x + T/2, y + CH, col);
+            int yb = y + CH + body_h;
+            it.filled_triangle(x, yb + CH, x - T/2, yb, x + T/2, yb, col);
+          };
+
+          static const uint8_t DIG[10] = {0x7E,0x30,0x6D,0x79,0x33,0x5B,0x5F,0x70,0x7F,0x7B};
+
+          struct Geo { int x_left,x_right,y_a,y_g,y_d,Lh,Lv_top,Lv_bot; } G0;
+          {
+            const int L = left + PAD;
+            const int Rr = left + DW - PAD;
+            const int Tt = top  + PAD;
+            const int Bb = top  + DH - PAD;
+            G0.x_left  = L + T/2;
+            G0.x_right = Rr - T/2;
+            G0.y_a = Tt + T/2;
+            G0.y_g = (Tt + Bb) / 2;
+            G0.y_d = Bb - T/2;
+            G0.Lh     = (G0.x_right - G0.x_left);
+            G0.Lv_top = (G0.y_g - G0.y_a);
+            G0.Lv_bot = (G0.y_d - G0.y_g);
+          }
+
+          auto draw_digit = [&](int x, int y, int val, Color on_col) {
+            const uint8_t mask = DIG[val];
+            const int dx = x - left;
+            const int dy = y - top;
+
+            const int x_left  = G0.x_left  + dx;
+            const int x_right = G0.x_right + dx;
+            const int y_a     = G0.y_a     + dy;
+            const int y_g     = G0.y_g     + dy;
+            const int y_d     = G0.y_d     + dy;
+
+            const int a_x = x_left + G;     const int a_w = G0.Lh - 2*G;
+            const int g_x = x_left + G;     const int g_w = G0.Lh - 2*G;
+            const int d_x = x_left + G;     const int d_w = G0.Lh - 2*G;
+
+            const int f_y = y_a + G;        const int f_h = G0.Lv_top - 2*G;
+            const int b_y = y_a + G;        const int b_h = G0.Lv_top - 2*G;
+            const int e_y = y_g + G;        const int e_h = G0.Lv_bot - 2*G;
+            const int c_y = y_g + G;        const int c_h = G0.Lv_bot - 2*G;
+
+            if (mask & 0x40) seg_h(a_x, y_a, a_w, on_col);
+            if (mask & 0x20) seg_v(x_right, b_y, b_h, on_col);
+            if (mask & 0x10) seg_v(x_right, c_y, c_h, on_col);
+            if (mask & 0x08) seg_h(d_x, y_d, d_w, on_col);
+            if (mask & 0x04) seg_v(x_left,  e_y, e_h, on_col);
+            if (mask & 0x02) seg_v(x_left,  f_y, f_h, on_col);
+            if (mask & 0x01) seg_h(g_x, y_g, g_w, on_col);
+          };
+
+          int x1 = left;
+          int x2 = x1 + DW + gap;
+          int x3 = (x2 + DW) + 2*colon_gap;
+          int x4 = x3 + DW + gap;
+
+          int h1 = (hour / 10) % 10;
+          int h2 = hour % 10;
+          int m1 = (minute / 10) % 10;
+          int m2 = minute % 10;
+
+          draw_digit(x1, top, h1, YELLOW);
+          draw_digit(x2, top, h2, YELLOW);
+          draw_digit(x3, top, m1, YELLOW);
+          draw_digit(x4, top, m2, YELLOW);
+
+          {
+            bool blink_off = id(clock_show_seconds).state && ((sec % 2) == 0);
+            int colon_center_x = (x2 + DW + x3) / 2;
+            int colon_center_y = top + DH / 2;
+            int colon_r = std::max(2, DW / 14);
+            int colon_y_offset = DH / 6;
+            if (!blink_off) {
+              it.filled_circle(colon_center_x, colon_center_y - colon_y_offset, colon_r, YELLOW);
+              it.filled_circle(colon_center_x, colon_center_y + colon_y_offset, colon_r, YELLOW);
+            }
+          }
+
+          // move cursor to end of digits (use actual DH so date is truly "close")
+          y_cursor = top + DH + gap_after_digits;
+
+          // Date (closer to digits)
+          it.printf(CX, y_cursor, date_font, WHITE, TextAlign::TOP_CENTER, "%s", datebuf);
+          y_cursor += date_h + gap_after_date;
+
+          // Temp (largest font)
+          it.printf(CX, y_cursor, temp_font, YELLOW, TextAlign::TOP_CENTER, "%s", tempbuf);
+          y_cursor += temp_h + gap_after_temp;
+
+          // Wind + Feels
+          if (WIND_TWO_LINES) {
+            it.printf(CX, y_cursor, wind_font, BLUE, TextAlign::TOP_CENTER, "%s", windbuf);
+            y_cursor += wind_line_h + (TINY ? 2 : 3);
+            it.printf(CX, y_cursor, wind_font, BLUE, TextAlign::TOP_CENTER, "%s", feelsbuf);
+          } else {
+            char line[96];
+            snprintf(line, sizeof(line), "%s  %s", windbuf, feelsbuf);
+            it.printf(CX, y_cursor, wind_font, BLUE, TextAlign::TOP_CENTER, "%s", line);
+          }

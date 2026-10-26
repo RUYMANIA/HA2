@@ -1,0 +1,386 @@
+{
+  "kind": "sanitized-documentary-snapshot",
+  "upstream_companion_revision": "7dc174cedf2cf47b16083979ff9b5b4bfc8fa8a9",
+  "plugin_upstream_revision": "ba30cb0cf86c52bdb5cde98974bc062e97966529",
+  "entries": [
+    {
+      "origin": "/path/to/user/.hermes/projects/hermes-homeassistant/provider/hermes_ha_provider/__init__.py",
+      "copy": "companion/provider/hermes_ha_provider/__init__.py",
+      "source_sha256": "96ff6511adb9d78adb083d2bb36747189599148a40a39cc1114bc82c8a4e44aa",
+      "copy_sha256": "96ff6511adb9d78adb083d2bb36747189599148a40a39cc1114bc82c8a4e44aa",
+      "changes": {}
+    },
+    {
+      "origin": "/path/to/user/.hermes/projects/hermes-homeassistant/provider/hermes_ha_provider/app.py",
+      "copy": "companion/provider/hermes_ha_provider/app.py",
+      "source_sha256": "7f664e8f4279aefb654cafe7f482a6846119c8a09d00cac91d4e2c02211d2a44",
+      "copy_sha256": "7f664e8f4279aefb654cafe7f482a6846119c8a09d00cac91d4e2c02211d2a44",
+      "changes": {}
+    },
+    {
+      "origin": "/path/to/user/.hermes/projects/hermes-homeassistant/provider/hermes_ha_provider/cli.py",
+      "copy": "companion/provider/hermes_ha_provider/cli.py",
+      "source_sha256": "7589b5f2e888fb1f32a982ba18ee41bd3437975c23bfb584562e57fe5d3a0aa9",
+      "copy_sha256": "7589b5f2e888fb1f32a982ba18ee41bd3437975c23bfb584562e57fe5d3a0aa9",
+      "changes": {}
+    },
+    {
+      "origin": "/path/to/user/.hermes/projects/hermes-homeassistant/provider/hermes_ha_provider/config.py",
+      "copy": "companion/provider/hermes_ha_provider/config.py",
+      "source_sha256": "fda5ff165c3060862d0f715d2e743259e521214903b4ad6a38b16e49bbdded40",
+      "copy_sha256": "fda5ff165c3060862d0f715d2e743259e521214903b4ad6a38b16e49bbdded40",
+      "changes": {}
+    },
+    {
+      "origin": "/path/to/user/.hermes/projects/hermes-homeassistant/provider/hermes_ha_provider/runtime.py",
+      "copy": "companion/provider/hermes_ha_provider/runtime.py",
+      "source_sha256": "93657b790b45a554d03dedf282b6efc7e594d5a7417e1033eaddc55ab8d89daa",
+      "copy_sha256": "93657b790b45a554d03dedf282b6efc7e594d5a7417e1033eaddc55ab8d89daa",
+      "changes": {}
+    },
+    {
+      "origin": "/path/to/user/.hermes/projects/hermes-homeassistant/provider/hermes_ha_provider/version.py",
+      "copy": "companion/provider/hermes_ha_provider/version.py",
+      "source_sha256": "543b01b30cdf53b80db019086b1c55eadb22d22c659acdd68cdec76206496768",
+      "copy_sha256": "543b01b30cdf53b80db019086b1c55eadb22d22c659acdd68cdec76206496768",
+      "changes": {}
+    },
+    {
+      "origin": "/path/to/user/.hermes/projects/hermes-homeassistant/managed_launcher.py",
+      "copy": "companion/managed_launcher.py",
+      "source_sha256": "2d85c177ba1fa7663bbfd0200f456618aeffb73927dbb947c65fb6aebfd68819",
+      "copy_sha256": "2d85c177ba1fa7663bbfd0200f456618aeffb73927dbb947c65fb6aebfd68819",
+      "changes": {}
+    },
+    {
+      "origin": "/path/to/user/.hermes/projects/hermes-homeassistant/run_provider.py",
+      "copy": "companion/run_provider.py",
+      "source_sha256": "4598ee4a746f6d23eb1e3f429c36c7bcae6da9b58c1fb7d34f9b87b805a0485e",
+      "copy_sha256": "9ade463cca03bf1c3a6295e039554b88f3d13d8dc0f2eeca0178ec8a9ada5de0",
+      "changes": {
+        "user_path": 2,
+        "private_ip": 1
+      }
+    },
+    {
+      "origin": "/path/to/user/.hermes/projects/hermes-homeassistant/ui_timing_runtime.py",
+      "copy": "companion/ui_timing_runtime.py",
+      "source_sha256": "24bb2e47ed326e49042c002fb926120a36179875daa2aba1d8b473c156386f30",
+      "copy_sha256": "54535ff40a482ac20f38ac2dec23dade300666e8c87b2781cd7270cc6269513b",
+      "changes": {
+        "user_path": 4
+      }
+    },
+    {
+      "origin": "/path/to/user/.hermes/projects/hermes-homeassistant/test_managed_launcher.py",
+      "copy": "companion/test_managed_launcher.py",
+      "source_sha256": "69c03c7652759abfea7c62925b3c9479b5590a6e82075c3001dcb1dfd773855b",
+      "copy_sha256": "69c03c7652759abfea7c62925b3c9479b5590a6e82075c3001dcb1dfd773855b",
+      "changes": {}
+    },
+    {
+      "origin": "/path/to/user/.hermes/projects/hermes-homeassistant/test_ui_timing.py",
+      "copy": "companion/test_ui_timing.py",
+      "source_sha256": "9fe5bf220fe812d47ec7d6571a7843a7e628a9911ed3bcf898a8fa0b10fb7e38",
+      "copy_sha256": "d1c8d84637b9caaaa26ead64594d2e76cbd2372abe400dda31680d86dfcbae9d",
+      "changes": {
+        "user_path": 2,
+        "device_mac": 1
+      }
+    },
+    {
+      "origin": "/path/to/user/.hermes/projects/hermes-homeassistant/test_tts_inheritance.py",
+      "copy": "companion/test_tts_inheritance.py",
+      "source_sha256": "f4968e5486d3a9edb4a2bc4bbb7d8c2fcebf321138793ac73646c25a9f253559",
+      "copy_sha256": "f4968e5486d3a9edb4a2bc4bbb7d8c2fcebf321138793ac73646c25a9f253559",
+      "changes": {}
+    },
+    {
+      "origin": "/path/to/user/.hermes/projects/xiaozhi-ui-v3/ui_tts_timing_send.py",
+      "copy": "xiaozhi-ui-v3/ui_tts_timing_send.py",
+      "source_sha256": "9874cfdb2367c8b20608fff5b0b674b80b52a69286a7b8907fc9a6ef6b44773e",
+      "copy_sha256": "1c28cf95ba54716000a164d3317f6b7f89173a3e8f2c03a78dd3cc6d59f704eb",
+      "changes": {
+        "user_path": 2,
+        "device_mac": 1,
+        "private_ip": 1
+      }
+    },
+    {
+      "origin": "/path/to/user/.hermes/projects/xiaozhi-cards/backend.py",
+      "copy": "cards/backend.py",
+      "source_sha256": "abfd75940ced91d7f887f3ff86f86c0d1f695385a738aea8ae0fb853a082ebac",
+      "copy_sha256": "e34153e19e037d618e330b266f663952fb9199401c3b60e2e4eb39f828d2a5d0",
+      "changes": {
+        "user_path": 3,
+        "device_mac": 1,
+        "example_weather_entity": 2,
+        "example_satellite_entity": 6,
+        "generic_timezone": 1,
+        "private_ip": 4
+      }
+    },
+    {
+      "origin": "/path/to/user/.hermes/projects/xiaozhi-cards/test_backend.py",
+      "copy": "cards/test_backend.py",
+      "source_sha256": "d932c16aed7364cf3bacee3b281ff4f5c398257a9abe472990e32c8b464ae78b",
+      "copy_sha256": "e66f7244026946f719e4692ab685b650d877927d852e521d8d2712c8476c99c1",
+      "changes": {
+        "negative_ip_fixture": 1,
+        "negative_mac_fixture": 1,
+        "device_mac": 2,
+        "device_mac_compact": 1,
+        "private_ip": 7,
+        "utc_expected_fixture": 2
+      }
+    },
+    {
+      "origin": "/path/to/user/.hermes/projects/xiaozhi-cards/backend.md",
+      "copy": "cards/backend.md",
+      "source_sha256": "78d5ed9fe84a7fe2ebd19133405d5ee7e93d38045e7078a2e6b9d932dfa07c46",
+      "copy_sha256": "8b66aa08bdd9c72482c89ce6aefe6aa751a7ac66e670652e47da5f64fa0e8698",
+      "changes": {
+        "user_path": 7,
+        "device_mac": 1,
+        "example_weather_entity": 1,
+        "example_satellite_entity": 3,
+        "generic_timezone": 1,
+        "private_ip": 1
+      }
+    },
+    {
+      "origin": "/path/to/user/.hermes/plugins/homeassistant/__init__.py",
+      "copy": "plugin/__init__.py",
+      "source_sha256": "7eae28aa76b25aa36b46ed37f243d22326b282d7170c354ed813dd27602c4e11",
+      "copy_sha256": "ddbcb5bc47c179305ac93b463f3e30caf3b9675a0d81a2763d34df1c06a910a9",
+      "changes": {
+        "user_path": 1
+      }
+    },
+    {
+      "origin": "/path/to/user/.hermes/plugins/homeassistant/adapter.py",
+      "copy": "plugin/adapter.py",
+      "source_sha256": "05f3826c09297216694b5c4ae11f7daadfc95660e1d58068b085bcbb127accf1",
+      "copy_sha256": "05f3826c09297216694b5c4ae11f7daadfc95660e1d58068b085bcbb127accf1",
+      "changes": {}
+    },
+    {
+      "origin": "/path/to/user/.hermes/plugins/homeassistant/tools.py",
+      "copy": "plugin/tools.py",
+      "source_sha256": "05c0a2fd04a5746f360393b9d765d473c17e253a695a83c110d3936495416916",
+      "copy_sha256": "05c0a2fd04a5746f360393b9d765d473c17e253a695a83c110d3936495416916",
+      "changes": {}
+    },
+    {
+      "origin": "/path/to/user/.hermes/plugins/homeassistant/plugin.yaml",
+      "copy": "plugin/plugin.yaml",
+      "source_sha256": "7a3655acde9c602acac819db47d9cb9e3124728d495dc8e15dd40171b7c51618",
+      "copy_sha256": "7a3655acde9c602acac819db47d9cb9e3124728d495dc8e15dd40171b7c51618",
+      "changes": {}
+    },
+    {
+      "origin": "/path/to/user/.hermes/plugins/homeassistant/pyproject.toml",
+      "copy": "plugin/pyproject.toml",
+      "source_sha256": "8b246d492e96cc70aa0359c18fc4355518aaae1d73d1f65ce98a095c53927b6c",
+      "copy_sha256": "8b246d492e96cc70aa0359c18fc4355518aaae1d73d1f65ce98a095c53927b6c",
+      "changes": {}
+    },
+    {
+      "origin": "/path/to/user/.hermes/plugins/homeassistant/README.md",
+      "copy": "plugin/README.md",
+      "source_sha256": "4726a39d1dd3b804ca2c28253fceaceaf2c0bc13d54b9f3cc2ffaa1eb275cc88",
+      "copy_sha256": "e445657602a3c011396c6dcd56f35363a90b7c7a34ebda10d6ed1b5fb18a2c85",
+      "changes": {
+        "private_ip": 1
+      }
+    },
+    {
+      "origin": "/path/to/user/.hermes/plugins/homeassistant/LICENSE",
+      "copy": "plugin/LICENSE",
+      "source_sha256": "5f79d321c17de8ef6e5f34967dc5b484afebeeefd87180890d9741941f6b815f",
+      "copy_sha256": "5f79d321c17de8ef6e5f34967dc5b484afebeeefd87180890d9741941f6b815f",
+      "changes": {}
+    },
+    {
+      "origin": "/path/to/user/.hermes/plugins/homeassistant/pytest.ini",
+      "copy": "plugin/pytest.ini",
+      "source_sha256": "f25d55c4c6a65eed64a5c0294ee5d063c8a629d50ede3d90d2f9328348175087",
+      "copy_sha256": "f25d55c4c6a65eed64a5c0294ee5d063c8a629d50ede3d90d2f9328348175087",
+      "changes": {}
+    },
+    {
+      "origin": "/path/to/user/.hermes/plugins/homeassistant/tests/conftest.py",
+      "copy": "plugin/tests/conftest.py",
+      "source_sha256": "01a90c4baf1b3a40a026c3bb04b02ab53875dae00893d9f69d704aa33732bd8d",
+      "copy_sha256": "01a90c4baf1b3a40a026c3bb04b02ab53875dae00893d9f69d704aa33732bd8d",
+      "changes": {}
+    },
+    {
+      "origin": "/path/to/user/.hermes/plugins/homeassistant/tests/test_homeassistant_adapter.py",
+      "copy": "plugin/tests/test_homeassistant_adapter.py",
+      "source_sha256": "f06c04946a83cef839e66c3265394946b01dba57d369a0a43b76917e18d43b85",
+      "copy_sha256": "642eea270c1e007f277b60b873c4c2af0d79665c5fddd362258a05f14e948d93",
+      "changes": {
+        "private_ip": 6
+      }
+    },
+    {
+      "origin": "/path/to/user/.hermes/plugins/homeassistant/tests/test_homeassistant_tools.py",
+      "copy": "plugin/tests/test_homeassistant_tools.py",
+      "source_sha256": "3a6dcb7fe26fd56b78b2545b087fb951683c799f69fd2810c7f18b23a5f250f4",
+      "copy_sha256": "3a6dcb7fe26fd56b78b2545b087fb951683c799f69fd2810c7f18b23a5f250f4",
+      "changes": {}
+    },
+    {
+      "origin": "/path/to/user/.hermes/plugins/homeassistant/tests/test_plugin_registration.py",
+      "copy": "plugin/tests/test_plugin_registration.py",
+      "source_sha256": "d11e4d0d3fa27f8fce9bfc64bf6849ca3ff8d0c431b940651a413af3e1409b1e",
+      "copy_sha256": "cb199be543a48947edd9aadef0afb88a8a0d544e24f81a82856666fb226e6049",
+      "changes": {
+        "private_ip": 2
+      }
+    },
+    {
+      "origin": "/path/to/user/.hermes/plugins/homeassistant/hermes_bridge/__init__.py",
+      "copy": "plugin/hermes_bridge/__init__.py",
+      "source_sha256": "8f21333f4000357ce95cc150f382c37079f7bee98eaf8dbdcdd0a4525fbd609a",
+      "copy_sha256": "8f21333f4000357ce95cc150f382c37079f7bee98eaf8dbdcdd0a4525fbd609a",
+      "changes": {}
+    },
+    {
+      "origin": "/path/to/user/.hermes/plugins/homeassistant/hermes_bridge/bridge.py",
+      "copy": "plugin/hermes_bridge/bridge.py",
+      "source_sha256": "e8db98273e86a6b091f56bf24573fd566327f1b6ce0c8ff6d475ca7c39b08483",
+      "copy_sha256": "e8db98273e86a6b091f56bf24573fd566327f1b6ce0c8ff6d475ca7c39b08483",
+      "changes": {}
+    },
+    {
+      "origin": "/path/to/user/.hermes/plugins/homeassistant/hermes_bridge/plugin.py",
+      "copy": "plugin/hermes_bridge/plugin.py",
+      "source_sha256": "3b7030c545a443951de34c89a372890ec39ecd6a68ec5d3e426574f2d5c9f17b",
+      "copy_sha256": "fc9d032779a5d2dd18469ce8cac9f2e4b01cd146dfc4ffa274eacfdfbdf382c9",
+      "changes": {
+        "example_owner_id": 1
+      }
+    },
+    {
+      "origin": "/path/to/user/.hermes/plugins/homeassistant/hermes_bridge/runtime.py",
+      "copy": "plugin/hermes_bridge/runtime.py",
+      "source_sha256": "368fdbf02b8dafaa2b9596eb4d48f25da69153b6ccfb7a7884734ec12e4b82e8",
+      "copy_sha256": "368fdbf02b8dafaa2b9596eb4d48f25da69153b6ccfb7a7884734ec12e4b82e8",
+      "changes": {}
+    },
+    {
+      "origin": "/path/to/user/.hermes/plugins/homeassistant/hermes_bridge/sqlite_reader.py",
+      "copy": "plugin/hermes_bridge/sqlite_reader.py",
+      "source_sha256": "e18f3003f6fe276701212d40f93e51c8cea3ce7bd30b5040e3c63d77119e6144",
+      "copy_sha256": "e18f3003f6fe276701212d40f93e51c8cea3ce7bd30b5040e3c63d77119e6144",
+      "changes": {}
+    },
+    {
+      "origin": "/path/to/user/.hermes/projects/ha2-notifications-0.3.0/tests/bridge/test_bridge.py",
+      "copy": "plugin/tests/bridge/test_bridge.py",
+      "source_sha256": "43db26e6f016844260541fcb000fc0ff7fe625a71134eb1cc13c51cf398cc810",
+      "copy_sha256": "43db26e6f016844260541fcb000fc0ff7fe625a71134eb1cc13c51cf398cc810",
+      "changes": {}
+    },
+    {
+      "origin": "/path/to/user/.hermes/projects/ha2-notifications-0.3.0/tests/runtime/test_backend_compatibility.py",
+      "copy": "plugin/tests/runtime/test_backend_compatibility.py",
+      "source_sha256": "866c753ade5247cba0c26decd5c0b7f546b3501860bb59debfb944b7608ec1db",
+      "copy_sha256": "866c753ade5247cba0c26decd5c0b7f546b3501860bb59debfb944b7608ec1db",
+      "changes": {}
+    },
+    {
+      "origin": "/path/to/user/.hermes/projects/ha2-notifications-0.3.0/tests/runtime/test_plugin_namespace.py",
+      "copy": "plugin/tests/runtime/test_plugin_namespace.py",
+      "source_sha256": "4c424694514dd4c9fe87df64c93b171d1cea7196df22f17ff7ac551886290ae6",
+      "copy_sha256": "4c424694514dd4c9fe87df64c93b171d1cea7196df22f17ff7ac551886290ae6",
+      "changes": {}
+    },
+    {
+      "origin": "/path/to/user/.hermes/projects/ha2-notifications-0.3.0/tests/runtime/test_runtime.py",
+      "copy": "plugin/tests/runtime/test_runtime.py",
+      "source_sha256": "52ee2ebff56c1a33e0ada1982fe1879f507316eda6294f7b9b90ca148b14753d",
+      "copy_sha256": "52ee2ebff56c1a33e0ada1982fe1879f507316eda6294f7b9b90ca148b14753d",
+      "changes": {}
+    },
+    {
+      "origin": "/path/to/user/.hermes/projects/ha2-notifications-0.3.0/tests/plugin_wiring/test_health.py",
+      "copy": "plugin/tests/plugin_wiring/test_health.py",
+      "source_sha256": "7e14fc7ed4a3e3f33c43fafe4cd01776d4c509e04bf57fabad2492d5e25e3b3b",
+      "copy_sha256": "7e14fc7ed4a3e3f33c43fafe4cd01776d4c509e04bf57fabad2492d5e25e3b3b",
+      "changes": {}
+    },
+    {
+      "origin": "/path/to/user/.hermes/projects/ha2-notifications-0.3.0/tests/plugin_wiring/test_plugin.py",
+      "copy": "plugin/tests/plugin_wiring/test_plugin.py",
+      "source_sha256": "78eadbd9b1499358454928e2a29a079a0ffb9fe67845881fda6e60a673546c1c",
+      "copy_sha256": "5c86213b159df093136814b8749ce28f4bffc3f9ec2f8d3dc383bf8a63437558",
+      "changes": {
+        "user_path": 1,
+        "example_owner_id": 5
+      }
+    },
+    {
+      "origin": "https://raw.githubusercontent.com/Codename-11/hermes-homeassistant/7dc174cedf2cf47b16083979ff9b5b4bfc8fa8a9/LICENSE",
+      "copy": "companion/LICENSE",
+      "source_sha256": "cfc80ceb1e25d167f96d5a01e401c684f31abf30e471008608ef67c88e956c15",
+      "copy_sha256": "cfc80ceb1e25d167f96d5a01e401c684f31abf30e471008608ef67c88e956c15",
+      "changes": {}
+    },
+    {
+      "origin": null,
+      "copy": "README.md",
+      "source_sha256": null,
+      "copy_sha256": "6eff54a1239b9bb2e236a02584dadf345a273d8df08690f84e289759478665fa",
+      "changes": {
+        "generated_snapshot_documentation_or_verification": true
+      }
+    },
+    {
+      "origin": null,
+      "copy": "THIRD_PARTY.md",
+      "source_sha256": null,
+      "copy_sha256": "b7f74dc358ce1bd16a25eeebc51699509a14e640b728cbc2abfcd848491b9c97",
+      "changes": {
+        "generated_snapshot_documentation_or_verification": true
+      }
+    },
+    {
+      "origin": null,
+      "copy": "companion/provider.env.example",
+      "source_sha256": null,
+      "copy_sha256": "53a9ddaa008315db8ee90ab9ab15f0c6ec16977510f3124fade2f344899dffee",
+      "changes": {
+        "generated_snapshot_documentation_or_verification": true
+      }
+    },
+    {
+      "origin": null,
+      "copy": "test-results.json",
+      "source_sha256": null,
+      "copy_sha256": "980daadd026dc8378d7c3fdb111eeb5c7fde8586a73861e42667eddeea6e57f0",
+      "changes": {
+        "generated_snapshot_documentation_or_verification": true
+      }
+    },
+    {
+      "origin": null,
+      "copy": "verify_snapshot.py",
+      "source_sha256": null,
+      "copy_sha256": "8afc195e8bc67ef19e4633c34e1a927618ce0a0ec33b5702c0b644448979646c",
+      "changes": {
+        "generated_snapshot_documentation_or_verification": true
+      }
+    }
+  ],
+  "notes": [
+    "Origin paths use /path/to/user; hashes describe actual source bytes, never credential files.",
+    "Local adaptations are not represented as identical to upstream.",
+    "Synthetic negative IP/MAC fixtures remain distinct to preserve rejection assertions.",
+    "No own license assigned; upstream notices do not settle licensing of local additions.",
+    "String-literal-only AST comparison passed for every copied Python source; no structural code edits. UTC fixture expectations updated with generic timezone."
+  ],
+  "manifest_self_hash": "Excluded to avoid self-reference; all other snapshot files enumerated."
+}

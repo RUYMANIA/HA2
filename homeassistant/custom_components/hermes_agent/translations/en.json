@@ -1,0 +1,74 @@
+{
+  "config": {
+    "abort": {
+      "already_configured": "This Hermes companion is already configured.",
+      "reauth_successful": "Authentication was updated successfully."
+    },
+    "error": {
+      "cannot_connect": "Cannot connect to the Hermes companion. Check the URL, service, and network access.",
+      "invalid_auth": "The API token was rejected. Enter the bearer token configured by the companion.",
+      "invalid_url": "Enter an HTTP or HTTPS URL without credentials, a query string, or a fragment.",
+      "no_capabilities": "The companion is reachable but has no Conversation, text-to-speech, or speech-to-text capability available.",
+      "unknown": "An unexpected error occurred. Check the Home Assistant logs without sharing your token.",
+      "unsupported_api": "The companion uses an unsupported API version. Update Hermes Agent and the Home Assistant integration."
+    },
+    "step": {
+      "reauth_confirm": {
+        "data": {
+          "token": "API token"
+        },
+        "data_description": {
+          "token": "Bearer token configured by the Hermes companion."
+        },
+        "description": "Enter the updated bearer token for this Hermes companion."
+      },
+      "user": {
+        "data": {
+          "name": "Display name",
+          "token": "API token",
+          "url": "Companion URL",
+          "verify_tls": "Verify TLS certificate"
+        },
+        "data_description": {
+          "name": "Name shown for the integration in Home Assistant.",
+          "token": "Bearer token configured by the Hermes companion. Hermes provider credentials stay in Hermes and are not entered here.",
+          "url": "Base URL of the provider companion, for example http://hermes-host:8765.",
+          "verify_tls": "Keep enabled unless a trusted local companion deliberately uses a self-signed certificate."
+        },
+        "description": "Connect Home Assistant to an authenticated Hermes provider companion. HTTP sends the token without transport encryption; prefer HTTPS when traffic leaves the local host."
+      }
+    }
+  },
+  "options": {
+    "error": {
+      "invalid_tts_provider_voice": "The selected TTS voice is not available for the selected provider. Choose a matching provider and voice, or use Hermes defaults."
+    },
+    "step": {
+      "init": {
+        "data": {
+          "default_provider": "Default TTS provider",
+          "default_voice": "Default TTS voice",
+          "enable_conversation": "Enable Conversation",
+          "enable_stt": "Enable speech-to-text",
+          "enable_tts": "Enable text-to-speech",
+          "inference_timeout": "Conversation timeout",
+          "request_timeout": "Connection timeout",
+          "stt_timeout": "Speech-to-text timeout",
+          "system_prompt": "Conversation system prompt",
+          "tts_timeout": "Text-to-speech timeout",
+          "verify_tls": "Verify TLS certificate"
+        },
+        "data_description": {
+          "default_provider": "Provider used unless an automation overrides it. Leave on Hermes default to preserve Hermes routing.",
+          "default_voice": "Voice used unless an automation overrides it. Leave on Hermes default to preserve the provider default.",
+          "inference_timeout": "Maximum seconds for an inference response (1–300).",
+          "request_timeout": "Maximum seconds for health and capability requests (1–300).",
+          "stt_timeout": "Maximum seconds for a transcription response (1–300).",
+          "system_prompt": "Optional concise instruction applied to Conversation requests.",
+          "tts_timeout": "Maximum seconds for speech generation (1–300).",
+          "verify_tls": "Disable only for a deliberately trusted local self-signed endpoint."
+        }
+      }
+    }
+  }
+}

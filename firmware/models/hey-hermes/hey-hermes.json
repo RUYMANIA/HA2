@@ -1,0 +1,16 @@
+{
+  "type": "micro",
+  "wake_word": "Hey Hermes",
+  "author": "Mike Tomkins",
+  "website": "https://github.com/miketomkins/hey-hermes-wakeword-model",
+  "model": "hey-hermes.tflite",
+  "trained_languages": ["en"],
+  "version": 2,
+  "micro": {
+    "probability_cutoff": 0.32,
+    "sliding_window_size": 5,
+    "feature_step_size": 10,
+    "tensor_arena_size": 65536,
+    "minimum_esphome_version": "2026.8.0"
+  }
+}

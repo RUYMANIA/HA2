@@ -1,0 +1,123 @@
+# Adaptación local de RealDeco/xiaozhi-esphome, commit
+# 12599ede7b79101157ac55bb31f4c28356ccbb69 — Ball_v2 modular.
+# Conserva USB Serial/JTAG. No implementa audio USB.
+substitutions:
+  name: xiaozhi-ball-v2
+  friendly_name: "XiaoZhi Ball v2"
+  imagewidth: "240"
+  imageheight: "240"
+  screenwidth: "240"
+  screenheight: "240"
+  rotate_display: "0"
+  startup_sound: "Home_Connected"
+  clock_background_image: "chip"
+  imagemodel: "Gwen"
+  imagepath: "https://raw.githubusercontent.com/RealDeco/xiaozhi-esphome/12599ede7b79101157ac55bb31f4c28356ccbb69/images"
+  sensor1_entity: "binary_sensor.xiaozhi_placeholder_presence_1"
+  light1_entity: "light.xiaozhi_placeholder_1"
+  sensor1_label: "Habitación 1"
+  sensor2_entity: "binary_sensor.xiaozhi_placeholder_presence_2"
+  light2_entity: "light.xiaozhi_placeholder_2"
+  sensor2_label: "Habitación 2"
+  sensor3_entity: "binary_sensor.xiaozhi_placeholder_presence_3"
+  light3_entity: "light.xiaozhi_placeholder_3"
+  sensor3_label: "Habitación 3"
+  sensor4_entity: "binary_sensor.xiaozhi_placeholder_presence_4"
+  light4_entity: "light.xiaozhi_placeholder_4"
+  sensor4_label: "Habitación 4"
+  sensor5_entity: "binary_sensor.xiaozhi_placeholder_presence_5"
+  light5_entity: "light.xiaozhi_placeholder_5"
+  sensor5_label: "Habitación 5"
+  weather_entity: "weather.forecast_casa"
+  font_glyphsets: "GF_Latin_Core"
+  font_family: Figtree
+
+esphome:
+  compile_process_limit: 2
+
+esp32:
+  board: esp32-s3-devkitc-1
+  flash_size: 16MB
+  cpu_frequency: 240MHz
+  framework:
+    type: esp-idf
+    sdkconfig_options:
+      CONFIG_ESP32S3_DEFAULT_CPU_FREQ_240: "y"
+      CONFIG_ESP32S3_DATA_CACHE_64KB: "y"
+      CONFIG_ESP32S3_DATA_CACHE_LINE_64B: "y"
+
+psram:
+  mode: octal
+  speed: 80MHz
+
+packages:
+  core: !include config/core.yaml
+  hw: !include config/HW/ball_v2_hw.yaml
+  avatar: !include config/hermes_avatar.yaml
+  system_menu: !include config/system_menu.yaml
+  temporary_cards: !include config/temporary_cards.yaml
+  ui_v3: !include config/ui_v3.yaml
+  ha2: !include config/ha2.yaml
+
+logger:
+  hardware_uart: USB_SERIAL_JTAG
+  level: INFO
+
+api:
+  encryption:
+    key: !secret api_encryption_key
+  reboot_timeout: 0s
+
+ota:
+  - platform: esphome
+    id: !extend ota_esphome
+    password: !secret ota_password
+
+wifi:
+  ap:
+    ssid: "XiaoZhi Ball v2 Recovery"
+    password: !secret fallback_ap_password
+
+improv_serial:
+
+safe_mode:
+  boot_is_good_after: 60s
+  num_attempts: 10
+  reboot_timeout: 5min
+
+# La placa original mantiene GPIO3 alto para su alimentación.
+# Interno: no se expone a Home Assistant para evitar apagados accidentales.
+switch:
+  - platform: gpio
+    id: board_power_hold
+    internal: true
+    pin: GPIO3
+    restore_mode: ALWAYS_ON
+
+# Reports only the activation label, not recorded speech or question content.
+text_sensor:
+  - platform: template
+    id: last_detected_wake_word
+    name: "Last Detected Wake Word"
+    entity_category: diagnostic
+
+micro_wake_word:
+  id: mww
+  on_wake_word_detected:
+    - text_sensor.template.publish:
+        id: last_detected_wake_word
+        state: !lambda return wake_word;
+    - logger.log:
+        level: INFO
+        tag: wake_diagnostic
+        format: "Detected activation model: %s"
+        args: ["wake_word.c_str()"]
+  models:
+    - okay_nabu
+    - hey_jarvis
+    - alexa
+    # Experimental: original English Hey Hermes weights, not a Spanish retraining.
+    # Keep the original manifest/name and Okay Nabu as a working fallback.
+    - model: models/hey-hermes/hey-hermes.json
+      id: hey_hermes_experimental
+

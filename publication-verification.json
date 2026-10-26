@@ -1,0 +1,70 @@
+{
+  "verified_at_utc": "2026-10-26T12:06:50.370086+00:00",
+  "purpose": "Private archival publication, not deployable release certification",
+  "checked_by_parent": true,
+  "privacy_scan": {
+    "files_scanned_before_this_report": 198,
+    "high_confidence_secret_patterns": 0,
+    "personal_home_paths": 0,
+    "private_network_literals": 0,
+    "known_family_ids": 0,
+    "forbidden_files": 0,
+    "caveat": "Heuristic review, not exhaustive proof of absence"
+  },
+  "manifests": [
+    {
+      "manifest": "firmware/SHA256-MANIFEST.json",
+      "entries_verified": 75,
+      "mismatches": []
+    },
+    {
+      "manifest": "hermes/manifest.json",
+      "entries_verified": 45,
+      "mismatches": []
+    },
+    {
+      "manifest": "homeassistant/MANIFEST.json",
+      "entries_verified": 63,
+      "mismatches": []
+    }
+  ],
+  "python_sources_compiled_in_memory": 78,
+  "parent_test_repetitions": {
+    "firmware_host": {
+      "compiled": 18,
+      "run_pass": 17,
+      "run_fail": 1,
+      "known_failure": "tests/temporary_cards_test.cpp:26",
+      "original_baseline_same_failure": true,
+      "original_compile_exit": 0,
+      "original_run_exit": -6,
+      "snapshot_run_exit": -6
+    },
+    "homeassistant": {
+      "python_tests_passed": 15,
+      "node_tests_passed": 54,
+      "failed": 0
+    },
+    "hermes": {
+      "launcher_passed": 1,
+      "cards_passed": 32,
+      "bridge_passed": 15,
+      "runtime_passed": 9,
+      "timing_subset_passed": 8,
+      "plugin_pytest_passed": 95,
+      "plugin_pytest_skipped": 1,
+      "plugin_subtests_passed": 11,
+      "counts_overlap": true
+    }
+  },
+  "not_executed": [
+    "production firmware compile",
+    "OTA or USB",
+    "Home Assistant live tests",
+    "gateway/plugin reload",
+    "hardware audio/touch tests",
+    "full historic QA suite"
+  ],
+  "publication_gate": "private archival snapshot with disclosed existing failure; not all tests green",
+  "no_operational_deployment": true
+}

@@ -1,0 +1,126 @@
+# Temporary native text cards. No media URL service with arbitrary hosts.
+esphome:
+  includes:
+    - temporary_cards.h
+
+api:
+  actions:
+    - action: card_show
+      variables:
+        request_id: string
+        title: string
+        body: string
+        kind: string
+        ttl_ms: int
+        audio_expected: bool
+      then:
+        - lambda: |-
+            // Accept synchronously; card_show NEVER starts/stops audio or VA.
+            ui_v3::power().refresh_night(millis());
+            if(temporary_cards::state().show(request_id,title,body,kind,ttl_ms,audio_expected,millis(),ui_v3::power().night_active)) {
+              ui_v3::power().wake(millis(),"card");id(ui_power_sync).execute();
+              ha2::cue().accept(temporary_cards::state().generation,audio_expected,ui_v3::power().night_active,millis());
+              if(system_menu::state().active && system_menu::state().page==2) {ui_v3::view().invalidate();id(menu_render).execute();}
+            }
+            id(avatar_preview_state)=-1;
+        - script.execute: card_publish
+        - script.execute: draw_display
+    - action: card_play
+      variables:
+        request_id: string
+        url: string
+      then:
+        - lambda: |-
+            auto &c=temporary_cards::state();
+            // Atomic loop-context admission + public on_announce, without HA pipeline cancellation.
+            const bool connected=wifi::global_wifi_component->is_connected() && id(system_menu_ha_clients)>0;
+            const bool player_idle=connected && id(external_media_player).state==media_player::MEDIA_PLAYER_STATE_IDLE
+                && !id(box_speaker).is_running();
+            const bool va_idle=connected && !id(va).is_running() && !id(init_in_progress) && !id(timer_ringing).state
+                && (id(voice_assistant_phase)==1 || id(voice_assistant_phase)==12);
+            ui_v3::power().refresh_night(millis());
+            if (c.play(request_id,url,millis(),system_menu::state().active,va_idle,player_idle,ui_v3::power().night_active)) {
+              api::VoiceAssistantAnnounceRequest msg;
+              msg.media_id = esphome::StringRef(url);
+              const std::string marker = "__hermes_card__" + request_id;
+              msg.text = esphome::StringRef(marker);
+              msg.start_conversation = false;
+              msg.preannounce_media_id = esphome::StringRef("");
+              id(va).on_announce(msg);
+            }
+        - script.execute: card_publish
+        - script.execute: draw_display
+    - action: card_cancel
+      variables:
+        request_id: string
+      then:
+        - lambda: temporary_cards::state().cancel(request_id);
+        - script.execute: card_publish
+        - script.execute: draw_display
+
+text_sensor:
+  - platform: template
+    id: card_status
+    name: Card Status
+    entity_category: diagnostic
+    update_interval: never
+binary_sensor:
+  - platform: template
+    id: card_active
+    name: Card Active
+    entity_category: diagnostic
+    lambda: return temporary_cards::state().exists();
+
+script:
+  - id: card_publish
+    then:
+      - lambda: |-
+          const auto value=temporary_cards::state().status_json();
+          if (id(card_status).state!=value) id(card_status).publish_state(value);
+          id(card_active).publish_state(temporary_cards::state().exists());
+  - id: card_tick
+    then:
+      - lambda: |-
+          auto &c=temporary_cards::state();
+          const int phase=id(voice_assistant_phase);
+          const bool connected=wifi::global_wifi_component->is_connected() && id(system_menu_ha_clients)>0;
+          if (id(init_in_progress) || id(timer_ringing).state || phase==11 || phase==20)
+            c.interrupt(id(init_in_progress)?"boot":(phase==11?"error":"timer"));
+          if (!connected && c.owns_audio()) c.interrupt("connection");
+          const bool idle=connected && !id(init_in_progress) && !id(timer_ringing).state &&
+              (phase==1 || phase==12) && !id(va).is_running() &&
+              id(external_media_player).state==media_player::MEDIA_PLAYER_STATE_IDLE && !id(box_speaker).is_running();
+          c.tick(millis(),system_menu::state().active,idle);
+          id(ha2_card_cue).execute();
+          c.finished(c.owner_generation,
+              id(external_media_player).state==media_player::MEDIA_PLAYER_STATE_IDLE && !id(box_speaker).is_running(),
+              !id(va).is_running(),millis());
+  - id: card_render
+    then:
+      - lambda: |-
+          auto &c=temporary_cards::state();
+          if (!c.visible() || system_menu::state().active) return;
+          auto title_width=[](const std::string &s) {
+            int w,x,b,h; id(font_big_date).measure(s.c_str(),&w,&x,&b,&h); return w+std::abs(x);
+          };
+          auto body_width=[](const std::string &s) {
+            int w,x,b,h; id(font_request_response).measure(s.c_str(),&w,&x,&b,&h); return w+std::abs(x);
+          };
+          const auto previous=c.layout_generation;
+          c.layout(title_width,body_width);
+          if(previous!=c.layout_generation) text_scroll::card().reset(millis(),c.lines.size()*ui_v3::line_height(id(font_request_response).get_height()),98,0);
+          hermes_avatar::timeline().update(millis(),-1,nullptr,0);
+          id(main_display).show_page(id(temporary_card_page));
+          if (id(main_display).is_ready() && ui_v3::power().awake) id(main_display).update();
+      - script.execute: card_publish
+
+interval:
+  - interval: 100ms
+    then:
+      - lambda: |-
+          auto &c=temporary_cards::state();
+          const bool was_visible=c.visible();
+          const auto generation=c.active.generation;
+          id(card_tick).execute();
+          if (was_visible!=c.visible() || generation!=c.active.generation) id(draw_display).execute();
+          id(card_publish).execute();

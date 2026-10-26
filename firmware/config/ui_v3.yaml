@@ -1,0 +1,202 @@
+# UI v3: persisted selects are the only configuration authority.
+esphome:
+  on_boot:
+    - priority: 800
+      then:
+        - lambda: |-
+            id(box_speaker).add_audio_output_callback([](uint32_t count,int64_t timestamp_us) {
+              (void)timestamp_us;
+              text_scroll::frames().fetch_add(count,std::memory_order_relaxed);
+            });
+
+select:
+  - platform: template
+    id: screen_sleep
+    name: Screen Sleep
+    entity_category: config
+    optimistic: true
+    restore_value: true
+    initial_option: 1 minuto
+    options: ['1 minuto', '3 minutos', '5 minutos', 'Desactivado']
+    on_value:
+      - lambda: |-
+          auto &p=ui_v3::power();p.sleep_index=id(screen_sleep).active_index().value_or(0);
+          p.wake(millis(),"sleep_selection");id(ui_power_sync).execute();
+          if(system_menu::state().active)id(menu_render).execute();
+  - platform: template
+    id: screen_auto_wake
+    name: Screen Auto Wake
+    entity_category: config
+    optimistic: true
+    restore_value: true
+    initial_option: Cada 15 min
+    options: ['Cada 15 min', 'Cada 30 min', 'Cada 60 min', 'Desactivado']
+    on_value:
+      - lambda: |-
+          ui_v3::power().auto_index=id(screen_auto_wake).active_index().value_or(0);
+          if(system_menu::state().active)id(menu_render).execute();
+
+api:
+  actions:
+    - action: ui_stt_text
+      variables:
+        message: string
+      then:
+        - lambda: |-
+            if(text_scroll::transcript().metadata(message,millis())) {
+              text_scroll::stt().reset(millis(),0,176,0);++ui_v3::voice_revision();
+            }
+    - action: ui_tts_timing
+      variables:
+        message: string
+        duration_ms: int
+      then:
+        - lambda: |-
+            // Literal text is retained only in bounded private RAM, never a diagnostic entity.
+            auto &p=text_scroll::playback();
+            if(p.active && text_scroll::matches(message,p.raw)) {
+              if(p.metadata(message,duration_ms,millis()))++ui_v3::voice_revision();
+              return;
+            }
+            text_scroll::timing().put(message,duration_ms,millis());
+    - action: screen_manual_wake
+      then:
+        - lambda: ui_v3::power().wake(millis(),"manual");id(ui_power_sync).execute();
+    - action: screen_manual_sleep
+      then:
+        - lambda: ui_v3::power().sleep(millis());id(ui_power_sync).execute();
+    - action: ui_diagnostic
+      then:
+        - script.execute: ui_publish
+
+text_sensor:
+  - platform: template
+    id: ui_status
+    name: UI Status
+    entity_category: diagnostic
+    update_interval: never
+  - platform: template
+    id: ui_scroll
+    name: UI Scroll
+    entity_category: diagnostic
+    update_interval: never
+  - platform: template
+    id: ui_timing
+    name: UI Timing
+    entity_category: diagnostic
+    update_interval: never
+
+script:
+  - id: ui_power_sync
+    then:
+      - lambda: |-
+          static bool last_awake=true;
+          static float brightness=1.0f;
+          auto &p=ui_v3::power();p.refresh_night(millis());
+          if(last_awake==p.awake)return;
+          last_awake=p.awake;
+          if(!p.awake){
+            brightness=id(Sled).remote_values.get_brightness();
+            id(Sled).turn_off().set_transition_length(0).perform();
+          } else {
+            id(Sled).turn_on().set_brightness(brightness).set_transition_length(0).perform();
+            if(p.cause=="clock" && id(clock_enabled).state && !id(va).is_running() && !id(timer_ringing).state && !temporary_cards::state().visible() && !system_menu::state().active)
+              id(show_clock)=true;
+            if(system_menu::state().active)id(menu_render).execute();else id(draw_display).execute();
+          }
+  - id: ui_history_layout
+    then:
+      - lambda: |-
+          auto title_measure=[](const std::string &s){int w,x,b,h;id(font_big_date).measure(s.c_str(),&w,&x,&b,&h);return w+std::abs(x);};
+          auto body_measure=[](const std::string &s){int w,x,b,h;id(font_request_response).measure(s.c_str(),&w,&x,&b,&h);return w+std::abs(x);};
+          if(ui_v3::view().prepare(temporary_cards::state(),title_measure,body_measure,millis(),ui_v3::line_height(id(font_request_response).get_height()))) {
+            const auto &s=text_scroll::history();
+            // One bounded reading block. Auto-scroll never resets the screen sleep deadline.
+            const uint32_t block=s.overflow?2000u+uint32_t(s.overflow)*1000u/16u+5000u:0u;
+            system_menu::state().reading_until(millis(),block);
+          }
+  - id: ui_draw_voice_text
+    then:
+      - lambda: |-
+          if(ui_v3::gif_pass())return;
+          if(!id(show_text).state)return;
+          auto &it=*id(main_display);
+          auto draw=[&](const std::string &value,int y,int offset){
+            it.start_clipping(32,y,208,y+30);
+            it.filled_rectangle(32,y,176,30,Color::WHITE);
+            it.rectangle(32,y,176,30,Color::BLACK);
+            const int fy=y+(30-id(font_request_response).get_height())/2;
+            it.printf(34-offset,fy,id(font_request_response),Color::BLACK,TextAlign::TOP_LEFT,"%s",value.c_str());
+            it.end_clipping();
+          };
+          auto width=[](const std::string &s){int w,x,b,h;id(font_request_response).measure(s.c_str(),&w,&x,&b,&h);return w+std::abs(x);};
+          text_scroll::stt().overflow=std::max(0,width(ui_v3::stt_text())-172);
+          draw(ui_v3::stt_text(),40,text_scroll::stt().offset(millis()));
+          if(id(voice_assistant_phase)==${voice_assist_replying_phase_id}) {
+            auto &p=text_scroll::playback();p.geometry(width(p.text),172);
+            draw(p.text,174,p.offset(text_scroll::frames().load(std::memory_order_relaxed)));
+          }
+  - id: ui_publish
+    then:
+      - lambda: |-
+          const auto &p=ui_v3::power();const auto &c=temporary_cards::state();const auto &m=system_menu::state();
+          auto &pb=text_scroll::playback();const auto &scroll=m.active && m.page==2?text_scroll::history():text_scroll::card();
+          // Three short JSON states remain below HA's 255-byte state limit, including max counters.
+          char output[256];
+          snprintf(output,sizeof(output),"{\"page\":\"%s\",\"history_count\":%u,\"history_index\":%u,\"screen_awake\":%s,\"sleep_select\":%d,\"auto_select\":%d,\"cause\":\"%s\",\"wakes\":%u,\"sleeps\":%u,\"auto_count\":%u,\"last_auto_epoch\":%lld}",
+            m.active?ui_v3::page_name(m.page):"closed",unsigned(c.history_count),unsigned(c.history_index),p.awake?"true":"false",p.sleep_index,p.auto_index,p.cause.c_str(),unsigned(p.wakes),unsigned(p.sleeps),unsigned(p.auto_count),(long long)p.last_auto_epoch);
+          if(id(ui_status).state!=output)id(ui_status).publish_state(output);
+          snprintf(output,sizeof(output),"{\"scroll_offset\":%d,\"scroll_started\":%s,\"scroll_end\":%s}",scroll.offset(millis()),scroll.offset(millis())>0?"true":"false",scroll.ended(millis())?"true":"false");
+          if(id(ui_scroll).state!=output)id(ui_scroll).publish_state(output);
+          snprintf(output,sizeof(output),"{\"playtext_timing_confirmed\":%s,\"playtext_timing_fallback\":%s,\"playtext_offset\":%d,\"playtext_elapsed_ms\":%u,\"duration_ms\":%u,\"audio_attributable\":%s}",
+            pb.confirmed?"true":"false",pb.confirmed?"false":"true",pb.offset(text_scroll::frames().load(std::memory_order_relaxed)),unsigned(pb.elapsed(text_scroll::frames().load(std::memory_order_relaxed))),unsigned(pb.real_duration),pb.attributable?"true":"false");
+          if(id(ui_timing).state!=output)id(ui_timing).publish_state(output);
+          snprintf(output,sizeof(output),"{\"night_active\":%d,\"enabled\":%d,\"start\":%u,\"end\":%u,\"manual\":%d,\"screen_awake\":%d,\"blocked_by_night\":%u,\"night_sleeps\":%u,\"setting_changes\":%u}",int(p.night_active),int(p.night.enabled),unsigned(p.night.start),unsigned(p.night.end),int(p.manual_override),int(p.awake),unsigned(p.blocked_by_night),unsigned(p.night_sleeps),unsigned(p.persist_changes));
+          if(id(ui_night).state!=output)id(ui_night).publish_state(output);
+          const auto &cue=ha2::cue();
+          snprintf(output,sizeof(output),"{\"started\":%u,\"suppressed_night\":%u,\"expired\":%u,\"owner\":%d,\"pending\":%d,\"dma_frames\":%u}",unsigned(cue.played),unsigned(cue.suppressed_night),unsigned(cue.expired),int(cue.owns(c.active.generation,millis())),int(cue.candidate!=0),unsigned(text_scroll::frames().load(std::memory_order_relaxed)));
+          if(id(ui_cue).state!=output)id(ui_cue).publish_state(output);
+          const auto &s=ha2::startup();
+          snprintf(output,sizeof(output),"{\"v\":\"1.2.0\",\"a\":\"8bf1f576\",\"admit\":%u,\"start\":%u,\"finish\":%u,\"skip\":%u,\"timeout\":%u,\"reason\":%u,\"frames\":%u,\"owner\":%u}",unsigned(s.admitted),unsigned(s.started),unsigned(s.finished),unsigned(s.skipped),unsigned(s.timeouts),unsigned(s.reason),unsigned(s.frames),unsigned(s.owns()));
+          if(id(ui_startup).state!=output)id(ui_startup).publish_state(output);
+
+interval:
+  - interval: 100ms
+    then:
+      - lambda: |-
+          auto &p=ui_v3::power();
+          const int phase=id(voice_assistant_phase);
+          const bool busy=system_menu::state().demo_active || id(va).is_running() || id(timer_ringing).state || id(box_speaker).is_running() || id(external_media_player).state==media_player::MEDIA_PLAYER_STATE_ANNOUNCING || temporary_cards::state().owns_audio() || phase==2 || phase==3 || phase==4 || phase==5 || phase==13 || phase==20;
+          p.tick(millis(),busy);
+          const auto now=id(homeassistant_time).now();
+          if(p.auto_wake(millis(),now.is_valid(),now.timestamp,now.minute,now.second) && !busy && id(clock_enabled).state && !system_menu::state().active && !temporary_cards::state().visible())id(show_clock)=true;
+          id(ui_power_sync).execute();
+          if(!p.awake || !id(main_display).is_ready())return;
+          auto &m=system_menu::state();
+          if(m.active && m.page==2) {
+            id(ui_history_layout).execute();
+            static int last=-1;static uint64_t revision=0;
+            const int offset=text_scroll::history().offset(millis());
+            if(offset!=last || revision!=temporary_cards::state().history_revision) {
+              last=offset;revision=temporary_cards::state().history_revision;
+              id(main_display).start_clipping(32,82,208,180);
+              if(id(main_display).is_ready() && ui_v3::power().awake)id(main_display).update();
+              id(main_display).end_clipping();
+            }
+          } else if(!m.active && temporary_cards::state().visible()) {
+            static int last=-1;const int offset=text_scroll::card().offset(millis());
+            if(last!=offset){last=offset;id(main_display).start_clipping(32,82,208,180);
+              if(id(main_display).is_ready() && ui_v3::power().awake)id(main_display).update();
+              id(main_display).end_clipping();}
+          } else if(!m.active && id(show_text).state && (phase==${voice_assist_thinking_phase_id} || phase==${voice_assist_replying_phase_id})) {
+            static int top=-1,bottom=-1;static uint32_t revision=0;
+            const bool new_text=revision!=ui_v3::voice_revision();revision=ui_v3::voice_revision();
+            const int stt=text_scroll::stt().offset(millis());const int tts=text_scroll::playback().offset(text_scroll::frames().load(std::memory_order_relaxed));
+            if(stt!=top || new_text){top=stt;id(main_display).start_clipping(32,40,208,70);
+              if(id(main_display).is_ready() && ui_v3::power().awake)id(main_display).update();id(main_display).end_clipping();}
+            if(phase==${voice_assist_replying_phase_id} && (tts!=bottom || new_text)){bottom=tts;id(main_display).start_clipping(32,174,208,204);
+              if(id(main_display).is_ready() && ui_v3::power().awake)id(main_display).update();id(main_display).end_clipping();}
+          }
+  - interval: 1s
+    then:
+      - script.execute: ui_publish

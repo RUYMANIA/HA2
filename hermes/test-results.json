@@ -1,0 +1,116 @@
+{
+  "python": "3.11.15 (main, Jun 23 2026, 15:46:51) [Clang 22.1.3 ]",
+  "compiled_in_memory": 34,
+  "core_api_tests_requested": true,
+  "results": [
+    {
+      "suite": "launcher",
+      "cwd": "companion",
+      "command": [
+        "python",
+        "-I",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        ".",
+        "-p",
+        "test_managed_launcher.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "output": "test_enters_managed_runtime_without_pinning_tts (test_managed_launcher.LauncherTests.test_enters_managed_runtime_without_pinning_tts) ... ok\n\n----------------------------------------------------------------------\nRan 1 test in 0.002s\n\nOK\n"
+    },
+    {
+      "suite": "cards",
+      "cwd": "cards",
+      "command": [
+        "python",
+        "-I",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        ".",
+        "-p",
+        "test_backend.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "output": "test_native_discovery_identity_schemas_and_domain_collisions (test_backend.AdapterTests.test_native_discovery_identity_schemas_and_domain_collisions) ... ok\ntest_status_validation_rejects_malformed (test_backend.AdapterTests.test_status_validation_rejects_malformed) ... ok\ntest_tts_adapter_selected_voice_no_playback_or_fallback (test_backend.AdapterTests.test_tts_adapter_selected_voice_no_playback_or_fallback) ... ok\ntest_full_cli_show_injected_no_network (test_backend.CLITests.test_full_cli_show_injected_no_network) ... ok\ntest_parser_invalid_before_runtime_and_json_exit_codes (test_backend.CLITests.test_parser_invalid_before_runtime_and_json_exit_codes) ... ok\ntest_weather_compact_spanish_real_units_and_local_timestamp (test_backend.CompactWeatherTests.test_weather_compact_spanish_real_units_and_local_timestamp) ... ok\ntest_busy_ttl_and_slow_synthesis_expire_without_device_write (test_backend.CoordinatorTests.test_busy_ttl_and_slow_synthesis_expire_without_device_write) ... ok\ntest_cancel_is_compare_id_and_verified_readback (test_backend.CoordinatorTests.test_cancel_is_compare_id_and_verified_readback) ... ok\ntest_cancel_pending_hidden_card (test_backend.CoordinatorTests.test_cancel_pending_hidden_card) ... ok\ntest_error_has_terminal_status_not_old_shown_snapshot (test_backend.CoordinatorTests.test_error_has_terminal_status_not_old_shown_snapshot) ... ok\ntest_generation_conflict_late_callback_does_not_cleanup_replacement (test_backend.CoordinatorTests.test_generation_conflict_late_callback_does_not_cleanup_replacement) ... ok\ntest_identity_busy_and_producer_conflict_never_clear_other (test_backend.CoordinatorTests.test_identity_busy_and_producer_conflict_never_clear_other) ... ok\ntest_nonblocking_cleanup_is_never_awaited (test_backend.CoordinatorTests.test_nonblocking_cleanup_is_never_awaited) ... ok\ntest_pending_other_producer_not_overwritten (test_backend.CoordinatorTests.test_pending_other_producer_not_overwritten) ... ok\ntest_plain_ack_left_to_local_expiry (test_backend.CoordinatorTests.test_plain_ack_left_to_local_expiry) ... ok\ntest_playback_timeout_is_honest (test_backend.CoordinatorTests.test_playback_timeout_is_honest) ... ok\ntest_polling_deadline_bounds_slow_adapter (test_backend.CoordinatorTests.test_polling_deadline_bounds_slow_adapter) ... ok\ntest_speech_completion_not_send_is_success (test_backend.CoordinatorTests.test_speech_completion_not_send_is_success) ... ok\ntest_spoken_card_survives_completion_until_local_ttl (test_backend.CoordinatorTests.test_spoken_card_survives_completion_until_local_ttl) ... ok\ntest_tts_failure_no_silent_fallback_or_show (test_backend.CoordinatorTests.test_tts_failure_no_silent_fallback_or_show) ... ok\ntest_zero_wait_allows_one_idle_check (test_backend.CoordinatorTests.test_zero_wait_allows_one_idle_check) ... ok\ntest_audio_path_matches_firmware_rejecting_query_or_oversize (test_backend.DataTests.test_audio_path_matches_firmware_rejecting_query_or_oversize) ... ok\ntest_only_validated_lan_origin_and_unchanged_token_path (test_backend.DataTests.test_only_validated_lan_origin_and_unchanged_token_path) ... ok\ntest_rejected_empty_identity_is_readable_to_allow_recovery (test_backend.DataTests.test_rejected_empty_identity_is_readable_to_allow_recovery) ... ok\ntest_weather_only_present_data_units_timestamp (test_backend.DataTests.test_weather_only_present_data_units_timestamp) ... ok\ntest_ha_adapter_routes_guard_and_real_json_encoding (test_backend.HTTPTests.test_ha_adapter_routes_guard_and_real_json_encoding) ... ok\ntest_lock_bounded_and_reusable (test_backend.LockTests.test_lock_bounded_and_reusable) ... ok\ntest_selected_pipeline_voice_and_common_audio_options (test_backend.PipelineTests.test_selected_pipeline_voice_and_common_audio_options) ... ok\ntest_native_connection_identity_client_label_login_and_async_stop (test_backend.RuntimeTests.test_native_connection_identity_client_label_login_and_async_stop) ... ok\ntest_sigterm_cancels_current_operation_and_restores_handlers (test_backend.SignalTests.test_sigterm_cancels_current_operation_and_restores_handlers) ... ok\ntest_body_utf8_bytes_match_display_limit_without_silent_truncation (test_backend.ValidationTests.test_body_utf8_bytes_match_display_limit_without_silent_truncation) ... ok\ntest_utf8_request_and_strict_bounds (test_backend.ValidationTests.test_utf8_request_and_strict_bounds) ... ok\n\n----------------------------------------------------------------------\nRan 32 tests in 0.163s\n\nOK\n"
+    },
+    {
+      "suite": "bridge",
+      "cwd": "plugin",
+      "command": [
+        "python",
+        "-I",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests/bridge",
+        "-p",
+        "test_*.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "output": "test_bounded_thousand_equal_timestamp_scan (test_bridge.BridgeTests.test_bounded_thousand_equal_timestamp_scan) ... ok\ntest_catalog_allowlist_reopens_and_invalid_is_not_deletion (test_bridge.BridgeTests.test_catalog_allowlist_reopens_and_invalid_is_not_deletion) ... ok\ntest_catalog_count_diff_and_identifiers_not_repaired (test_bridge.BridgeTests.test_catalog_count_diff_and_identifiers_not_repaired) ... ok\ntest_false_ack_does_not_consume_execution (test_bridge.BridgeTests.test_false_ack_does_not_consume_execution) ... ok\ntest_initial_baseline_is_durable_before_offline (test_bridge.BridgeTests.test_initial_baseline_is_durable_before_offline) ... ok\ntest_json_checkpoint_guards_mode_durability_and_corruption (test_bridge.BridgeTests.test_json_checkpoint_guards_mode_durability_and_corruption) ... ok\ntest_ledger_missing_and_missing_wal_fail_closed (test_bridge.BridgeTests.test_ledger_missing_and_missing_wal_fail_closed) ... ok\ntest_metadata_all_modes_ties_restart_retry_and_direct_excluded (test_bridge.BridgeTests.test_metadata_all_modes_ties_restart_retry_and_direct_excluded) ... ok\ntest_opt_in_exact_projection_privacy_sanitization_and_no_agent (test_bridge.BridgeTests.test_opt_in_exact_projection_privacy_sanitization_and_no_agent) ... ok\ntest_preview_missing_empty_nonjson_codec_and_long_silent_fallback (test_bridge.BridgeTests.test_preview_missing_empty_nonjson_codec_and_long_silent_fallback) ... ok\ntest_queue_full_ttl_not_refreshed_and_wal_preflight (test_bridge.BridgeTests.test_queue_full_ttl_not_refreshed_and_wal_preflight) ... ok\ntest_run_cancellation_backoff_and_sync_client_boundary (test_bridge.BridgeTests.test_run_cancellation_backoff_and_sync_client_boundary) ... ok\ntest_silent_unknown_codec_and_ambiguous_are_safe (test_bridge.BridgeTests.test_silent_unknown_codec_and_ambiguous_are_safe) ... ok\ntest_statuses_terminal_acks_and_ha_offline_checkpoint (test_bridge.BridgeTests.test_statuses_terminal_acks_and_ha_offline_checkpoint) ... ok\ntest_unicode_controls_and_quoted_secrets_are_removed (test_bridge.BridgeTests.test_unicode_controls_and_quoted_secrets_are_removed) ... ok\n\n----------------------------------------------------------------------\nRan 15 tests in 0.304s\n\nOK\n"
+    },
+    {
+      "suite": "runtime",
+      "cwd": "plugin",
+      "command": [
+        "python",
+        "-I",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests/runtime",
+        "-p",
+        "test_*.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "output": "test_only_audited_02_and_03_backends_sync_after_guard (test_backend_compatibility.BackendCompatibility.test_only_audited_02_and_03_backends_sync_after_guard) ... Executing <Task pending name='Task-2' coro=<BackendCompatibility.test_only_audited_02_and_03_backends_sync_after_guard() running at /path/to/user/.hermes/projects/HA2/hermes/plugin/tests/runtime/test_backend_compatibility.py:22> wait_for=<_GatheringFuture pending cb=[Task.task_wakeup()] created at /path/to/user/.local/share/uv/python/cpython-3.11-macos-aarch64-none/lib/python3.11/asyncio/tasks.py:709> cb=[_run_until_complete_cb() at /path/to/user/.local/share/uv/python/cpython-3.11-macos-aarch64-none/lib/python3.11/asyncio/base_events.py:181] created at /path/to/user/.local/share/uv/python/cpython-3.11-macos-aarch64-none/lib/python3.11/asyncio/runners.py:100> took 0.147 seconds\nok\ntest_protected_reader_imports_under_real_plugin_namespace (test_plugin_namespace.PluginNamespaceTests.test_protected_reader_imports_under_real_plugin_namespace) ... ok\ntest_auth_version_timeout_and_cancel_fail_closed (test_runtime.RuntimeTests.test_auth_version_timeout_and_cancel_fail_closed) ... ok\ntest_bridge_readers_and_checkpoint_do_not_starve_loop (test_runtime.RuntimeTests.test_bridge_readers_and_checkpoint_do_not_starve_loop) ... ok\ntest_factory_preflight_checkpoint_and_cleanup (test_runtime.RuntimeTests.test_factory_preflight_checkpoint_and_cleanup) ... ok\ntest_factory_real_bridge_fake_ws_integration_and_single_owner (test_runtime.RuntimeTests.test_factory_real_bridge_fake_ws_integration_and_single_owner) ... ok\ntest_runtime_status_degrades_when_tick_reader_fails (test_runtime.RuntimeTests.test_runtime_status_degrades_when_tick_reader_fails) ... ok\ntest_ws_auth_ids_reconnect_and_redaction (test_runtime.RuntimeTests.test_ws_auth_ids_reconnect_and_redaction) ... ok\ntest_wal_snapshot_and_sql_denial (test_runtime.SQLiteTests.test_wal_snapshot_and_sql_denial) ... ok\n\n----------------------------------------------------------------------\nRan 9 tests in 1.069s\n\nOK\n"
+    },
+    {
+      "suite": "timing_pure_subset",
+      "cwd": "companion",
+      "command": [
+        "python",
+        "-I",
+        "-B",
+        "-c",
+        "import sys,unittest,os\nfrom pathlib import Path\nsys.path.insert(0,str(Path.cwd()))\nimport test_ui_timing as tests\nimport ui_timing_runtime as timing\ntests.SCRATCH=Path(os.environ['TMPDIR'])\ntiming.SCRATCH=tests.SCRATCH\nsuite=unittest.TestSuite(unittest.defaultTestLoader.loadTestsFromTestCase(c) for c in (tests.PCMTests,tests.WrapperTests,tests.EntrypointTests))\nresult=unittest.TextTestRunner(verbosity=2).run(suite)\nraise SystemExit(not result.wasSuccessful())\n"
+      ],
+      "exit_code": 0,
+      "output": "test_format_alignment_bounds_and_extra_chunks (test_ui_timing.PCMTests.test_format_alignment_bounds_and_extra_chunks) ... ok\ntest_real_pcm_frames_not_stream_sentinel (test_ui_timing.PCMTests.test_real_pcm_frames_not_stream_sentinel) ... ok\ntest_diagnostic_cleanup_error_cannot_break_audio (test_ui_timing.WrapperTests.test_diagnostic_cleanup_error_cannot_break_audio) ... ok\ntest_fail_open_unknown_audio_timeout_diagnostic_and_stt (test_ui_timing.WrapperTests.test_fail_open_unknown_audio_timeout_diagnostic_and_stt) ... ok\ntest_http_body_and_mime_unchanged_on_metadata_failure (test_ui_timing.WrapperTests.test_http_body_and_mime_unchanged_on_metadata_failure) ... ok\ntest_original_arguments_and_body_unchanged_before_return (test_ui_timing.WrapperTests.test_original_arguments_and_body_unchanged_before_return) ... ok\ntest_stt_ignores_nonusers_and_preserves_original_error (test_ui_timing.WrapperTests.test_stt_ignores_nonusers_and_preserves_original_error) ... ok\ntest_factory_only_wraps_ball_loopback_without_endpoint_changes (test_ui_timing.EntrypointTests.test_factory_only_wraps_ball_loopback_without_endpoint_changes) ... ok\n\n----------------------------------------------------------------------\nRan 8 tests in 0.224s\n\nOK\n"
+    },
+    {
+      "suite": "plugin_all",
+      "cwd": "plugin",
+      "command": [
+        "python",
+        "-B",
+        "-m",
+        "pytest",
+        "-p",
+        "pytest_asyncio.plugin",
+        "-p",
+        "no:cacheprovider",
+        "--import-mode=importlib",
+        "-q",
+        "-rs",
+        "tests"
+      ],
+      "exit_code": 0,
+      "output": "............................................................. [ 63%]\n..................................s                                      [100%]\n=========================== short test summary info ============================\nSKIPPED [1] tests/test_plugin_registration.py:161: core no longer ships tools/homeassistant_tool.py\n95 passed, 1 skipped, 11 subtests passed in 1.60s\n"
+    }
+  ]
+}

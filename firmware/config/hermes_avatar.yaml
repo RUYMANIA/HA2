@@ -1,0 +1,213 @@
+# Approved Hermes avatar collection; local-only firmware resources.
+esphome:
+  includes:
+    - avatar_timeline.h
+    - avatar_damage.h
+    - gif_demo.h
+
+globals:
+  - id: avatar_preview_state
+    type: int
+    restore_value: false
+    initial_value: '-1'
+  - id: avatar_preview_started
+    type: uint32_t
+    restore_value: false
+    initial_value: '0'
+  - id: avatar_preview_duration
+    type: uint32_t
+    restore_value: false
+    initial_value: '4000'
+  - id: avatar_render_count
+    type: uint32_t
+    restore_value: false
+    initial_value: '0'
+  - id: avatar_seen_frames
+    type: uint32_t
+    restore_value: false
+    initial_value: '0'
+  - id: avatar_max_render_ms
+    type: uint32_t
+    restore_value: false
+    initial_value: '0'
+
+api:
+  actions:
+    - action: avatar_preview
+      variables:
+        state: int
+        duration_ms: int
+      then:
+        - lambda: |-
+            // Display-only preview. Never change mute, connectivity or voice phase.
+            if (system_menu::state().active || temporary_cards::state().exists() || state < 0 || state >= 11 || id(init_in_progress) || id(va).is_running()
+                || id(mute).state || id(timer_ringing).state
+                || id(voice_assistant_phase) != ${voice_assist_idle_phase_id}) return;
+            id(avatar_preview_started) = millis();
+            id(avatar_preview_duration) = (uint32_t)(duration_ms < 2000 ? 2000 : (duration_ms > 6000 ? 6000 : duration_ms));
+            id(avatar_preview_state) = state;
+            hermes_avatar::timeline() = hermes_avatar::Timeline();
+            id(show_clock) = false;
+            id(idle_seconds) = 0;
+    - action: avatar_preview_cancel
+      then:
+        - lambda: id(avatar_preview_state) = -1;
+        - script.execute: draw_display
+
+text_sensor:
+  - platform: template
+    id: avatar_state
+    name: Avatar State
+    entity_category: diagnostic
+    update_interval: never
+
+binary_sensor:
+  - platform: template
+    id: avatar_preview_active
+    name: Avatar Preview Active
+    entity_category: diagnostic
+    lambda: return id(avatar_preview_state) >= 0;
+
+sensor:
+  - platform: template
+    name: Avatar Frames Seen
+    id: avatar_frames_seen
+    entity_category: diagnostic
+    accuracy_decimals: 0
+    update_interval: 1s
+    lambda: return id(avatar_seen_frames);
+  - platform: template
+    name: Avatar Frame
+    id: avatar_frame
+    entity_category: diagnostic
+    accuracy_decimals: 0
+    update_interval: 1s
+    lambda: return hermes_avatar::timeline().frame();
+  - platform: template
+    name: Avatar Frames Rendered
+    id: avatar_frames_rendered
+    entity_category: diagnostic
+    accuracy_decimals: 0
+    update_interval: 1s
+    lambda: return id(avatar_render_count);
+  - platform: template
+    name: Avatar Max Render Time
+    id: avatar_render_time
+    entity_category: diagnostic
+    unit_of_measurement: ms
+    accuracy_decimals: 0
+    update_interval: 5s
+    lambda: return id(avatar_max_render_ms);
+  - platform: uptime
+    name: Avatar Firmware Uptime
+    id: avatar_uptime
+    entity_category: diagnostic
+    update_interval: 5s
+
+interval:
+  - interval: 20ms
+    then:
+      - lambda: |-
+          auto &demo=hermes_avatar::demo();
+          if(demo.active) {
+            const bool priority=id(init_in_progress) || id(va).is_running() || id(timer_ringing).state
+                || id(box_speaker).is_running()
+                || id(external_media_player).state==media_player::MEDIA_PLAYER_STATE_ANNOUNCING
+                || id(external_media_player).state==media_player::MEDIA_PLAYER_STATE_PLAYING
+                || temporary_cards::state().exists()
+                || (id(voice_assistant_phase)!=1 && id(voice_assistant_phase)!=12);
+            if(priority || !system_menu::state().active || !system_menu::state().demo_active || !ui_v3::power().awake) {
+              id(menu_demo_end).execute(priority || !ui_v3::power().awake);
+              hermes_avatar::timeline().update(millis(),-1,nullptr,0);
+              return;
+            }
+          }
+          if (!ui_v3::power().awake || (system_menu::state().active && !demo.active) || temporary_cards::state().visible()) {
+            hermes_avatar::timeline().update(millis(),-1,nullptr,0);
+            return;
+          }
+          esphome::display::DisplayPage* pages[] = {id(idle_page), id(listening_page), id(thinking_page), id(replying_page), id(timer_finished_page), id(error_page), id(initializing_page), id(muted_page), id(now_playing_page), id(no_wifi_page), id(no_ha_page)};
+          esphome::animation::Animation* animations[] = {id(casita_idle), id(casita_listening), id(casita_thinking), id(casita_replying), id(casita_timer_finished), id(casita_error), id(casita_initializing), id(casita_muted), id(casita_playing), id(error_no_wifi), id(error_no_ha)};
+          static const char* names[] = {"Reposo", "Escuchando", "Pensando", "Hablando", "Temporizador terminado", "Error", "Arrancando", "Micrófono silenciado", "Reproduciendo audio", "Sin Wi-Fi", "Sin Home Assistant"};
+          static const uint16_t delays[11][8] = {
+            {1000,1000,1000,80,80,80,80,520},
+            {120,120,120,120,120,120,120,120},
+            {140,140,140,140,140,140,140,140},
+            {120,120,120,120,120,120,120,120},
+            {140,140,140,140,140,140,140,140},
+            {140,140,140,140,140,140,140,140},
+            {140,140,140,140,140,140,140,140},
+            {180,180,180,180,180,180,180,180},
+            {120,120,120,120,120,120,120,120},
+            {160,160,160,160,160,160,160,160},
+            {160,160,160,160,160,160,160,160}
+          };
+          const uint32_t now = millis();
+          if(demo.active) id(main_display).show_page(pages[demo.index]);
+          int preview = id(avatar_preview_state);
+          if (preview >= 0) {
+            const bool expired = (uint32_t)(now - id(avatar_preview_started)) >= id(avatar_preview_duration);
+            const bool interrupted = id(va).is_running() || id(mute).state || id(timer_ringing).state
+                || id(voice_assistant_phase) != ${voice_assist_idle_phase_id};
+            if (expired || interrupted) {
+              id(avatar_preview_state) = -1;
+              id(draw_display).execute();
+            } else {
+              id(show_clock) = false;
+              id(idle_seconds) = 0;
+              id(main_display).show_page(pages[preview]);
+            }
+          }
+          const auto* page = id(main_display).get_active_page();
+          int index = -1;
+          for (int i = 0; i < 11; ++i) if (page == pages[i]) { index = i; break; }
+          const int old_state = hermes_avatar::timeline().state();
+          const int old_frame = hermes_avatar::timeline().frame();
+          const bool changed = hermes_avatar::timeline().update(now, index, index < 0 ? nullptr : delays[index], index < 0 ? 0 : 8);
+          // Only full rendered loops count; wrap includes the last-frame dwell.
+          if(demo.active && demo.boundary(hermes_avatar::timeline().frame())) {
+            hermes_avatar::timeline().update(now,-1,nullptr,0);
+            if(!demo.active) id(menu_demo_end).execute(false);
+            return;
+          }
+          if (old_state != index) {
+            id(avatar_seen_frames) = 0;
+            const char* name = index < 0 ? "Reloj / imagen" : names[index];
+            id(avatar_state).publish_state(name);
+            ESP_LOGI("hermes_avatar", "State %d: %s (%s)", index, name, id(avatar_preview_state) >= 0 ? "preview" : "live");
+          }
+          if (index < 0 || !changed) return;
+          if(demo.active && !id(main_display).is_ready()) return;
+          animations[index]->set_frame(hermes_avatar::timeline().frame());
+          const uint32_t started = millis();
+          // Suppress stale transcript overlays for a display-only GIF test,
+          // without changing show_text, the transcript, or its audio clock.
+          if(demo.active) ui_v3::gif_pass()=true;
+          if (old_state == index && old_frame >= 0) {
+            const auto* box = hermes_avatar::DAMAGE[index][old_frame][hermes_avatar::timeline().frame()];
+            if(!demo.active && id(show_text).state && (index==2 || index==3)) {
+              // Damage rectangles are exclusive edges; never repaint text strips on GIF ticks.
+              const int bands[3][2]={{0,40},{70,174},{204,240}};
+              ui_v3::gif_pass()=true;
+              for(const auto &band:bands) {
+                const int top=std::max(int(box[1]),band[0]),bottom=std::min(int(box[3]),band[1]);
+                if(top>=bottom)continue;
+                id(main_display).start_clipping(box[0],top,box[2],bottom);
+                if (id(main_display).is_ready() && ui_v3::power().awake) id(main_display).update();
+                id(main_display).end_clipping();
+              }
+              ui_v3::gif_pass()=false;
+            } else {
+              id(main_display).start_clipping(box[0], box[1], box[2], box[3]);
+              if (id(main_display).is_ready() && ui_v3::power().awake) id(main_display).update();
+              id(main_display).end_clipping();
+            }
+          } else {
+            if (id(main_display).is_ready() && ui_v3::power().awake) id(main_display).update();
+          }
+          if(demo.active) ui_v3::gif_pass()=false;
+          const uint32_t elapsed = millis() - started;
+          if (elapsed > id(avatar_max_render_ms)) id(avatar_max_render_ms) = elapsed;
+          id(avatar_render_count)++;
+          id(avatar_seen_frames) |= 1U << hermes_avatar::timeline().frame();
+          if(demo.active) demo.rendered(hermes_avatar::timeline().frame());

@@ -1,0 +1,8 @@
+{
+  "title": "HA² Notifications",
+  "config": {
+    "step": {"user": {"title": "HA² Notifications", "description": "Home Hermes Agent Assitant · RUYMANIA. No example rules are activated.", "data": {"target_prefix": "ESPHome target prefix", "weather_entity": "Weather entity"}}},
+    "error": {"config_error": "The target entities or ESPHome card services do not exist. Check the installed device and prefix."},
+    "abort": {"single_instance_allowed": "Only one HA² Notifications entry is supported."}
+  }
+}
