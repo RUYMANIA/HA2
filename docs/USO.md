@@ -8,6 +8,8 @@ Menú circular: **Proyecto → Idioma → Tarjetas → Volumen → Reposo → De
 
 Idioma de interfaz English/Español, sin cambiar STT/TTS ni contenido de tarjetas. Once GIF conservados; etiquetas internacionales START, MUTED, NO WIFI, NO HA. Reposo y despertares programados son ajustes separados de Modo noche. El primer toque corto con pantalla dormida despierta sin lanzar voz. Historial de cinco tarjetas en RAM; reiniciar lo vacía.
 
+**[Ver la guía visual del menú con fotografías en español e inglés](MENU-VISUAL.md).** Mantén pulsada la pantalla aproximadamente **1 segundo** para abrirlo; las flechas permiten recorrer las secciones. Las fotografías ilustran la interfaz, no certifican la ejecución de cada función.
+
 ## Tarjetas por conversación o CLI
 
 Peticiones de ejemplo: «Muestra este recordatorio en la Ball», «Muestra el tiempo», «Avisa y dilo en voz alta». Sin locución no significa silencio absoluto: puede sonar el aviso local aprobado de tres notas fuera de modo noche.

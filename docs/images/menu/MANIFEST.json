@@ -1,0 +1,169 @@
+{
+  "purpose": "User-provided menu photographs for private project documentation",
+  "images": [
+    {
+      "path": "EN-Autowake.jpg",
+      "source_sha256": "34f0860980ddcfea1cd7bb10dc99444daee444f3d1895e48ee922f089109c258",
+      "published_sha256": "34f0860980ddcfea1cd7bb10dc99444daee444f3d1895e48ee922f089109c258",
+      "width": 1280,
+      "height": 1280,
+      "changes": [
+        "removed EXIF/XMP/IPTC/comment metadata segments where present"
+      ]
+    },
+    {
+      "path": "EN-Card.jpg",
+      "source_sha256": "2683adb7e6cdf36770162a15ff91fcb55395a68da26632494752806afe1da973",
+      "published_sha256": "2683adb7e6cdf36770162a15ff91fcb55395a68da26632494752806afe1da973",
+      "width": 1280,
+      "height": 1280,
+      "changes": [
+        "removed EXIF/XMP/IPTC/comment metadata segments where present"
+      ]
+    },
+    {
+      "path": "EN-Exit.jpg",
+      "source_sha256": "594206b2b4bbf12db47782018b68bb50e70dbf496448a2a94faaa4806b8f073f",
+      "published_sha256": "594206b2b4bbf12db47782018b68bb50e70dbf496448a2a94faaa4806b8f073f",
+      "width": 1280,
+      "height": 1280,
+      "changes": [
+        "removed EXIF/XMP/IPTC/comment metadata segments where present"
+      ]
+    },
+    {
+      "path": "EN-HA2.jpg",
+      "source_sha256": "5537e434d608c587e96852ba2f82bbe1b08016b925a22d64fddcd5b6e77324d6",
+      "published_sha256": "5537e434d608c587e96852ba2f82bbe1b08016b925a22d64fddcd5b6e77324d6",
+      "width": 1280,
+      "height": 1280,
+      "changes": [
+        "removed EXIF/XMP/IPTC/comment metadata segments where present"
+      ]
+    },
+    {
+      "path": "EN-Language.jpg",
+      "source_sha256": "2612210c96f5afba91784b436786be060efbf071d0605c6d9497e7a1b2640448",
+      "published_sha256": "2612210c96f5afba91784b436786be060efbf071d0605c6d9497e7a1b2640448",
+      "width": 1280,
+      "height": 1280,
+      "changes": [
+        "removed EXIF/XMP/IPTC/comment metadata segments where present"
+      ]
+    },
+    {
+      "path": "EN-Night.jpg",
+      "source_sha256": "dff1289305386a922419f3805f6b1e83233ecb5a8d9f5cbb5bd2dab9c97bf677",
+      "published_sha256": "dff1289305386a922419f3805f6b1e83233ecb5a8d9f5cbb5bd2dab9c97bf677",
+      "width": 1280,
+      "height": 1280,
+      "changes": [
+        "removed EXIF/XMP/IPTC/comment metadata segments where present"
+      ]
+    },
+    {
+      "path": "EN-Sleep.jpg",
+      "source_sha256": "43d16129d68eb5ea1fa8cc5ec90610d0b2b5f4f6535237963b13b94c641db67f",
+      "published_sha256": "43d16129d68eb5ea1fa8cc5ec90610d0b2b5f4f6535237963b13b94c641db67f",
+      "width": 1280,
+      "height": 1280,
+      "changes": [
+        "removed EXIF/XMP/IPTC/comment metadata segments where present"
+      ]
+    },
+    {
+      "path": "EN-Volume.jpg",
+      "source_sha256": "fb75b198b701eeeacb75aa80b613143ee69850224d9726764e704585f2f45617",
+      "published_sha256": "9c389a846337177130357fbb882dbfd04af469e771801fc807d36b1f60e5df32",
+      "width": 1280,
+      "height": 1280,
+      "changes": [
+        "removed EXIF/XMP/IPTC/comment metadata segments where present",
+        "opaque redaction of IP and Wi-Fi value regions",
+        "re-encoded image after redaction"
+      ]
+    },
+    {
+      "path": "ES-Despertar.jpg",
+      "source_sha256": "5fb767d38c42f069e37a4a6ca858fc09225a0a9a4607ee483b34a08105985ebc",
+      "published_sha256": "5fb767d38c42f069e37a4a6ca858fc09225a0a9a4607ee483b34a08105985ebc",
+      "width": 1280,
+      "height": 1280,
+      "changes": [
+        "removed EXIF/XMP/IPTC/comment metadata segments where present"
+      ]
+    },
+    {
+      "path": "ES-HA2.jpg",
+      "source_sha256": "d29f6f61f5e2be6a83bcba9e5f9d71377fd015887c16a38c7190b13ab5a47354",
+      "published_sha256": "d29f6f61f5e2be6a83bcba9e5f9d71377fd015887c16a38c7190b13ab5a47354",
+      "width": 1280,
+      "height": 1280,
+      "changes": [
+        "removed EXIF/XMP/IPTC/comment metadata segments where present"
+      ]
+    },
+    {
+      "path": "ES-Idioma.jpg",
+      "source_sha256": "84a0957a7e02068093df10b19c51e93d30e36037b772d375c44ecf7768b71852",
+      "published_sha256": "84a0957a7e02068093df10b19c51e93d30e36037b772d375c44ecf7768b71852",
+      "width": 1280,
+      "height": 1280,
+      "changes": [
+        "removed EXIF/XMP/IPTC/comment metadata segments where present"
+      ]
+    },
+    {
+      "path": "ES-Noche.jpg",
+      "source_sha256": "699b7fe5ba1bee3c79de6210e74a249ae7821478aea9af18c2efe70ca538c2af",
+      "published_sha256": "699b7fe5ba1bee3c79de6210e74a249ae7821478aea9af18c2efe70ca538c2af",
+      "width": 1280,
+      "height": 1280,
+      "changes": [
+        "removed EXIF/XMP/IPTC/comment metadata segments where present"
+      ]
+    },
+    {
+      "path": "ES-Reposo.jpg",
+      "source_sha256": "1dc8d7b3df27cc5b78f58da3d435dcde87bcb07dd4d1d24702dff55b91fd339e",
+      "published_sha256": "1dc8d7b3df27cc5b78f58da3d435dcde87bcb07dd4d1d24702dff55b91fd339e",
+      "width": 1280,
+      "height": 1280,
+      "changes": [
+        "removed EXIF/XMP/IPTC/comment metadata segments where present"
+      ]
+    },
+    {
+      "path": "ES-Salir.jpg",
+      "source_sha256": "b9610b286652d6acd3804f21120c7e6b70aa9d307c24c597ae19e3835ade8062",
+      "published_sha256": "b9610b286652d6acd3804f21120c7e6b70aa9d307c24c597ae19e3835ade8062",
+      "width": 1280,
+      "height": 1280,
+      "changes": [
+        "removed EXIF/XMP/IPTC/comment metadata segments where present"
+      ]
+    },
+    {
+      "path": "ES-Tarjeta.jpg",
+      "source_sha256": "520ce7947bd0cfe3bc6b68d5ca295d1c069319d387549d7dedfb8596470e4872",
+      "published_sha256": "520ce7947bd0cfe3bc6b68d5ca295d1c069319d387549d7dedfb8596470e4872",
+      "width": 1280,
+      "height": 1280,
+      "changes": [
+        "removed EXIF/XMP/IPTC/comment metadata segments where present"
+      ]
+    },
+    {
+      "path": "ES-Volumen.jpg",
+      "source_sha256": "0003b85ae067206f5ceb93aa908021794c1568db4353b36fd5645f1d13ce0614",
+      "published_sha256": "f0b6e5a787248dd78cf2941284fc1c8863b7acb346f938fa25ca74598403fe4c",
+      "width": 1280,
+      "height": 1280,
+      "changes": [
+        "removed EXIF/XMP/IPTC/comment metadata segments where present",
+        "opaque redaction of IP and Wi-Fi value regions",
+        "re-encoded image after redaction"
+      ]
+    }
+  ]
+}
