@@ -22,16 +22,15 @@ test('proactive: HA then cron then proactive closed exclusive accordions, activi
  }finally{p.disconnectedCallback();}
 });
 
-test('proactive: heading beta badge reuses domestic event styling and survives locale poll collapse without writes',async()=>{
+test('proactive: approved heading has no beta; domestic beta and drafts survive locale poll collapse without writes',async()=>{
  const calls=[];const p=mount(async q=>{calls.push(q);return snapshot();});await flush();try{
- const badge=p.$('proactive-toggle').querySelector('.beta-badge');
- assert.ok(badge,'Proactive heading must show a beta badge');
- assert.equal(badge.textContent,'MODO BETA');
- assert.equal(badge.className,p.$('template-notice').querySelector('.beta-badge').className);
+ assert.equal(p.$('proactive-toggle').querySelector('.beta-badge'),null);
+ assert.equal(p.$('proactive-toggle').textContent,'Modo Proactivo');
+ const badge=p.$('template-notice').querySelector('.beta-badge');assert.equal(badge.textContent,'MODO BETA');
  const form=p.$('proactive-form'),start=p.$('proactive-start');input(start,'10:30');
  for(const key of ['ha','cron','proactive']){p.$(key+'-toggle').click();assert.equal(p._accordions.filter(x=>!x.content.hidden).length,1);}
  p.hass={...p.hass,states:{[LANGUAGE_ENTITY]:{state:'English'}}};await p.refresh();
- assert.equal(p.$('proactive-toggle').querySelector('.beta-badge'),badge);assert.equal(badge.textContent,'BETA MODE');
+ assert.equal(p.$('proactive-toggle').querySelector('.beta-badge'),null);assert.equal(p.$('proactive-toggle').textContent,'Proactive mode');assert.equal(badge.textContent,'BETA MODE');
  assert.match(p.$('ha-toggle').textContent,/Scheduled notifications in Home Assistant/);
  assert.match(p.$('cron-toggle').textContent,/Hermes Agent scheduled task notifications/);
  p.hass={...p.hass,states:{[LANGUAGE_ENTITY]:{state:'Español'}}};

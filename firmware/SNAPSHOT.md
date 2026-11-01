@@ -1,8 +1,10 @@
 # Registro del snapshot firmware
 
-Origen lógico: `ha2-menu-1.3.1`; no se incluyen rutas privadas originales.
+Origen vigente: firmware **1.3.2**, cierre `ha2-okey-hermes-20261029`. Actualización de archivo del 1 de noviembre de 2026: tres YAML actualizados contra sus bytes congelados y dos artefactos Okey Hermes añadidos; demás fuentes/recursos y pruebas conservados. No se incluyen rutas privadas originales. El manifiesto registra la procedencia por archivo.
 
-## Conteos calculados
+**Aceptación:** RUYMANIA confirma uso físico correcto de Okey Hermes tanto hablando en español como en inglés; el manifiesto sigue declarando entrenamiento `es`. No se ha ejecutado ninguna acción de hardware durante esta actualización.
+
+## Conteos históricos de la primera copia (1.3.1)
 
 ```json
 {
@@ -33,7 +35,7 @@ Solo saneado textual; sin cambios de lógica, entidades ni expectativas. Un recu
 
 Los demás archivos copiados son byte-idénticos según el manifiesto. El saneado puede romper expectativas históricas negativas que comparaban IP distintas: no se modifica esa lógica para ocultarlo.
 
-## Ejecución nueva
+## Ejecución histórica de la primera copia (26-10-2026)
 
 Comandos por archivo, salida y códigos reales en TEST-RESULTS.json. Directorio de trabajo del compilador: raíz de este snapshot; ejecutables temporales exclusivamente en scratch y eliminados después. No se ejecutan runners originales ni Python, ESPHome, red HA, OTA o reinicios. No se infieren pruebas físicas ni una suite portable.
 

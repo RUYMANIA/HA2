@@ -8,6 +8,8 @@ from pathlib import Path
 from types import SimpleNamespace
 from zoneinfo import ZoneInfo
 import time
+import re
+import unicodedata
 from homeassistant.components import conversation
 from homeassistant.components.assist_pipeline import pipeline
 from homeassistant.components.esphome import assist_satellite as esp_satellite
@@ -15,6 +17,25 @@ from homeassistant.helpers.network import get_url
 from .native_conversation import NativeConversationStarter
 from .native_ingress import NativeIngressGate
 from .proactive import CAPABILITY_KEYS,INTENT_IDS
+
+MAX_OPENER_CHARACTERS=120
+MAX_OPENER_WORDS=20
+MAX_OPENER_UTF8_BYTES=240
+
+def valid_short_opener(body):
+    """Validate, never truncate: the exact opener also binds conversational context."""
+    if (not isinstance(body,str) or not body or body!=body.strip()
+            or len(body)>MAX_OPENER_CHARACTERS or len(body.split())>MAX_OPENER_WORDS):
+        return False
+    try:
+        if len(body.encode('utf-8'))>MAX_OPENER_UTF8_BYTES:return False
+    except UnicodeError:return False
+    # Plain ES/EN text: no lists, markup, emoji, URLs, controls or hidden line breaks.
+    if not all(c.isalpha() or c.isdecimal() or unicodedata.category(c).startswith('M')
+               or c in " ,;:'’-¿¡.!?" for c in body):return False
+    return ((body[0].isalpha() or body[0] in '¿¡')
+            and any(c.isalpha() for c in body)
+            and re.fullmatch(r'(?:¿[^¿¡.!?]+\?|¡[^¿¡.!?]+!|[^¿¡.!?]+[.!?])',body) is not None)
 
 class NativeProactiveTransport:
     def __init__(self,hass,sender,*,resolver=None,cue_media_id=None):
@@ -95,7 +116,12 @@ class NativeProactiveTransport:
         if not ctx.gate.install():raise RuntimeError('native_ingress_unavailable')
         self.owner=request_id;self.context=ctx
         local=self.sender.clock().astimezone(ZoneInfo(self.hass.config.time_zone)).strftime('%H:%M')
-        prompt=(f'Genera sólo una invitación breve y natural a charlar, máximo180caracteres. '
+        prompt=(f'Genera sólo una invitación breve y natural a charlar en una única frase completa. '
+                f'Máximo {MAX_OPENER_CHARACTERS} caracteres, {MAX_OPENER_WORDS} palabras '
+                f'y {MAX_OPENER_UTF8_BYTES} bytes UTF-8, incluidos espacios y puntuación. '
+                'Termina con un único punto, signo de interrogación o exclamación. '
+                'Sin listas, saltos de línea, emojis, enlaces, markdown, comillas envolventes '
+                'ni abreviaturas con punto; no añadas un saludo como segunda frase. '
                 f'Intención:{intent_id};hora local:{local};idioma:{ctx.pipeline.language}. '
                 'Terminal compartido: no identifiques a nadie, no uses nombres ni datos privados, '
                 'no atribuyas aburrimiento o necesidad emocional, no presiones ni culpabilices. '
@@ -104,7 +130,7 @@ class NativeProactiveTransport:
             result=await ctx.client.async_inference(messages=[dict(role='user',content=prompt)],
                 conversation_id=request_id,language=ctx.pipeline.language,bootstrap_session=True)
             body=getattr(result,'text',None)
-            if not valid() or not isinstance(body,str) or not body.strip() or len(body)>400 or len(body.encode())>480:
+            if not valid() or not valid_short_opener(body):
                 raise RuntimeError('invalid_opener')
             self.prepared=dict(request_id=request_id,body=body,context=ctx)
             return self.prepared
@@ -115,6 +141,9 @@ class NativeProactiveTransport:
     async def present(self,prepared,config,valid):
         if prepared is not self.prepared or prepared['request_id']!=self.owner or not valid():
             return dict(accepted=False,completed=False,reason='ownership_changed')
+        if not valid_short_opener(prepared.get('body')):
+            await self.cancel(self.owner)
+            return dict(accepted=False,completed=False,reason='invalid_opener')
         ctx=self._resolve()
         if ctx.satellite is not prepared['context'].satellite or ctx.client is not prepared['context'].client:
             return dict(accepted=False,completed=False,reason='target_changed')

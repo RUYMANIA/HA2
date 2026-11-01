@@ -150,7 +150,7 @@ class Engine:
             if outcome=='queued':
                 request_id=self.append(data,cron.synthetic(job,result),request_id=rid,due=finished.timestamp(),origin=origin)
             else:
-                self.log(data,dict(request_id=rid,rule_id=job_key,rule={'name':job['name'][:60] if job else 'Hermes Agent'},origin=origin),outcome)
+                self.log(data,dict(request_id=rid,rule_id=job_key,rule={'name':job['name'][:60] if job else 'Hermes Agent','kind':'result'},origin=origin),outcome)
             receipts[rid]=dict(until=now+172800,request_id=request_id,outcome=outcome)
             await self.commit(data)
             return dict(accepted=True,outcome=outcome,request_id=request_id)
@@ -189,9 +189,13 @@ class Engine:
     def log(self,data,item,status,reason=''):
         data['logs'].append({'id':item['request_id'],'at':self.clock().isoformat(),
                              'rule_id':item['rule_id'],'name':item['rule']['name'],
-                             'status':status,'reason':reason})
+                             'status':status,'reason':reason,
+                             'source':('proactive' if item.get('source')=='proactive' else
+                                       'hermes_cron' if item.get('origin',{}).get('job_key') else 'home_assistant'),
+                             'kind':item['rule'].get('kind'),
+                             'trigger':item['rule'].get('trigger')})
         if 'origin' in item:data['logs'][-1]['origin']=deepcopy(item['origin'])
-        data['logs']=data['logs'][-50:]
+        data['logs']=data['logs'][-200:]
 
     def finish(self,data,item,status,reason=''):
         self.log(data,item,status,reason)

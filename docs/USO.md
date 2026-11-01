@@ -10,6 +10,10 @@ Idioma de interfaz English/Español, sin cambiar STT/TTS ni contenido de tarjeta
 
 **[Ver la guía visual del menú con fotografías en español e inglés](MENU-VISUAL.md).** Mantén pulsada la pantalla aproximadamente **1 segundo** para abrirlo; las flechas permiten recorrer las secciones. Las fotografías ilustran la interfaz, no certifican la ejecución de cada función.
 
+## Activación «Okey Hermes»
+
+La wake word **Okey Hermes** está integrada desde firmware 1.3.2. RUYMANIA confirma que funciona en sus pruebas tanto hablando en **español** como en **inglés**. El modelo conserva su entrenamiento `es`; esto no fija el idioma del menú ni cambia la pipeline STT/TTS. [Modelo, configuración y aceptación](OKEY-HERMES.md). No se necesita el entrenador para usar el dispositivo ya compilado.
+
 ## Tarjetas por conversación o CLI
 
 Peticiones de ejemplo: «Muestra este recordatorio en la Ball», «Muestra el tiempo», «Avisa y dilo en voz alta». Sin locución no significa silencio absoluto: puede sonar el aviso local aprobado de tres notas fuera de modo noche.
@@ -30,8 +34,8 @@ Meteorología toma la entidad configurada, condición/unidades y hora del estado
 
 - Avisos HA: reglas temporales/semanales/estado/manual, cue o voz, revisión optimista y pausa.
 - Tareas Hermes: decidir qué resultados recibir, con extractos/voz opt-in; no modificar el cron original.
-- Proactivo BETA: opciones y disponibilidad, sin activar por guardar ni lanzar pruebas automáticamente.
-- Actividad real: ingestión, cola, entrega y rechazo son estados distintos.
+- Proactivo: aprobado y sin BETA; los cierres posteriores registran que está activo. Guardar opciones no lanza una prueba ni autoriza cambiar su configuración en esta publicación. Invitaciones automáticas breves, con rechazo si exceden su contrato, no recorte silencioso.
+- Log de Actividad / Activity Log: las tres fuentes comparten registro y retención de hasta 200 eventos; ingestión, cola, entrega y rechazo son estados distintos. Nuevo evento doméstico conserva BETA.
 
 `enqueued` es entrada en cola, no entrega; `tts_end` sólo acredita URL lista, no reproducción. Para voz, exigir fin real de audio y confirmación humana cuando importe la audibilidad.
 

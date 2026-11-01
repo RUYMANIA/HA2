@@ -1,6 +1,6 @@
 # HA² branding and night configuration. Selects/switch own preferences; RAM is derived.
 esphome:
-  comment: "HA² 1.3.0 — approved local Cori v2 startup and three-note notification"
+  comment: "HA² 1.3.2 — local Spanish Okey Hermes candidate; existing UI and audio preserved"
   includes:
     - ui_catalogue.h
     - night_mode.h
@@ -8,7 +8,7 @@ esphome:
     - ha2_startup.h
   project:
     name: ruymania.ha2
-    version: 1.3.1
+    version: 1.3.2
   on_boot:
     - priority: 800
       then:

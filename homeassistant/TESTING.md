@@ -1,44 +1,55 @@
-# Pruebas del snapshot
+# Pruebas offline de la copia
 
-## Resultado real y alcance ejecutado
+## Ejecución final del 1 de noviembre de 2026
 
-`TEST-RESULTS.json` conserva entorno, comandos, códigos de salida y salida real saneada. En la copia: Python **3.11.15**, Node **v22.23.1**; `test_engine.py` **12 OK**, `test_review_gates.py` **3 OK**, Node **54 pass / 0 fail**. No se atribuyen estos resultados al resto de pruebas archivadas ni a HA real.
+`TEST-RESULTS.json` separa `current_execution` de `historical_execution_2026_10_26`. La ejecución final actual tiene **71 casos Python y 58 Node, todos PASS**. No se suman la primera pasada exploratoria, las repeticiones finales, los resultados históricos ni los recuentos de los cierres de instalación. El runner Python verifica IDs únicos en su selección explícita. Son casos ejecutados, no una medida de cobertura ni 129 entregas.
 
-Desde este directorio, los comandos equivalentes son:
+Entorno comprobado: Python **3.12.13**, Node **v22.23.1**. No se instala ninguna dependencia. Desde este directorio, con Python que soporte estas fuentes y `zoneinfo`:
 
 ```sh
-python -I -B -m unittest discover -s tests/backend -p test_engine.py -v
-python -I -B -m unittest discover -s tests/backend -p test_review_gates.py -v
-node --test tests/frontend/panel.test.mjs tests/frontend/cron.test.mjs tests/frontend/proactive.test.mjs
+python -I -B tests/offline/run.py
+TZ=America/Los_Angeles node --test tests/frontend/panel.test.mjs tests/frontend/cron.test.mjs tests/frontend/proactive.test.mjs tests/frontend/activity.test.mjs
 ```
 
-Los dos comandos Python cargan `engine.py` por ruta, con Store/reloj/sender de memoria y sin importar el setup HA. Sólo biblioteca estándar, incluidos datos de zonas horarias disponibles para `zoneinfo`. No determinan el Python mínimo de Home Assistant. Node usa módulos nativos `node:test`, `structuredClone` y ESM; no hay npm/build, lockfile ni paquetes frontend instalados. El DOM simulado no demuestra renderizado de navegador.
+En este Mac se utilizó el intérprete aislado de desarrollo ya existente; el reporte scratch para el padre conserva su ruta local, sin añadirla al repositorio. `HOME`, `HERMES_HOME` y `TMPDIR` se establecieron a directorios fixture efímeros durante la ejecución final. No se lee configuración real de Hermes ni HA. No ejecutar discovery global: hay suites archivadas con otras dependencias.
 
-## Resto archivado: offline no significa autosuficiente
+## Selección Python pura
 
-Se revisaron fuentes y fronteras de efectos antes de copiarlas: no se incluyen tests que contacten servicios operativos. Aquí «offline» incluye pruebas de clases reales HA con IO simulado; **no** significa que todas usen sólo biblioteca estándar. Estas suites adicionales **no se ejecutaron**.
+`tests/offline/run.py` incluye una allowlist explícita. Resuelve el namespace vacío `custom_components.ha2_notifications` sin ejecutar su `__init__.py`; carga los módulos puros reales sin fingir una versión o clase HA. Esto **no acredita integración ni compatibilidad de Home Assistant**. Un audit hook rechaza `socket.connect`, `socket.bind`, `subprocess.Popen` y `os.system`; no es un sandbox de seguridad general.
 
-| Área | Dependencias/fronteras que conserva |
+| Área ejecutada | Frontera |
 |---|---|
-| `backend/test_cron.py` | Engine y `test_engine`; su import de paquete pasa por el setup HA, por lo que requiere un entorno HA o carga aislada externa. No se añadió bootstrap ni runner. |
-| Otros `backend/test_*.py` | Clases HA reales, `voluptuous` y dependencias transitivas `aioesphomeapi`; registros/services/state machine locales, Store de prueba y handlers simulados. Algunas escriben configuración de prueba dentro de la copia. No usar discovery global indiscriminado. |
-| `audio_followup` | Importa `backend/test_ha.py`; HA real y transporte con reloj, TTS y servicios fixture. Sin reproducción física. |
-| `lifecycle_followup` | HA, `voluptuous`; instancia no iniciada, registro local, Store aislado y efectos de dispositivo prohibidos. Puede crear `isolated-config/` en una futura ejecución. |
-| `proactive_backend/test_scheduler.py` | Biblioteca estándar, carga por ruta de `proactive.py`, reloj/RNG fixture. |
-| `proactive_backend/test_coordinator.py`, `test_native_capability.py`, `test_ownership.py` | Motor/coordinador reales con Store/transport de memoria; imports de paquete HA y fixtures hermanos. No modelos ni hardware. |
-| `proactive_backend/test_ws.py` | HA, `voluptuous`, Store local; registro WS sin servidor, worker local y transporte fixture. Puede escribir configuración aislada. |
-| `native_conversation/test_adapter_context.py` | HA conversation/chat log y adaptador; cliente inference sustituido por fixture. Conserva ruta `/config/.ha2-development-tests/native-fixture` como literal histórico, no autorización de acceso. |
-| `native_conversation/test_client_capability.py` | `aiohttp` y adaptador/HA; `_request_json` se sustituye antes de invocar; `fixture.invalid` no se consulta. |
-| `native_conversation/test_native_ingress.py` | HA y `aioesphomeapi` reales; conexión/subscripción/API fixture, sin socket. Guardas/versiones siguen siendo necesarias. |
-| `native_conversation/test_native_starter.py`, `test_native_transport.py` | HA/ESPHome reales, anuncio/ACK/modelo/resolver fixture; ruta `/config/.ha2-development-tests/native-flow` conservada. No iniciar en HA vivo. |
-| `native_conversation/test_timing_boundary.py` | Depende de `native_provider/ui_timing_runtime.py`, **fuera de esta instantánea**; inference/sender inyectados. No ejecutable de manera autónoma aquí. |
-| `contract/test_compat.py` | Engine cargado por ruta, Store y busy sender de memoria; biblioteca estándar. No ejecutada. |
-| `integration/test_bridge_engine.py` | Depende de `hermes_bridge.bridge`, **fuera de este directorio**; SQLite y archivos temporales sintéticos con `TMPDIR`, WS cliente fixture. No lee bases vivas ni dispara scheduler/altavoz. No ejecutable de manera autónoma aquí. |
+| `backend/test_engine.py`, `test_review_gates.py` | Engine real, Store/reloj/sender de memoria; retención actualizada a 200. |
+| `backend/test_cron.py`, `test_activity.py` | Engine y auxiliares reales, persistencia de memoria, metadatos y revisiones; no puente ni WS real. |
+| `proactive_backend/test_scheduler.py`, `test_coordinator.py`, `test_native_capability.py`, `test_ownership.py`, `test_activity_log.py` | Scheduler/coordinador reales con transporte inerte; retención común, estados, cancelación, owner ajeno, duplicados, fallos de commit y conservación de configuración activa fixture. No inferencia ni micrófono. |
+| `contract/test_compat.py` | Engine cargado por ruta, Store y sender ocupado de memoria. |
+| `offline/test_short_opener.py` | AST sin modificar del validador, constantes y clase de `native_transport.py`; sólo imports stdlib, resolver/client/gate/starter fixture. Ejercita límites 120/20/240, Unicode, formato, no truncar/reintentar, contexto exacto, prompt, doble validación y ownership. **No importa HA, no ejecuta la rama nativa por defecto de `_resolve`, ni valida compatibilidad, audio, escucha o guards HA en ejecución.** |
 
-No se han copiado dependencias HA/terceras ni se han instalado para ejecutar suites extra. Para evaluarlas en el futuro, usar sandbox efímero dedicado, resolver imports hermanos y dependencias explícitamente y mantener todas las fronteras offline. No cambiar imports/lógica archivados sólo para obtener PASS.
+Los imports se aíslan sólo en el proceso de pruebas, no se modifica código operativo. Los fingerprints y guards de los componentes permanecen intactos. La selección nueva se valida sobre los hashes finales; no se cambian expectativas para ocultar un fallo del código instalado.
 
-## Exclusiones deliberadas
+## Node
 
-No se copian `run.py`, `run-tests.mjs`, runners Docker, pruebas de navegador, fixtures generados, resultados históricos, snapshots de pruebas, wrapper HTML ni capturas. `test_provider_bootstrap.py` se excluye aunque use fixtures: crea servidores HTTP/socket locales y requiere `native_provider`, por lo que no es una prueba pura sin red.
+Cuatro `*.test.mjs`: las tres suites existentes más `activity.test.mjs` del cierre de rótulos. Prueban ES/EN, 200 filas sin deduplicarlas, origen legacy honesto, estados no equivalentes a entrega, zona HA/DST con zona de navegador simulada distinta, texto XSS literal, scroll/nodos/borradores y BETA sólo en eventos domésticos. El transporte WS es fixture. Node usa `node:test`, ESM y el DOM simulado local, sin npm ni navegador real: no demuestra layout, accesibilidad física o actualización de Safari.
 
-Se conservan sólo los tres `*.test.mjs`, `dom-harness.mjs`, `build-wrapper.mjs` y el **fuente** `wrapper-fixture.js`. `build-wrapper.mjs` escribe `wrapper.html`: se archiva como fuente, **no se ejecutó** y su resultado no se incluye. Los comandos Node anteriores no lo necesitan.
+`dom-harness.mjs`, `build-wrapper.mjs` y `wrapper-fixture.js` conservan sus fuentes originales. **No se ejecuta** `build-wrapper.mjs` ni se genera `wrapper.html`.
+
+## Resto archivado: no ejecutado en esta revisión
+
+| Área | Límite honesto |
+|---|---|
+| Otros `backend/test_*.py`, `audio_followup`, `lifecycle_followup`, `proactive_backend/test_ws.py` | Requieren clases/dependencias HA reales y registros/servicios fixture. No se usa el contenedor vivo para resolverlas. |
+| `native_conversation/test_native_transport.py` | Se incorpora la ampliación del 29 de octubre (límites, no retry, contexto, modos y conversación manual no restringida). La suite completa requiere HA/ESPHome y fixtures hermanos; **no se ejecutó**. Los probes AST anteriores no sustituyen esa suite. |
+| Otros `native_conversation/test_*.py` | Dependen de HA, `aioesphomeapi`, `aiohttp` o adaptador real. `test_timing_boundary.py` requiere `native_provider/ui_timing_runtime.py`, fuera de este directorio. |
+| `integration/test_bridge_engine.py` | Requiere `hermes_bridge.bridge`, fuera de este directorio; no ejecutable autónomamente aquí. |
+
+No se añaden dependencias ni bootstrap que simule HA compatible. Las rutas históricas `/config/.ha2-development-tests/` de fixtures no son autorización para acceder a una instalación. Una futura comprobación de clases HA requiere laboratorio offline dedicado y dependencias resueltas; no comandos contra producción.
+
+## Exclusiones y procedencia
+
+No se copian runners Docker, instaladores, pruebas de navegador, snapshots/receipts privados, Store, bases de datos, capturas, archivos generados ni resultados operativos. El nuevo `tests/offline/run.py` es un runner **puro**, no el runner Docker del proyecto original. `test_provider_bootstrap.py` sigue excluido: abre sockets y depende de `native_provider` no archivado. No se importan tests de upgrade/plugin/runtime ajenos a esta superficie.
+
+El manifiesto registra hashes de origen/copia y conserva los anteriores. Resultados actuales contienen comandos, salida real saneada y huella de todos los fuentes de componentes y pruebas. Un parseo AST de los Python y hashes de archivo no equivalen a una prueba HA.
+
+## Ejecución histórica — 26 de octubre de 2026
+
+La primera instantánea ejecutó 15 casos Python (12 Engine y 3 review gates) y 54 Node con Python 3.11.15 y Node v22.23.1. Su salida original permanece en `historical_execution_2026_10_26`; no describe los nuevos hashes ni se suma a los resultados actuales. Los cierres privados posteriores conservan sus fases RED/GREEN y sus propios recuentos, que tampoco se reproducen como pruebas nuevas de esta copia.

@@ -201,7 +201,7 @@ class EngineTests(unittest.IsolatedAsyncioTestCase):
         with self.assertRaisesRegex(engine.Error,'queue_full'): await self.e.enqueue(rid)
         await self.e.command('toggle',id=rid,enabled=False,expected_revision=3)
         self.assertEqual(self.e.data['queue'],[])
-        self.assertLessEqual(len(self.e.data['logs']),50)
+        self.assertLessEqual(len(self.e.data['logs']),200)
         self.assertNotIn('Contenido',str(self.e.data['logs']))
 
     async def test_canonical_validation_and_crud(self):

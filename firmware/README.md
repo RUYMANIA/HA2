@@ -1,14 +1,18 @@
 # HA² — Home Hermes Agent Assistant · firmware
 
-Snapshot documental saneado de la release local **ha2-menu-1.3.1**, para archivo en un repositorio **privado**. No es firmware nuevo, rediseño, portabilidad ni entrega compilable validada. No se ha tocado el árbol original, Home Assistant, el dispositivo, USB, OTA ni servicios.
+Snapshot documental saneado actualizado a **HA² 1.3.2**, basado en el cierre de `ha2-okey-hermes-20261029`, para archivo en un repositorio **privado**. Los recursos y pruebas sin cambios conservan su procedencia 1.3.1 en el manifiesto. No es firmware nuevo, rediseño, portabilidad ni entrega compilable validada. No se ha tocado el árbol original, Home Assistant, el dispositivo, USB, OTA ni servicios.
 
 ## Qué contiene
 
-Once encabezados, entrada ESPHome, configuración y hardware originales, cinco YAML vendor, once GIF finales, los dos PNG QR de producción/comparación, saludo Cori v2 y aviso WAV, paquete Hey Hermes con su licencia, pruebas C++ y cuatro pruebas Python seleccionadas. No incluye secretos, binarios OTA/factory/ELF, cachés, logs originales, respaldos, informes domésticos ni herramientas operativas de despliegue.
+Once encabezados, entrada ESPHome, configuración y hardware originales, cinco YAML vendor, once GIF finales, los dos PNG QR de producción/comparación, saludo Cori v2 y aviso WAV, paquete Hey Hermes con su licencia, modelo local **Okey Hermes** con manifiesto original y hashes, pruebas C++ y cuatro pruebas Python seleccionadas. No incluye secretos, binarios OTA/factory/ELF, cachés, logs originales, respaldos, informes domésticos ni herramientas operativas de despliegue.
 
 Los únicos cambios a archivos copiados son sustituciones documentales de IP LAN por `192.0.2.10`, directorio de usuario por `/path/to/user` y MAC por `00:00:00:00:00:00`, donde proceda. Se mantiene el puerto y la allowlist de URL TTS; no se amplían hosts admitidos ni se parametriza/rediseña la lógica. El endpoint documental no debe usarse para despliegue.
 
 Se conservan entidades y nombres técnicos heredados (por ejemplo `weather.forecast_casa`, IDs `xiaozhi_*`, etiquetas de habitaciones), que son ejemplos heredados y deben revisarse para otra instalación. La grafía histórica **Agent Assitant** se conserva en código/recursos; la denominación editorial es **Agent Assistant**.
+
+## Wake word aceptada: Okey Hermes
+
+**Okey Hermes funciona en las pruebas físicas de RUYMANIA hablando en español y en inglés**, confirmado el 1 de noviembre de 2026. Entrenado en español (`trained_languages: [es]`), integrado en 1.3.2 y distinto del modelo Hey Hermes anterior. [Artefactos, configuración y derechos](models/okey-hermes/README.md) · [Alcance de aceptación](../docs/OKEY-HERMES.md). La actualización de GitHub no vuelve a instalar ni activa el detector.
 
 ## Configuración y pruebas: límites
 

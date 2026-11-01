@@ -1,5 +1,17 @@
 # Alcance y cambios de la instantánea
 
+## Actualización — 1 de noviembre de 2026
+
+Se sincronizan cuatro fuentes por SHA instalado exacto en los cierres posteriores del 27 y 29 de octubre, **sin copiar candidatos completos**. Detalles y autoridades en `UPDATE-20261101.md`; procedencia origen/copia actual y anterior en `MANIFEST.json`. Se incorporan pruebas puras de actividad/cron/coordinador/frontend y la ampliación nativa de invitaciones cortas (ésta requiere HA y no se ejecuta completa). El runner offline añadido y los probes AST no son runners Docker ni una simulación de HA compatible.
+
+Ejecución final de esta copia: **71 casos Python y 58 Node PASS**; salida actual separada de la histórica en `TEST-RESULTS.json`. No se suman pasadas ni recuentos de otros cierres. No se modifica firmware, voz, guards ni lógica respecto de los fuentes seleccionados. El resto de componentes retiene la procedencia original. No se ha accedido a servicios, producción ni hardware; sin despliegue/reinicio, inferencia, micrófono, stage/commit/push ni licencia propia.
+
+Los cierres documentan Proactivo activo y aprobado sin BETA; eso no modifica el default OFF de una instalación nueva ni prueba estado vivo actual. El Log de Actividad comparte Store y retiene 200 eventos; la primera actividad nueva enriquecida y la primera invitación natural no quedan acreditadas por estas pruebas. No reconstruir historia ni apagar configuraciones a partir de staging congelado.
+
+## Registro histórico inalterado — 26 de octubre de 2026
+
+**Lo que sigue describe sólo la fase inicial, no el estado ni el alcance de la actualización anterior.** Sus contadores, selección de una sola raíz y frases de futura aceptación se conservan como historia; para el estado documentado posterior prevalecen los cierres resumidos en `UPDATE-20261101.md`.
+
 Fecha de trabajo: **2026-10-26**. Estado: **snapshot privado de fuentes**, no distribución portable, no despliegue y no lectura del estado vivo. Se parte exclusivamente de la raíz lógica `ha2-notifications-0.3.0`; no se mezclan versiones anteriores, firmware o receipts operativos.
 
 ## Lista positiva y cambios

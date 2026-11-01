@@ -2,8 +2,9 @@
 
 ## Funcionales
 
-- Aceptación física del menú/mantenimiento 1.3.1 y demo completa.
-- Activación expresamente autorizada de Proactivo y primera oportunidad automática real.
+- Aceptación específica de los controles de mantenimiento y demo completa que no esté documentada; las fotos del menú no prueban que se hayan ejecutado. La versión actual documentada del firmware es 1.3.2.
+- Proactivo ya está aprobado y figura ACTIVO en cierres posteriores: no mantener su activación como pendiente. Conservar separada la observación de una oportunidad natural/enriquecida que no esté acreditada; no provocarla para actualizar GitHub.
+- Okey Hermes: integración y prueba física inicial aceptadas; uso en español e inglés confirmado el 1 de noviembre de 2026. No dejar su activación o prueba inicial pendientes. Las métricas acústicas prolongadas no medidas no son un bloqueo obligatorio nuevo.
 - Pruebas de recorridos completos de avisos/tareas, modo noche y lectura/TTL con versiones exactas.
 - Medición de heap/underruns en hardware si se quiere afirmar comportamiento de memoria/audio; flash libre no demuestra RAM libre.
 
@@ -20,7 +21,7 @@
 
 - Decidir licencia del código propio con RUYMANIA.
 - Consolidar derechos de logo/GIF, QR, voz y mezcla musical antes de apertura pública.
-- Revisar dependencias descargadas (fuentes, sonidos y modelos stock) si se redistribuyen.
+- Revisar dependencias descargadas (fuentes, sonidos y modelos stock) si se redistribuyen; conservar separada la política de derechos del modelo propio Okey Hermes sin aplicarle la MIT del modelo Hey Hermes.
 - Aprobar documentación y después traducir al inglés la parte técnica.
 - Decidir si corregir «Assitant» en una **nueva** revisión funcional; no modificar retrospectivamente fuentes instaladas como parte de documentación.
 

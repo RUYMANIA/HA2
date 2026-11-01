@@ -1,0 +1,33 @@
+{
+  "verified_at_utc": "2026-11-01T12:58:10.895876+00:00",
+  "scope": "File integrity, frozen sources and configuration contract only; no hardware/audio/network HA/new firmware build",
+  "checks": {
+    "installed_source_freeze_43_verified": true,
+    "weights_sha256_matches_trained_original": true,
+    "weights_size_137984": true,
+    "flatbuffer_TFL3": true,
+    "manifest_original_bytes": true,
+    "manifest_preserves_spanish_training": true,
+    "manifest_preserves_cutoff_window": true,
+    "model_relative_reference_resolves": true,
+    "changed_yaml_matches_installed_sources": true,
+    "old_model_order_preserved": true,
+    "new_model_append_visible": true,
+    "no_core_cpp_changes": true
+  },
+  "all_checks_passed": true,
+  "physical_acceptance": {
+    "reported_by": "RUYMANIA",
+    "initial_acceptance_date": "2026-10-29",
+    "bilingual_confirmation_date": "2026-11-01",
+    "works_in_user_tests": [
+      "Spanish",
+      "English"
+    ],
+    "training_languages_unchanged": [
+      "es"
+    ],
+    "source": "User confirmation; no new agent-run recognition test or bilingual benchmark"
+  },
+  "historic_firmware_tests": "67 gates in installed release record, not re-executed for this archive update"
+}

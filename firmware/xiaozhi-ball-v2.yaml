@@ -120,4 +120,9 @@ micro_wake_word:
     # Keep the original manifest/name and Okay Nabu as a working fallback.
     - model: models/hey-hermes/hey-hermes.json
       id: hey_hermes_experimental
+    # Locally trained Spanish candidate. Append only: preserve existing IDs/preferences.
+    # ESPHome enables only index 0 by default; this new option starts disabled.
+    - model: models/okey-hermes/okey_hermes.esphome.json
+      id: okey_hermes_experimental
+      internal: false
 

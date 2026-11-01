@@ -19,6 +19,22 @@ const EN = {
   "-Durante el modo noche la Ball no mostrará por pantalla los avisos ni audio.": "-During night mode the Ball will not display notifications or play audio.",
   "-El contenido de los avisos puede ser privado. Si la Ball es compartida, elija con cuidado qué se muestra o se lee.": "-Notification content may be private. If the Ball is shared, choose carefully what is displayed or read aloud.",
   "Actividad real": "Real activity",
+  "Log de Actividad": "Activity Log",
+  "Envíos y ejecuciones hacia la Ball · hasta 200 eventos recientes; no es un historial ilimitado.": "Sends and executions towards the Ball · up to 200 recent events; not an unlimited history.",
+  "Proactivo": "Proactive",
+  "Invitación a conversar": "Invitation to chat",
+  "Origen no disponible (registro anterior)": "Source unavailable (legacy record)",
+  "Tipo no disponible": "Type unavailable",
+  "Nombre no disponible": "Name unavailable",
+  "Resultado no disponible": "Outcome unavailable",
+  "Aceptado (no confirma finalización)": "Accepted (does not confirm completion)",
+  "Completado": "Completed",
+  "No completado": "Not completed",
+  "No disponible": "Unavailable",
+  "Oportunidad omitida": "Opportunity skipped",
+  "Generando invitación": "Generating invitation",
+  "Presentando invitación": "Presenting invitation",
+  "Oportunidad reservada": "Opportunity claimed",
   "Previsualización orientativa": "Illustrative preview",
   "Así llegaría a la Ball": "How it would appear on the Ball",
   "Aproximación visual · no envía ni reproduce audio": "Visual approximation · does not send or play audio",
@@ -39,7 +55,7 @@ const EN = {
   "Esperando datos reales…": "Waiting for real data…",
   "Crear un aviso": "Create a notification",
   "No se cargan ejemplos.": "No examples are loaded.",
-  "Actividad real, eventos recientes primero": "Real activity, newest events first",
+  "Log de Actividad, eventos recientes primero": "Activity Log, newest events first",
   "Aviso": "Notification",
   "Sin actividad registrada. No se ha inventado ninguna entrega.": "No activity recorded. No delivery has been fabricated.",
   "El resumen se generará con los datos meteorológicos HA al enviar.": "The summary will be generated from HA weather data when sent.",
@@ -199,7 +215,7 @@ const MODE = r => r.mode === 'voice' ? 'Texto + locución' : 'Texto + tres notas
 const KINDS = {weather:'Tiempo',reminder:'Recordatorio',notice:'Evento doméstico',result:'Resultado manual'};
 const NEW_TITLES = {weather:'Nuevo aviso de Tiempo',reminder:'Nuevo recordatorio',notice:'Nuevo evento doméstico',result:'Nuevo resultado manual'};
 const DESCRIPTIONS = {weather:'Muestra los datos meteorológicos actuales de Home Assistant al enviar; no inventa un pronóstico.',reminder:'Te recuerda algo en una fecha concreta o en los días de la semana que elijas.',notice:'Avisa al detectar una transición de estado de otro dispositivo de Home Assistant.',result:'Muestra un resultado bajo petición; no crea un enlace automático con tareas de Hermes.'};
-const STATUS = {queued:'En cola',waiting:'Esperando',delivered:'Recibido por la Ball (no confirma lectura)',audio_done:'Locución finalizada',night_silent:'Recepción nocturna sin audio',expired:'Caducado',failed:'Fallido',uncertain:'Entrega incierta: no repetir a ciegas',cancelled:'Cancelado'};
+const STATUS = {queued:'En cola',waiting:'Esperando',delivered:'Recibido por la Ball (no confirma lectura)',audio_done:'Locución finalizada',night_silent:'Recepción nocturna sin audio',expired:'Caducado',failed:'Fallido',uncertain:'Entrega incierta: no repetir a ciegas',cancelled:'Cancelado',accepted:'Aceptado (no confirma finalización)',completed:'Completado',not_completed:'No completado',skipped:'Oportunidad omitida',generating:'Generando invitación',presenting:'Presentando invitación',claimed:'Oportunidad reservada'};
 const EN_DAYS=['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
 export function whenRule(r,zone='Zona HA',language='Español') {
   const en=language==='English';
@@ -219,7 +235,7 @@ const CSS = `
 #device-info{display:inline-flex;align-items:center;justify-content:center;padding:8px}#device-info ha-icon{display:inline-flex;width:24px;height:24px}
 #language{min-width:120px}.language-control{margin-left:auto;display:flex;align-items:center;gap:8px}
 #pause{appearance:none;-webkit-appearance:none;position:relative;display:inline-block;flex:none;width:44px;height:24px;min-height:24px;padding:0;margin:0;border:1px solid var(--edge);border-radius:99px;background:var(--muted);cursor:pointer;vertical-align:middle;transition:background .15s}#pause::before{content:'';position:absolute;left:2px;top:2px;width:18px;height:18px;border-radius:50%;background:var(--surface);transition:left .15s}#pause:checked{background:var(--tone)}#pause:checked::before{left:calc(100% - 20px)}#pause:disabled{opacity:.5;cursor:not-allowed}
-#logs{max-height:360px;overflow-y:auto;overscroll-behavior:contain;scrollbar-gutter:stable}#logs .log{min-height:72px}.card{cursor:pointer}.card:focus-visible{outline:2px solid var(--tone);outline-offset:3px}.card .source{display:block;margin-top:10px}#remember ul{list-style:none;margin:0;padding:0}#remember li+li{margin-top:8px}
+#logs{max-height:360px;overflow-y:auto;overscroll-behavior:contain;scrollbar-gutter:stable}#logs .log{min-height:96px;display:grid;grid-template-columns:minmax(125px,.8fr) minmax(0,1.5fr) minmax(0,1.3fr);gap:6px 16px;align-items:start;overflow-wrap:anywhere}#logs .log>*{min-width:0}#logs .log-time{grid-column:1/-1;font-variant-numeric:tabular-nums}#logs .log-source{color:var(--tone)}@media(max-width:650px){#logs .log{grid-template-columns:minmax(0,1fr);gap:5px}#logs .log-time{grid-column:auto}}.card{cursor:pointer}.card:focus-visible{outline:2px solid var(--tone);outline-offset:3px}.card .source{display:block;margin-top:10px}#remember ul{list-style:none;margin:0;padding:0}#remember li+li{margin-top:8px}
 :host{display:block;color:var(--primary-text-color,#20252c);background:var(--primary-background-color,#f5f7f9);font:14px/1.5 system-ui,-apple-system,sans-serif;--edge:var(--divider-color,#dde2e8);--surface:var(--card-background-color,#fff);--tone:var(--primary-color,#087f8c);--muted:var(--secondary-text-color,#657281);--soft:color-mix(in srgb,var(--tone) 9%,var(--surface))}
 *{box-sizing:border-box}[hidden]{display:none!important}button,input,textarea,select{font:inherit;color:inherit}button{cursor:pointer;border:1px solid var(--edge);border-radius:10px;padding:8px 12px;background:var(--surface)}button:hover{border-color:var(--tone);background:var(--soft)}button:disabled{opacity:.5;cursor:not-allowed}button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--tone);outline-offset:3px}.primary{background:var(--tone);color:var(--text-primary-color,#fff);font-weight:700}.app{max-width:1200px;margin:auto;padding:26px}.brand,.row,.toolbar,.actions{display:flex;gap:12px;align-items:center;flex-wrap:wrap}.brandmark{font-size:34px;font-weight:850;letter-spacing:-2px}.brand small{display:block;font-size:10px;letter-spacing:1.5px}.muted,small{color:var(--muted)}h1{font-size:clamp(26px,3vw,36px);letter-spacing:-1px;margin:26px 0 5px}h2{font-size:18px;margin:0 0 12px}h3,p{margin:0 0 8px}.toolbar{justify-content:space-between;margin:22px 0}.workspace{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:20px;align-items:start}.rules{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.card,.pane,.activity,.empty{border:1px solid var(--edge);border-radius:16px;background:var(--surface);padding:18px}.card.selected{border-color:var(--tone);box-shadow:0 0 0 1px var(--tone)}.card h3{font-size:16px;overflow-wrap:anywhere}.card .actions{gap:7px;margin-top:12px}.card button{font-size:12px;padding:6px 9px}.schedule{margin-top:12px;color:var(--muted);font-size:12px;overflow-wrap:anywhere}.badge{display:inline-block;background:var(--soft);padding:3px 9px;border-radius:99px;font-size:11px}.empty{grid-column:1/-1;padding:35px;text-align:center}.notice{background:var(--soft);border-left:3px solid var(--tone);padding:12px;margin:15px 0}.error{border-left-color:var(--error-color,#ba1a1a)}.system{margin-top:15px;color:var(--muted)}.ball{width:245px;height:245px;max-width:100%;border-radius:50%;background:#101b24;color:#f2f5f9;margin:18px auto;padding:40px 30px;text-align:center;display:flex;flex-direction:column;justify-content:center;overflow:hidden;box-shadow:inset 0 0 0 5px #2c3945}.ball b{font-size:17px;line-height:1.2;overflow-wrap:anywhere}.ball p{font-size:12px;white-space:pre-wrap;overflow:hidden;overflow-wrap:anywhere;display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical}.ball small{font-size:10px;color:#b7d3d9}.activity{margin-top:18px}.log{padding:10px 0;border-bottom:1px solid var(--edge);overflow-wrap:anywhere}.log small{display:block}.footnote{font-size:12px;color:var(--muted);margin-top:15px}dialog{color:inherit;background:var(--surface);border:1px solid var(--edge);border-radius:18px;max-width:720px;width:calc(100% - 24px);max-height:90vh;padding:22px}dialog::backdrop{background:#0008}.dialog-head{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:15px}.form-grid,.templates{display:grid;grid-template-columns:1fr 1fr;gap:15px}.field{display:flex;flex-direction:column;gap:5px}.wide{grid-column:1/-1}input,select,textarea{width:100%;min-width:0;background:var(--surface);border:1px solid var(--edge);border-radius:8px;padding:9px}input[type=checkbox]{width:auto}.check{display:flex;gap:8px;align-items:center}.days{display:flex;flex-wrap:wrap;gap:6px}.days button[aria-pressed=true]{background:var(--tone);color:var(--text-primary-color,#fff)}textarea{min-height:110px;resize:vertical}.template{text-align:left;padding:20px}.template strong,.template small{display:block}.dialog-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:20px}.status{white-space:pre-wrap}.pane{position:sticky;top:15px}
 @media(max-width:900px){.rules{grid-template-columns:1fr}.workspace{grid-template-columns:minmax(0,1fr) 280px}}@media(max-width:650px){.app{padding:16px}.workspace{grid-template-columns:1fr}.pane{position:static}.form-grid,.templates{grid-template-columns:1fr}.wide{grid-column:auto}.toolbar .actions{width:100%}dialog{padding:16px}.brand strong{font-size:12px}}
@@ -320,7 +336,7 @@ export class Ha2NotificationsPanel extends HTMLElement {
       return node('label',{class:checkbox?'check':'field',htmlFor:id},label(es,en),control,key==='enabled'?node('span',{id:'proactive-onoff'},'Off'):null);
     };
     const intervals=Array.from({length:48},(_,i)=>{const m=(i+1)*30;return [m,label(m<60?`${m} min`:`${Math.floor(m/60)} h${m%60?' 30 min':''}`,m<60?`${m} min`:`${Math.floor(m/60)} h${m%60?' 30 min':''}`)];});
-    return this._accordion('proactive','proactive','proactive-heading',node('span',{},label('Modo Proactivo','Proactive mode'),' ',node('span',{class:'beta-badge'},this._ui('MODO BETA'))),
+    return this._accordion('proactive','proactive','proactive-heading',label('Modo Proactivo','Proactive mode'),
       node('p',{class:'muted'},label('Invitaciones para charlar con Hermes. El modo noche y la pausa global tienen prioridad. No se guardan como tarjetas; las conversaciones conservan su historial habitual.','Invitations to chat with Hermes. Night mode and global pause take priority. Not saved as cards; conversations retain their usual history.')),
       node('p',{id:'proactive-status',role:'status','aria-live':'polite'}),
       node('form',{id:'proactive-form',onsubmit:e=>{e.preventDefault();this._saveProactive();}},
@@ -388,7 +404,7 @@ export class Ha2NotificationsPanel extends HTMLElement {
       node('div',{class:'workspace'},node('section',{'aria-label':this._ui("Reglas de notificación")},node('div',{id:'rules',class:'rules'}),node('section',{id:'remember',class:'notice','aria-label':this._ui("RECUERDA:")},node('h2',{},this._ui("RECUERDA:")),node('ul',{},node('li',{},this._ui("-Durante el modo noche la Ball no mostrará por pantalla los avisos ni audio.")),node('li',{},this._ui("-El contenido de los avisos puede ser privado. Si la Ball es compartida, elija con cuidado qué se muestra o se lee."))))),node('aside',{class:'pane','aria-label':this._ui("Previsualización orientativa")},node('h2',{},this._ui("Así llegaría a la Ball")),node('small',{},this._ui("Aproximación visual · no envía ni reproduce audio")),node('div',{id:'preview'})))),
       this._accordion('cron','hermes-cron','cron-heading',this._both(()=>'Notificación de Tareas programadas en Hermes Agent',()=>'Hermes Agent scheduled task notifications'),node('p',{class:'muted'},this._both(()=>'Avisar en HA² no pausa ni activa la tarea original en Hermes. La pausa global también bloquea estos avisos.',()=>'Notifying in HA² does not pause or activate the original Hermes task. Global pause also blocks these notifications.')),node('div',{id:'cron-catalog'})),
       this._buildProactive(),
-      node('section',{id:'real-activity',class:'activity','aria-labelledby':'activity-heading'},node('h2',{id:'activity-heading'},this._ui('Actividad real')),node('div',{id:'logs'}))
+      node('section',{id:'real-activity',class:'activity','aria-labelledby':'activity-heading'},node('h2',{id:'activity-heading'},this._ui('Log de Actividad')),node('p',{class:'muted'},this._ui('Envíos y ejecuciones hacia la Ball · hasta 200 eventos recientes; no es un historial ilimitado.')),node('div',{id:'logs'}))
     );
     this.shadowRoot.append(node('style',{},CSS),main);
     this._buildDialogs();this._renderRuntime();this._renderLanguage();
@@ -497,13 +513,22 @@ export class Ha2NotificationsPanel extends HTMLElement {
       node('div',{class:'actions'},button(this._ui("Editar"),action(()=>this.openEditor(r)),{disabled:this._busy || !this._online()}),button(this._ui("Probar real…"),action(()=>this.testRule(r)),{disabled:this._busy || !this._online() || this.snapshot.paused})))));
     if(!visible.length)this.$('rules').append(node('div',{class:'empty'},node('h2',{},this.snapshot?.rules.length?this._ui("No hay avisos en este filtro."):this.snapshot?this._ui("Todavía no hay avisos."):this._ui("Esperando datos reales…")),this.snapshot?button(this._ui("Crear un aviso"),()=>this.$('templates').showModal(),{class:'primary'}):node('small',{},this._ui("No se cargan ejemplos."))));
   }
+  _activityTime(at) {
+    // Never interpret a legacy naive time in the browser's local timezone.
+    const fallback=()=>`${at || (this._language==='English'?'Time unavailable':'Hora no disponible')} · ${this._language==='English'?'HA date/time or timezone unavailable':'Fecha/hora o zona HA no disponible'}`;
+    if(typeof at!=='string' || !/(?:Z|[+-]\d{2}:\d{2})$/i.test(at) || !Number.isFinite(Date.parse(at)) || !this.snapshot?.timezone)return fallback();
+    try {
+      const value=new Intl.DateTimeFormat(this._language==='English'?'en-US':'es-ES',{timeZone:this.snapshot.timezone,year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit',hourCycle:'h23',timeZoneName:'longOffset'}).format(new Date(at));
+      return `${value} · ${this.snapshot.timezone}`;
+    }catch{return fallback();}
+  }
   _renderLogs() {
-    const region=this.$('logs');region.role='region';region.tabIndex=0;this._bind(region,'aria-label',()=>this._tr('Actividad real, eventos recientes primero'));
+    const region=this.$('logs');region.role='region';region.tabIndex=0;this._bind(region,'aria-label',()=>this._tr('Log de Actividad, eventos recientes primero'));
     const logs=[...(this.snapshot?.logs || [])].sort((a,b)=>(Date.parse(b.at)||0)-(Date.parse(a.at)||0));
-    const key=JSON.stringify(logs);if(key===this._logsKey)return;
+    const key=JSON.stringify([this.snapshot?.timezone,logs]);if(key===this._logsKey)return;
     const top=region.scrollTop || 0;const cache=new Map();
-    const children=logs.map((l,index)=>{const id=l.id ?? String(index),signature=JSON.stringify(l),old=this._logNodes?.get(id);
-      const element=old?.signature===signature?old.element:node('div',{class:'log'},node('strong',{},this._ui(()=>`${l.name || this._tr('Aviso')} · ${STATUS[l.status]?this._tr(STATUS[l.status]):l.status}`)),node('small',{},`${l.at || ''} · ${l.reason || ''}`));
+    const children=logs.map((l,index)=>{const id=l.id ?? String(index),signature=JSON.stringify([this.snapshot?.timezone,l]),old=this._logNodes?.get(id);
+      const element=old?.signature===signature?old.element:node('div',{class:'log'},node('strong',{class:'log-source'},this._ui(()=>this._tr(({home_assistant:'Home Assistant',hermes_cron:'Hermes cron',proactive:'Proactivo'})[l.source] || (['job_key','job_id'].some(key=>typeof l.origin?.[key]==='string' && l.origin[key].trim())?'Hermes cron':'Origen no disponible (registro anterior)')))),node('span',{class:'log-task'},this._ui(()=>`${this._tr(l.kind==='proactive'?'Invitación a conversar':KINDS[l.kind] || 'Tipo no disponible')} — ${l.name || this._tr('Nombre no disponible')}`)),node('span',{class:'log-result'},this._ui(()=>`${STATUS[l.status]?this._tr(STATUS[l.status]):l.status || this._tr('Resultado no disponible')}${l.reason?' · '+(l.reason==='not_completed'?this._tr('No completado'):l.reason==='unavailable'?this._tr('No disponible'):l.reason):''}`)),node('small',{class:'log-time'},this._ui(()=>this._activityTime(l.at))));
       cache.set(id,{signature,element});return element;});
     region.replaceChildren(...children);if(!logs.length)region.append(node('small',{},this._ui("Sin actividad registrada. No se ha inventado ninguna entrega.")));
     region.scrollTop=top;this._logNodes=cache;this._logsKey=key;

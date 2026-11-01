@@ -22,7 +22,7 @@
 5. Preparar el adaptador HA `hermes_agent` y `ha2_notifications` en `<config>/custom_components/`. Respaldar fuentes/configuración propia de forma privada y revisar compatibilidad antes de reiniciar. No hay integración HACS verificada.
 6. Tras la autorización correspondiente, recargar/reiniciar sólo los procesos necesarios y verificar exactamente qué código está cargado. No confundir reiniciar companion con recargar plugin/gateway/HA.
 7. Añadir HA² Notifications mediante el flujo de integración. Requiere prefijo de satélite y entidad `weather.*` reales; el formulario valida entidades y servicios. No inventar sensores para salvar la validación.
-8. Comprobar panel vacío y nuevos controles desactivados antes de programar avisos. No importar reglas domésticas del autor. Proactivo sigue BETA y apagado hasta superar puertas específicas.
+8. Comprobar panel vacío y nuevos controles desactivados antes de programar avisos. No importar reglas domésticas del autor. En una instalación nueva, Proactivo debe empezar apagado hasta superar sus puertas de compatibilidad y activación. Esto no describe la instalación del autor: los cierres posteriores la registran ACTIVA y aprobada, sin BETA. No restaurar su estado a OFF por esta guía.
 
 ## Entidades y acciones exigidas por el config flow
 

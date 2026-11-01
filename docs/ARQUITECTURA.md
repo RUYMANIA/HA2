@@ -19,6 +19,10 @@ Usuario / voz / interfaz táctil
 
 No se copia el core completo de Hermes o Home Assistant. El companion, el adaptador HA `hermes_agent` y el plugin Hermes `homeassistant` son componentes distintos. Los dos proyectos upstream denominados `hermes-homeassistant` tienen autores y superficies diferentes.
 
+## Wake word local
+
+**Okey Hermes** se ejecuta mediante microWakeWord en la Ball; el entrenador no es dependencia de ejecución. Modelo entrenado en español y uso físico confirmado por RUYMANIA hablando en español e inglés. Es distinto de Hey Hermes. La detección de la frase, el idioma de interfaz y STT/TTS de la conversación son capas separadas. Véase [integración y aceptación](OKEY-HERMES.md).
+
 ## Conversación
 
 La Ball usa la pipeline Assist seleccionada; el adaptador HA llama al companion autenticado y este utiliza el Hermes real. STT/TTS, texto y metadatos de duración son capas distintas. El helper de metadata completa los datos privados necesarios para scroll sin convertir prompts internos en transcripciones públicas ni ampliar sensores con conversaciones completas.
@@ -39,12 +43,12 @@ Historial local: cinco tarjetas en RAM, nueva primero, sin persistir mensajes. C
 
 Hermes conserva su cron. El puente observa jobs/ledger y envía identidades de ejecución correlacionadas; no se inventa un hook universal de fin de tarea. `job_id` debe viajar en el nivel superior, los ACK deben ser booleanos y el guard de versión es un allowlist explícito. `accepted` no significa reproducido. La recepción y los extractos son opt-in; el panel no pausa ni edita el cron de Hermes.
 
-## Proactivo BETA
+## Proactivo aprobado
 
 Invitaciones efímeras separadas del historial de tarjetas. Ruta vigente: **locución → escucha nativa → respuesta con contexto de la invitación**; no se promete una sesión desconectada como equivalente ni una ventana especial de 30 segundos. No se requiere el candidato experimental de firmware 1.4.0.
 
-Disponibilidad y activación son puertas separadas. Guardas de versión/fingerprint de HA/ESPHome, noche, ocupación y capacidad de bootstrap fallan cerrado. Una prueba manual no valida la primera oportunidad automática. La última evidencia local registra automático desactivado.
+Disponibilidad y activación son puertas separadas. Guardas de versión/fingerprint de HA/ESPHome, noche, ocupación y capacidad de bootstrap fallan cerrado. Una prueba manual no acredita por sí sola una oportunidad automática. Los cierres posteriores de 27–29 de octubre registran Proactivo ACTIVO y la aprobación expresa de RUYMANIA; no restaurar el OFF histórico. Las invitaciones automáticas se limitan a una frase completa, una línea, 120 caracteres, 20 palabras y 240 bytes UTF-8; si incumplen se rechazan sin truncar ni repetir inferencia. Esta regla no afecta a la conversación normal.
 
 ## Panel
 
-Módulo JavaScript servido por HA, sin servidor frontend adicional. Orden: avisos HA → tareas Hermes → Proactivo BETA. Acordeones cerrados y mutuamente exclusivos; actividad real aparte al final. La versión visible procede de `snapshot.version` (backend), no de un literal ni del firmware. Las llamadas reutilizan la sesión HA, sin secretos en el navegador.
+Módulo JavaScript servido por HA, sin servidor frontend adicional. Orden: avisos HA → tareas Hermes → Proactivo. Proactivo ya no muestra BETA por aprobación expresa; Nuevo evento doméstico y su editor conservan su etiqueta experimental. Acordeones cerrados y mutuamente exclusivos; **Log de Actividad / Activity Log** aparte al final. El registro unifica avisos HA, tareas Hermes y Proactivo en el mismo Store, con hasta 200 eventos compartidos, origen/tipo/nombre/fecha-hora HA y resultado. No almacena cuerpos, transcripciones ni secretos; metadatos legacy desconocidos no se inventan. La versión visible procede de `snapshot.version` (backend), no de un literal ni del firmware. Las llamadas reutilizan la sesión HA, sin secretos en el navegador.

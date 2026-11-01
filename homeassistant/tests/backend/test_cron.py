@@ -20,6 +20,31 @@ class CronTests(unittest.IsolatedAsyncioTestCase):
         r=dict(execution_id='run1',finished_at=self.now.isoformat(),status='completed',delivery_outcome='unknown');r.update(kw);return r
     async def result(self,**kw):
         return await self.e.cron_result(source_instance='host',profile='default',job_id='job-original',result=self.envelope(**kw))
+    async def test_cron_activity_result_type_even_without_queue_and_no_preview(self):
+        await self.sync()
+        await self.result(preview='SECRET https://private.invalid')
+        event = self.e.data['logs'][-1]
+        self.assertEqual((event.get('source'), event.get('kind'), event['name']),
+                         ('hermes_cron', 'result', 'Tarea'))
+        self.assertEqual(event['origin']['job_id'], 'job-original')
+        self.assertEqual(event['status'], 'disabled')
+        await self.policy()
+        self.now += timedelta(seconds=1)
+        await self.result(execution_id='queued')
+        first = copy.deepcopy(self.e.data['logs'][-1])
+        revision = self.snap()['revision']
+        await self.sync([dict(JOB, name='Renamed')])
+        await self.e.cron_policy(job_key=self.snap()['jobs'][0]['job_key'],
+                                expected_revision=self.snap()['revision'], enabled=False,
+                                content='brief', mode='cue', title='')
+        last = self.e.data['logs'][-1]
+        self.assertEqual((last['source'], last['kind'], last['name']),
+                         ('hermes_cron', 'result', 'Tarea'))
+        self.assertEqual(last['id'], first['id'])
+        self.assertEqual(last['origin'], first['origin'])
+        self.assertNotIn('SECRET', str(self.e.data['logs']))
+        self.assertEqual(self.e.data['revision'], 0)
+
     async def test_brief_has_complete_content_footer_without_guessing_channel(self):
         await self.sync([dict(JOB,delivery='local')]);await self.policy();self.now+=timedelta(seconds=1)
         for status,delivery,label in [('completed','unknown','completada'),('failed','failed','fallida'),('unknown','not_configured','con estado desconocido')]:

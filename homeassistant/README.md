@@ -1,6 +1,6 @@
 # HA² — Home Assistant: snapshot privado
 
-**Archivo de fuentes, no distribución portable ni candidato de despliegue. No ejecutar en producción.** Este directorio conserva la integración y el panel de la base `ha2-notifications-0.3.0`, con saneamiento mínimo en la copia y sin modificar los originales. No contiene firmware ni el runtime/companion Hermes completo.
+**Archivo de fuentes, no distribución portable ni candidato de despliegue. No ejecutar en producción.** Este directorio conserva la base `ha2-notifications-0.3.0` y cuatro fuentes seleccionadas por SHA instalado en cierres del 27 y 29 de octubre de 2026, con saneamiento mínimo en la copia y sin modificar los originales. Sincronización documental del **1 de noviembre de 2026**: véase `UPDATE-20261101.md`. No contiene firmware ni el runtime/companion Hermes completo.
 
 - Backend HA² Notifications: **0.3.0**. El panel muestra `snapshot.version`; no tiene una versión semántica independiente. La versión del firmware es otra cosa.
 - Adaptador `hermes_agent`: manifest **0.1.0**, con modificaciones locales en `api.py` y `conversation.py`; no es upstream intacto.
@@ -15,7 +15,8 @@
 - `tests/`: selección positiva de fuentes offline; dependencias y limitaciones en `TESTING.md`.
 - `INSTALLATION.md`: manual **conceptual**, sin instalador ni permiso para operar.
 - `SNAPSHOT.md` y `MANIFEST.json`: alcance, cambios y hashes SHA-256 de origen/copia por archivo.
-- `TEST-RESULTS.json`: salida real de **15 pruebas Python puras y 54 Node**, ejecutadas exclusivamente en esta copia.
+- `TEST-RESULTS.json`: ejecución final actual de **71 pruebas Python puras y 58 Node** en esta copia; el resultado del 26 de octubre se conserva separado y no se suma.
+- `UPDATE-20261101.md`: cierres instalados, hashes exactos, Log de Actividad de 200 eventos compartidos, Proactivo aprobado sin BETA y política de invitaciones 120 caracteres / 20 palabras / 240 bytes UTF-8, sin truncamiento. Activación histórica y observaciones naturales pendientes se distinguen del estado vivo no consultado.
 - `THIRD_PARTY/`: atribución y licencia upstream conservadas.
 
 ## Defaults heredados: ejemplos, no configuración de tu casa

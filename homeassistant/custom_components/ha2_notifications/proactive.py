@@ -141,6 +141,8 @@ class Coordinator:
                 return
             data = deepcopy(self.engine.data)
             state = data.setdefault('proactive', empty_state())
+            if current['claim']:
+                self.activity(data, current['claim']['request_id'], 'cancelled', 'configuration_changed')
             state.update(config=config, revision=current['revision'] + 1,
                          epoch=current['epoch'] + 1, claim=None,
                          next_due_at=sample_due(config, self.engine.clock(), self.rng).isoformat() if config['enabled'] else None,
@@ -197,26 +199,40 @@ class Coordinator:
             state['next_due_at'] = sample_due(state['config'], now, self.rng).isoformat()
             if not (self.ready and self.policy_valid()):
                 state.update(status='skipped', reason='guard_blocked')
+                self.activity(data, None, 'skipped', 'guard_blocked')
                 await self.engine.commit(data)
                 return
             intent = choose_intent(state['recent_intents'], self.rng)
             owner = dict(request_id=uuid4().hex, epoch=state['epoch'])
             state.update(claim=owner, last_request_id=owner['request_id'], last_attempt_at=now.isoformat(), status='generating', reason=None)
             state['recent_intents'] = (state['recent_intents'] + [intent])[-3:]
+            self.activity(data, owner['request_id'], 'claimed')
+            self.activity(data, owner['request_id'], 'generating')
             await self.engine.commit(data)  # Must complete before task/model side effect.
             self.owner = owner
             self.task = self.create_task(self.encounter(deepcopy(owner), intent, deepcopy(state['config'])), 'HA² proactive encounter')
 
-    async def update(self, owner, status, reason=None, completed=False):
+    def activity(self, data, request_id, status, reason=None):
+        # Construct metadata only, never accept prepared content or transport reasons.
+        self.engine.log(data, dict(request_id=request_id, rule_id=None, source='proactive',
+                                  rule=dict(name='Invitación proactiva', kind='proactive')),
+                        status, reason)
+
+    async def update(self, owner, status, reason=None, completed=False, *, terminal=True, accepted=False):
         async with self.engine.lock:
             state = self.engine.data.get('proactive', empty_state())
             if state['claim'] != owner or state['epoch'] != owner['epoch']:
-                return
+                return False
             data = deepcopy(self.engine.data)
-            data['proactive'].update(status=status, reason=reason, claim=None)
+            if terminal:
+                data['proactive'].update(status=status, reason=reason, claim=None)
+            if accepted:
+                self.activity(data, owner['request_id'], 'accepted')
+            self.activity(data, owner['request_id'], status, reason)
             if completed:
                 data['proactive']['last_completed_at'] = self.engine.clock().isoformat()
             await self.engine.commit(data)
+            return True
 
     async def encounter(self, owner, intent, config):
         valid = lambda: self.valid(owner)
@@ -231,9 +247,12 @@ class Coordinator:
             if request_id != owner['request_id'] or not self.valid():
                 await self.update(owner, 'skipped', 'guard_blocked')
                 return
+            if not await self.update(owner, 'presenting', terminal=False):
+                return
             result = await self.transport.present(prepared, config, valid)
             completed = isinstance(result, dict) and result.get('accepted') is True and result.get('completed') is True and self.valid()
-            await self.update(owner, 'completed' if completed else 'skipped', None if completed else 'not_completed', completed)
+            accepted = isinstance(result, dict) and result.get('accepted') is True
+            await self.update(owner, 'completed' if completed else 'skipped', None if completed else 'not_completed', completed, accepted=accepted)
         except asyncio.CancelledError:
             raise
         except Exception:

@@ -55,16 +55,36 @@
     {
       "path": "custom_components/ha2_notifications/engine.py",
       "source": {
-        "root_label": "ha2-notifications-0.3.0",
+        "root_label": "ha2-activity-log-2026-10-27",
         "relative_path": "custom_components/ha2_notifications/engine.py",
-        "sha256": "14624f40fe2c9a8c859854621971d5e88c2f5f5fc5b62fb189becc24164abbfd",
-        "bytes": 18888
+        "sha256": "dc70618cc5caf3a858e434bfd1f2235bfac4a746670cf40da4f2a1dd65af9433",
+        "bytes": 19243
       },
       "copy": {
-        "sha256": "14624f40fe2c9a8c859854621971d5e88c2f5f5fc5b62fb189becc24164abbfd",
-        "bytes": 18888
+        "sha256": "dc70618cc5caf3a858e434bfd1f2235bfac4a746670cf40da4f2a1dd65af9433",
+        "bytes": 19243
       },
-      "transformations": {}
+      "transformations": {},
+      "history": [
+        {
+          "source": {
+            "root_label": "ha2-notifications-0.3.0",
+            "relative_path": "custom_components/ha2_notifications/engine.py",
+            "sha256": "14624f40fe2c9a8c859854621971d5e88c2f5f5fc5b62fb189becc24164abbfd",
+            "bytes": 18888
+          },
+          "copy": {
+            "sha256": "14624f40fe2c9a8c859854621971d5e88c2f5f5fc5b62fb189becc24164abbfd",
+            "bytes": 18888
+          },
+          "transformations": {}
+        }
+      ],
+      "selection": {
+        "installed_sha256": "dc70618cc5caf3a858e434bfd1f2235bfac4a746670cf40da4f2a1dd65af9433",
+        "authority": "DEPLOYMENT-STATUS.md",
+        "source_root_label": "ha2-activity-log-2026-10-27"
+      }
     },
     {
       "path": "custom_components/ha2_notifications/manifest.json",
@@ -111,30 +131,70 @@
     {
       "path": "custom_components/ha2_notifications/native_transport.py",
       "source": {
-        "root_label": "ha2-notifications-0.3.0",
+        "root_label": "ha2-proactive-short-2026-10-29",
         "relative_path": "custom_components/ha2_notifications/native_transport.py",
-        "sha256": "44b9f065b85ce689efc17cf2a96ab468c0aef883a1425bea81b9aa62cd2ce710",
-        "bytes": 8110
+        "sha256": "7c2984f7f02a40ce560efc2da5f97084cf975155d0d38ac663f8d35ed9c9b78f",
+        "bytes": 9655
       },
       "copy": {
-        "sha256": "44b9f065b85ce689efc17cf2a96ab468c0aef883a1425bea81b9aa62cd2ce710",
-        "bytes": 8110
+        "sha256": "7c2984f7f02a40ce560efc2da5f97084cf975155d0d38ac663f8d35ed9c9b78f",
+        "bytes": 9655
       },
-      "transformations": {}
+      "transformations": {},
+      "history": [
+        {
+          "source": {
+            "root_label": "ha2-notifications-0.3.0",
+            "relative_path": "custom_components/ha2_notifications/native_transport.py",
+            "sha256": "44b9f065b85ce689efc17cf2a96ab468c0aef883a1425bea81b9aa62cd2ce710",
+            "bytes": 8110
+          },
+          "copy": {
+            "sha256": "44b9f065b85ce689efc17cf2a96ab468c0aef883a1425bea81b9aa62cd2ce710",
+            "bytes": 8110
+          },
+          "transformations": {}
+        }
+      ],
+      "selection": {
+        "installed_sha256": "7c2984f7f02a40ce560efc2da5f97084cf975155d0d38ac663f8d35ed9c9b78f",
+        "authority": "DEPLOYMENT-STATUS.md",
+        "source_root_label": "ha2-proactive-short-2026-10-29"
+      }
     },
     {
       "path": "custom_components/ha2_notifications/proactive.py",
       "source": {
-        "root_label": "ha2-notifications-0.3.0",
+        "root_label": "ha2-activity-log-2026-10-27",
         "relative_path": "custom_components/ha2_notifications/proactive.py",
-        "sha256": "bb52b636999170d8fb391fa8b562eec2f77f422f95c397a1f22adb7bc8a27818",
-        "bytes": 12626
+        "sha256": "a39654ae21395e242d2acaaaeea524d5d9b4eb14f13b89b2e63f4ea2e8d58556",
+        "bytes": 13799
       },
       "copy": {
-        "sha256": "bb52b636999170d8fb391fa8b562eec2f77f422f95c397a1f22adb7bc8a27818",
-        "bytes": 12626
+        "sha256": "a39654ae21395e242d2acaaaeea524d5d9b4eb14f13b89b2e63f4ea2e8d58556",
+        "bytes": 13799
       },
-      "transformations": {}
+      "transformations": {},
+      "history": [
+        {
+          "source": {
+            "root_label": "ha2-notifications-0.3.0",
+            "relative_path": "custom_components/ha2_notifications/proactive.py",
+            "sha256": "bb52b636999170d8fb391fa8b562eec2f77f422f95c397a1f22adb7bc8a27818",
+            "bytes": 12626
+          },
+          "copy": {
+            "sha256": "bb52b636999170d8fb391fa8b562eec2f77f422f95c397a1f22adb7bc8a27818",
+            "bytes": 12626
+          },
+          "transformations": {}
+        }
+      ],
+      "selection": {
+        "installed_sha256": "a39654ae21395e242d2acaaaeea524d5d9b4eb14f13b89b2e63f4ea2e8d58556",
+        "authority": "DEPLOYMENT-STATUS.md",
+        "source_root_label": "ha2-activity-log-2026-10-27"
+      }
     },
     {
       "path": "custom_components/ha2_notifications/services.yaml",
@@ -153,16 +213,36 @@
     {
       "path": "custom_components/ha2_notifications/static/panel.js",
       "source": {
-        "root_label": "ha2-notifications-0.3.0",
+        "root_label": "ha2-panel-labels-2026-10-27",
         "relative_path": "custom_components/ha2_notifications/static/panel.js",
-        "sha256": "63584593e6dd2e428292228b2b4a79f3ce9131fbf3383658e9bb7d1a99760f15",
-        "bytes": 78160
+        "sha256": "475566d7cc33299bd4a5071085341c9da303275c58ef45dc9cb0e864bbd0154d",
+        "bytes": 81336
       },
       "copy": {
-        "sha256": "63584593e6dd2e428292228b2b4a79f3ce9131fbf3383658e9bb7d1a99760f15",
-        "bytes": 78160
+        "sha256": "475566d7cc33299bd4a5071085341c9da303275c58ef45dc9cb0e864bbd0154d",
+        "bytes": 81336
       },
-      "transformations": {}
+      "transformations": {},
+      "history": [
+        {
+          "source": {
+            "root_label": "ha2-notifications-0.3.0",
+            "relative_path": "custom_components/ha2_notifications/static/panel.js",
+            "sha256": "63584593e6dd2e428292228b2b4a79f3ce9131fbf3383658e9bb7d1a99760f15",
+            "bytes": 78160
+          },
+          "copy": {
+            "sha256": "63584593e6dd2e428292228b2b4a79f3ce9131fbf3383658e9bb7d1a99760f15",
+            "bytes": 78160
+          },
+          "transformations": {}
+        }
+      ],
+      "selection": {
+        "installed_sha256": "475566d7cc33299bd4a5071085341c9da303275c58ef45dc9cb0e864bbd0154d",
+        "authority": "DEPLOYMENT-STATUS.md",
+        "source_root_label": "ha2-panel-labels-2026-10-27"
+      }
     },
     {
       "path": "custom_components/ha2_notifications/static/proactive-three-notes.wav",
@@ -419,16 +499,31 @@
     {
       "path": "tests/backend/test_cron.py",
       "source": {
-        "root_label": "ha2-notifications-0.3.0",
+        "root_label": "ha2-activity-log-2026-10-27",
         "relative_path": "tests/backend/test_cron.py",
-        "sha256": "9410bda06924fd2a77f181ccf8234fbc3975b7466196da70ea913ce09cd486b8",
-        "bytes": 13545
+        "sha256": "332fdd3361a9907c6ee45afcb8eb237ddd75528d243e9388cc72e8e92b440191",
+        "bytes": 14930
       },
       "copy": {
-        "sha256": "9410bda06924fd2a77f181ccf8234fbc3975b7466196da70ea913ce09cd486b8",
-        "bytes": 13545
+        "sha256": "332fdd3361a9907c6ee45afcb8eb237ddd75528d243e9388cc72e8e92b440191",
+        "bytes": 14930
       },
-      "transformations": {}
+      "transformations": {},
+      "history": [
+        {
+          "source": {
+            "root_label": "ha2-notifications-0.3.0",
+            "relative_path": "tests/backend/test_cron.py",
+            "sha256": "9410bda06924fd2a77f181ccf8234fbc3975b7466196da70ea913ce09cd486b8",
+            "bytes": 13545
+          },
+          "copy": {
+            "sha256": "9410bda06924fd2a77f181ccf8234fbc3975b7466196da70ea913ce09cd486b8",
+            "bytes": 13545
+          },
+          "transformations": {}
+        }
+      ]
     },
     {
       "path": "tests/backend/test_cron_ws.py",
@@ -447,16 +542,31 @@
     {
       "path": "tests/backend/test_engine.py",
       "source": {
-        "root_label": "ha2-notifications-0.3.0",
+        "root_label": "ha2-activity-log-2026-10-27",
         "relative_path": "tests/backend/test_engine.py",
-        "sha256": "eb2ba0f1860c18937aa14bbf065ef884cbf3203b6de924a5564fe5454bc49067",
-        "bytes": 13728
+        "sha256": "eaf82547949657ed5931b6abbb39bf6bd7e194ab8a841511103a0a7f047eea13",
+        "bytes": 13729
       },
       "copy": {
-        "sha256": "eb2ba0f1860c18937aa14bbf065ef884cbf3203b6de924a5564fe5454bc49067",
-        "bytes": 13728
+        "sha256": "eaf82547949657ed5931b6abbb39bf6bd7e194ab8a841511103a0a7f047eea13",
+        "bytes": 13729
       },
-      "transformations": {}
+      "transformations": {},
+      "history": [
+        {
+          "source": {
+            "root_label": "ha2-notifications-0.3.0",
+            "relative_path": "tests/backend/test_engine.py",
+            "sha256": "eb2ba0f1860c18937aa14bbf065ef884cbf3203b6de924a5564fe5454bc49067",
+            "bytes": 13728
+          },
+          "copy": {
+            "sha256": "eb2ba0f1860c18937aa14bbf065ef884cbf3203b6de924a5564fe5454bc49067",
+            "bytes": 13728
+          },
+          "transformations": {}
+        }
+      ]
     },
     {
       "path": "tests/backend/test_entity_catalog.py",
@@ -589,16 +699,31 @@
     {
       "path": "tests/frontend/proactive.test.mjs",
       "source": {
-        "root_label": "ha2-notifications-0.3.0",
+        "root_label": "ha2-panel-labels-2026-10-27",
         "relative_path": "tests/frontend/proactive.test.mjs",
-        "sha256": "50f6cf728c92d4c0f143e5f339a0031e08d4f03487998e9c40b16ee0b108159f",
-        "bytes": 7008
+        "sha256": "ff05ccfa3cb62f9e1609a716a2b87bf78cc01f34da98a99d8f491670d6a2b109",
+        "bytes": 7059
       },
       "copy": {
-        "sha256": "50f6cf728c92d4c0f143e5f339a0031e08d4f03487998e9c40b16ee0b108159f",
-        "bytes": 7008
+        "sha256": "ff05ccfa3cb62f9e1609a716a2b87bf78cc01f34da98a99d8f491670d6a2b109",
+        "bytes": 7059
       },
-      "transformations": {}
+      "transformations": {},
+      "history": [
+        {
+          "source": {
+            "root_label": "ha2-notifications-0.3.0",
+            "relative_path": "tests/frontend/proactive.test.mjs",
+            "sha256": "50f6cf728c92d4c0f143e5f339a0031e08d4f03487998e9c40b16ee0b108159f",
+            "bytes": 7008
+          },
+          "copy": {
+            "sha256": "50f6cf728c92d4c0f143e5f339a0031e08d4f03487998e9c40b16ee0b108159f",
+            "bytes": 7008
+          },
+          "transformations": {}
+        }
+      ]
     },
     {
       "path": "tests/frontend/wrapper-fixture.js",
@@ -701,16 +826,33 @@
     {
       "path": "tests/native_conversation/test_native_transport.py",
       "source": {
-        "root_label": "ha2-notifications-0.3.0",
+        "root_label": "ha2-proactive-short-2026-10-29",
         "relative_path": "tests/native_conversation/test_native_transport.py",
-        "sha256": "3129fc6a58c468783fb493dbd87ac3eeb4760f5942412ef85d77d1a1ec58e279",
-        "bytes": 4143
+        "sha256": "bd7da59fc8724e5f269a3da269e266d7b43e162504a278fe10489786a40db35e",
+        "bytes": 8732
       },
       "copy": {
-        "sha256": "3129fc6a58c468783fb493dbd87ac3eeb4760f5942412ef85d77d1a1ec58e279",
-        "bytes": 4143
+        "sha256": "cf85db88de24a72fb4253640b484567360b571235a2b1704a71894c93aa68756",
+        "bytes": 8731
       },
-      "transformations": {}
+      "transformations": {
+        "trailing_blank_line_removed": 1
+      },
+      "history": [
+        {
+          "source": {
+            "root_label": "ha2-notifications-0.3.0",
+            "relative_path": "tests/native_conversation/test_native_transport.py",
+            "sha256": "3129fc6a58c468783fb493dbd87ac3eeb4760f5942412ef85d77d1a1ec58e279",
+            "bytes": 4143
+          },
+          "copy": {
+            "sha256": "3129fc6a58c468783fb493dbd87ac3eeb4760f5942412ef85d77d1a1ec58e279",
+            "bytes": 4143
+          },
+          "transformations": {}
+        }
+      ]
     },
     {
       "path": "tests/native_conversation/test_timing_boundary.py",
@@ -795,6 +937,48 @@
         "bytes": 5711
       },
       "transformations": {}
+    },
+    {
+      "path": "tests/backend/test_activity.py",
+      "source": {
+        "root_label": "ha2-activity-log-2026-10-27",
+        "relative_path": "tests/backend/test_activity.py",
+        "sha256": "be2ebe267a34d629c5ec4666675483728be02a2febc42789a1ced21f79c939a0",
+        "bytes": 5309
+      },
+      "copy": {
+        "sha256": "be2ebe267a34d629c5ec4666675483728be02a2febc42789a1ced21f79c939a0",
+        "bytes": 5309
+      },
+      "transformations": {}
+    },
+    {
+      "path": "tests/proactive_backend/test_activity_log.py",
+      "source": {
+        "root_label": "ha2-activity-log-2026-10-27",
+        "relative_path": "tests/proactive_backend/test_activity_log.py",
+        "sha256": "75f6823eb5ef2201f61651681e02de09c8aedb1e2e7b67d2d7026002770024bd",
+        "bytes": 15745
+      },
+      "copy": {
+        "sha256": "75f6823eb5ef2201f61651681e02de09c8aedb1e2e7b67d2d7026002770024bd",
+        "bytes": 15745
+      },
+      "transformations": {}
+    },
+    {
+      "path": "tests/frontend/activity.test.mjs",
+      "source": {
+        "root_label": "ha2-panel-labels-2026-10-27",
+        "relative_path": "tests/frontend/activity.test.mjs",
+        "sha256": "8f013fb9ac04f36cfdeed721d25bef8549c8588bddc347927edcc371c80c74fa",
+        "bytes": 6271
+      },
+      "copy": {
+        "sha256": "8f013fb9ac04f36cfdeed721d25bef8549c8588bddc347927edcc371c80c74fa",
+        "bytes": 6271
+      },
+      "transformations": {}
     }
   ],
   "third_party": [
@@ -813,30 +997,138 @@
     }
   ],
   "generated_files": [
-    {"path": "INSTALLATION.md", "sha256": "06655906aaa68b009c71fc8bce1f8d1601497418796bb2d6dc13c0a5ad232566", "bytes": 4769},
-    {"path": "README.md", "sha256": "5cc0d931a0e07fac1f93170fbd3e1b6e6e8194baa5a068e0957ab89de7c374a9", "bytes": 3229},
-    {"path": "SNAPSHOT.md", "sha256": "d248913c26a7c1baac31c95c520b69a0e51d09e67247de12687a62426c4f6263", "bytes": 3262},
-    {"path": "TEST-RESULTS.json", "sha256": "f236e62ac8f0b46d63dbaa862a3dd29336b6d8f502a62ae71757861f3cbc15b0", "bytes": 17879},
-    {"path": "TESTING.md", "sha256": "e564221c2c79529acd9a5f5945b34d76ef71aa891b5d8523859cd4a4cc1d8543", "bytes": 5230},
-    {"path": "THIRD_PARTY/README.md", "sha256": "97754367b9cd93ac555ef64adca8f9620846a7b876f65322d7481c1e3a8f9344", "bytes": 2107}
+    {
+      "path": "INSTALLATION.md",
+      "sha256": "6511443b12e292c8f4ca5ea888f6407716494ec5ffeb09f5ca206fcc61ce3825",
+      "bytes": 5222
+    },
+    {
+      "path": "README.md",
+      "sha256": "6572e08e80bb51977ddb5d322c03f8bf834040c16a7087dbe4b22790da456088",
+      "bytes": 3761
+    },
+    {
+      "path": "SNAPSHOT.md",
+      "sha256": "72eb65f3c085ad840b71c4d214568f233740c740154bd330cc2b78e2d113904b",
+      "bytes": 5066
+    },
+    {
+      "path": "TEST-RESULTS.json",
+      "sha256": "491f04f34621254dbc8c26b5a0c74e126b625a635b78214777c4d068c3cf29c4",
+      "bytes": 53224
+    },
+    {
+      "path": "TESTING.md",
+      "sha256": "1e877dbc9c7d952d0431828e6afe0a3705c98c6a5ae9df0c829d4fa31ce79980",
+      "bytes": 6409
+    },
+    {
+      "path": "THIRD_PARTY/README.md",
+      "sha256": "97754367b9cd93ac555ef64adca8f9620846a7b876f65322d7481c1e3a8f9344",
+      "bytes": 2107
+    },
+    {
+      "path": "UPDATE-20261101.md",
+      "sha256": "6b6f109189161215563a271f412cbc5cd97d3813bf3d9266bb7d79825153f0c4",
+      "bytes": 6876
+    },
+    {
+      "path": "tests/offline/run.py",
+      "sha256": "a4881bb536bebbf092ab8f004316aa1897e84e992b9b88e07e7a8e3e8f3f9293",
+      "bytes": 2205
+    },
+    {
+      "path": "tests/offline/test_short_opener.py",
+      "sha256": "e46a9983ce3fd6daef4792c0f1b03a84680a22cca231c269eccef2bab4bc9eda",
+      "bytes": 7617
+    }
   ],
   "verification": {
-    "verified_at_utc": "2026-10-26T12:02:25.605126+00:00",
-    "copied_files": 56,
-    "total_files_including_manifest": 64,
+    "verified_at_utc": "2026-11-01T13:01:53.904969+00:00",
+    "copied_files": 59,
+    "total_files_including_manifest": 70,
     "source_and_copy_hashes_match_manifest": true,
     "component_files_byte_identical": true,
-    "ast_python_files": 40,
+    "component_files": 28,
+    "exact_installed_files_selected": 4,
+    "ast_python_files": 44,
     "privacy_scan": {
       "author_paths": 0,
       "rfc1918_ipv4": 0,
       "nonplaceholder_mac": 0,
       "high_confidence_secret_patterns": 0,
-      "scope": "Heuristic pattern scan, not exhaustive secret certification"
+      "reviewed_synthetic_secret_fixture_matches": 1,
+      "scope": "Heuristic content pattern scan; one reviewed synthetic negative-test fixture excluded from high-confidence count; not exhaustive certification"
     },
-    "python_tests_passed": 15,
-    "node_tests_passed": 54,
-    "extra_tests_executed": false,
-    "no_generated_artifacts_or_operational_runners_present": true
-  }
+    "python_tests_passed": 71,
+    "node_tests_passed": 58,
+    "counting_policy": "Final execution only; historical verification retained separately",
+    "extra_tests_executed": true,
+    "no_private_snapshots_or_operational_runners_present": true,
+    "pure_offline_runner_added": true
+  },
+  "history": [
+    {
+      "snapshot_date": "2026-10-26",
+      "source_root_label": "ha2-notifications-0.3.0",
+      "verification": {
+        "verified_at_utc": "2026-10-26T12:02:25.605126+00:00",
+        "copied_files": 56,
+        "total_files_including_manifest": 64,
+        "source_and_copy_hashes_match_manifest": true,
+        "component_files_byte_identical": true,
+        "ast_python_files": 40,
+        "privacy_scan": {
+          "author_paths": 0,
+          "rfc1918_ipv4": 0,
+          "nonplaceholder_mac": 0,
+          "high_confidence_secret_patterns": 0,
+          "scope": "Heuristic pattern scan, not exhaustive secret certification"
+        },
+        "python_tests_passed": 15,
+        "node_tests_passed": 54,
+        "extra_tests_executed": false,
+        "no_generated_artifacts_or_operational_runners_present": true
+      }
+    }
+  ],
+  "updated_at_utc": "2026-11-01",
+  "selection_policy": "Four component files selected by exact installed SHA in later deployment closures; no whole candidate copied; remaining sources retain 2026-10-26 provenance.",
+  "generated_files_history": [
+    {
+      "snapshot_date": "2026-10-26",
+      "files": [
+        {
+          "path": "INSTALLATION.md",
+          "sha256": "06655906aaa68b009c71fc8bce1f8d1601497418796bb2d6dc13c0a5ad232566",
+          "bytes": 4769
+        },
+        {
+          "path": "README.md",
+          "sha256": "5cc0d931a0e07fac1f93170fbd3e1b6e6e8194baa5a068e0957ab89de7c374a9",
+          "bytes": 3229
+        },
+        {
+          "path": "SNAPSHOT.md",
+          "sha256": "d248913c26a7c1baac31c95c520b69a0e51d09e67247de12687a62426c4f6263",
+          "bytes": 3262
+        },
+        {
+          "path": "TEST-RESULTS.json",
+          "sha256": "f236e62ac8f0b46d63dbaa862a3dd29336b6d8f502a62ae71757861f3cbc15b0",
+          "bytes": 17879
+        },
+        {
+          "path": "TESTING.md",
+          "sha256": "e564221c2c79529acd9a5f5945b34d76ef71aa891b5d8523859cd4a4cc1d8543",
+          "bytes": 5230
+        },
+        {
+          "path": "THIRD_PARTY/README.md",
+          "sha256": "97754367b9cd93ac555ef64adca8f9620846a7b876f65322d7481c1e3a8f9344",
+          "bytes": 2107
+        }
+      ]
+    }
+  ]
 }

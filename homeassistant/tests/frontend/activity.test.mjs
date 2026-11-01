@@ -1,0 +1,31 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {installDOM,flush} from './dom-harness.mjs';
+installDOM();
+const {Ha2NotificationsPanel,LANGUAGE_ENTITY}=await import('../../custom_components/ha2_notifications/static/panel.js');
+const base=extra=>({version:'0.3.0',revision:55,paused:false,rules:[],logs:[],queue_count:0,timezone:'Atlantic/Canary',...extra});
+function locale(p,state){p.hass={...p.hass,states:{[LANGUAGE_ENTITY]:{state,attributes:{options:['English','Español']}}}};}
+async function mount(extra){const calls=[];let reply=base(extra);const p=new Ha2NotificationsPanel();p.hass={connection:{connected:true},user:{is_admin:true},callWS:async r=>{calls.push(r);return structuredClone(reply);}};locale(p,'Español');p.connectedCallback();await flush();return {p,calls,set:extra=>reply=base(extra)};}
+test('activity: HA timezone date and seconds across DST, locale and timezone-only poll',async()=>{
+ const {p,set}=await mount({logs:[event({id:'summer',at:'2026-10-25T00:30:45Z'}),event({id:'winter'})]});
+ try{let rows=p.$('logs').children;assert.match(rows[0].querySelector('.log-time').textContent,/25\/10\/2026.*01:30:45.*GMT.*Atlantic\/Canary/);assert.match(rows[1].querySelector('.log-time').textContent,/25\/10\/2026.*01:30:45.*GMT\+01:00/);const first=rows[0];locale(p,'English');assert.match(first.querySelector('.log-time').textContent,/10\/25\/2026.*01:30:45/);set({timezone:'Asia/Tokyo',logs:[event({id:'summer',at:'2026-10-25T00:30:45Z'}),event({id:'winter'})]});await p.refresh();assert.match(p.$('logs').children[0].querySelector('.log-time').textContent,/10:30:45.*Asia\/Tokyo/);
+ set({timezone:'Invalid/Zone',logs:[event({at:'not-a-date'})]});await p.refresh();assert.match(p.$('logs').textContent,/not-a-date.*timezone unavailable/i);set({timezone:null,logs:[event({at:'2026-10-25T01:30:45'})]});await p.refresh();assert.match(p.$('logs').textContent,/2026-10-25T01:30:45.*timezone unavailable/i);
+ }finally{p.disconnectedCallback();}
+});
+test('activity: honest legacy attribution never consults edited current rules; literal XSS and 200 rows',async()=>{
+ const logs=Array.from({length:200},(_,i)=>event({id:String(i),name:'<img src=x onerror=alert(1)>',reason:'<svg onload=alert(1)>',status:'queued'}));
+ logs[0]={...event(),id:'0',source:undefined,kind:undefined,rule_id:'edited',name:'Invitación proactiva'};
+ logs[1]={...logs[0],id:'1',origin:{job_key:'cron-key',job_id:'job-1'},name:'Cron antiguo'};
+ logs[2]={...logs[0],id:'2',origin:{job_key:'',job_id:null},name:'No atribuir'};
+ const {p,calls,set}=await mount({logs,rules:[{id:'edited',name:'Cambiado',kind:'weather',enabled:false,trigger:'manual',mode:'cue'}]});
+ try{const region=p.$('logs');assert.equal(region.children.length,200);assert.match(region.children[0].textContent,/Origen no disponible.*Tipo no disponible.*Invitación proactiva/);assert.match(region.children[1].textContent,/Hermes cron.*Tipo no disponible.*Cron antiguo/);assert.match(region.children[2].textContent,/Origen no disponible/);assert.equal(region.querySelector('img'),null);assert.equal(region.querySelector('svg'),null);const first=region.children[0];region.scrollTop=144;await p.refresh();assert.equal(region.children[0],first);assert.equal(region.scrollTop,144);p.filter='state';p._renderRules();assert.equal(region.children.length,200);locale(p,'English');assert.match(region.children[0].textContent,/Source unavailable.*Type unavailable/);set({logs:[event({id:'new',at:'2026-10-26T09:00:00Z'}),...logs.slice(0,199)]});await p.refresh();assert.equal(region.children.length,200);assert.equal(region.children[1],first);assert.equal(region.scrollTop,144);assert.ok(calls.every(c=>c.type==='ha2_notifications/get'));}finally{p.disconnectedCallback();}
+});
+test('activity: proactive lifecycle outcomes and bounded technical reasons translate without claiming completion',async()=>{
+ const {p}=await mount({logs:['claimed','generating','presenting','accepted','completed','skipped','failed','cancelled'].map((status,i)=>event({id:String(i),source:'proactive',kind:'proactive',status,reason:status==='skipped'?'not_completed':status==='failed'?'unavailable':null}))});
+ try{const r=p.$('logs');assert.match(r.children[3].textContent,/Aceptado \(no confirma finalización\)/);assert.match(r.children[4].textContent,/Completado/);assert.match(r.children[5].textContent,/Oportunidad omitida · No completado/);assert.match(r.children[6].textContent,/Fallido · No disponible/);locale(p,'English');assert.match(r.children[3].textContent,/Accepted \(does not confirm completion\)/);assert.match(r.children[5].textContent,/Opportunity skipped · Not completed/);assert.match(r.children[6].textContent,/Failed · Unavailable/);}finally{p.disconnectedCallback();}
+});
+const event=(extra={})=>({id:'fixture',at:'2026-10-25T01:30:45Z',name:'Fichar salida',status:'delivered',reason:'confirmed',source:'home_assistant',kind:'reminder',...extra});
+test('activity: three attributable sources, captured kind/name, bilingual title and outcome',async()=>{
+ const {p,calls}=await mount({logs:[event({reason:'Guardar'}),event({id:'cron',source:'hermes_cron',kind:'result',name:'Tarea semanal'}),event({id:'proactive',source:'proactive',kind:'proactive',name:'Invitación proactiva',status:'accepted'})]});
+ try{const r=p.$('logs');assert.equal(p.$('activity-heading').textContent,'Log de Actividad');assert.equal(p.$('logs').getAttribute('aria-label'),'Log de Actividad, eventos recientes primero');assert.match(p.$('real-activity').textContent,/Envíos y ejecuciones hacia la Ball/);assert.match(r.children[0].textContent,/Home Assistant.*Recordatorio.*Fichar salida/);assert.match(r.children[1].textContent,/Hermes cron.*Resultado manual.*Tarea semanal/);assert.match(r.children[2].textContent,/Proactivo.*Invitación a conversar.*Aceptado/);locale(p,'English');assert.equal(p.$('activity-heading').textContent,'Activity Log');assert.match(r.children[0].textContent,/Home Assistant.*Reminder.*Fichar salida.*Received by the Ball/);assert.match(r.children[0].querySelector('.log-result').textContent,/Guardar/);assert.match(r.children[2].textContent,/Proactive.*Invitation to chat.*Accepted/);assert.ok(calls.every(c=>c.type==='ha2_notifications/get'));}finally{p.disconnectedCallback();}
+});

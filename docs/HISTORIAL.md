@@ -12,4 +12,9 @@ Este documento resume hitos; no sustituye los recibos privados ni presume una hi
 - 25 de octubre de 2026: firmware 1.3.1 con menú final Salir/Reiniciar/Test Animaciones instalado según cierre posterior a staging. Validación física nueva pendiente.
 - 26 de octubre de 2026: RUYMANIA autoriza repositorio privado `RUYMANIA/HA2`, README español/inglés y documentación técnica española. Se crea un archivo saneado separado de operación; no se elige licencia pública global ni se abre el repositorio.
 
+- 27 de octubre de 2026: Log de Actividad unificado para HA, tareas Hermes y Proactivo; retención de 200 eventos. Proactivo ACTIVO y aprobado por RUYMANIA, retirada de BETA sólo en esa sección. Nuevo evento doméstico mantiene BETA.
+- 29 de octubre de 2026: firmware 1.3.2 instalado con el modelo local **Okey Hermes**, añadido sin sustituir modelos/IDs previos. Prueba física inicial aceptada y detección corroborada por HA.
+- 29 de octubre de 2026: instaladas las restricciones de invitaciones proactivas breves, sin cambiar conversaciones normales ni el detector.
+- 1 de noviembre de 2026: RUYMANIA confirma que **Okey Hermes funciona hablando en español e inglés**. Se sincronizan en GitHub modelo, manifiesto, fuentes y documentación; se mantiene el idioma de entrenamiento `es` y el archivo privado. No se repiten pruebas de voz ni despliegues.
+
 Decisiones: una única autoridad HA para avisos; Hermes conserva su cron; herencia de voz y modelo sin fijaciones adicionales; no activar nuevas reglas por defecto; no publicar configuración, sesiones o binarios privados. La expansión histórica «Assitant» se conserva dentro de las fuentes; título editorial solicitado «Assistant».

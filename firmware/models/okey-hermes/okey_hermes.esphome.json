@@ -1,0 +1,18 @@
+{
+  "type": "micro",
+  "wake_word": "Okey Hermes",
+  "author": "Tater Totterson",
+  "website": "https://github.com/TaterTotterson/microWakeWord-Trainer-AppleSilicon",
+  "model": "okey_hermes.tflite",
+  "trained_languages": [
+    "es"
+  ],
+  "version": 2,
+  "micro": {
+    "probability_cutoff": 0.99,
+    "sliding_window_size": 7,
+    "feature_step_size": 10,
+    "tensor_arena_size": 30000,
+    "minimum_esphome_version": "2024.7.0"
+  }
+}
