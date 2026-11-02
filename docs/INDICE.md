@@ -9,5 +9,6 @@ Esta documentación está en español por decisión del propietario. El README p
 5. [Historial y decisiones](HISTORIAL.md).
 6. [Pendientes y puertas de publicación](PENDIENTES.md).
 7. [Seguridad](../SECURITY.md), [procedencia](../THIRD_PARTY.md) y [derechos](../LICENSE.md).
+8. [Solución de problemas: START persistente, menú inaccesible y cambio de IP](SOLUCION-START-IP.md).
 
 Los README y SNAPSHOT de cada superficie detallan lo que se conserva y lo que no es todavía portable. Un procedimiento descrito no significa que se haya ejecutado durante esta publicación.

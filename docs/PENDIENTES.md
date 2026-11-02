@@ -8,6 +8,11 @@
 - Pruebas de recorridos completos de avisos/tareas, modo noche y lectura/TTL con versiones exactas.
 - Medición de heap/underruns en hardware si se quiere afirmar comportamiento de memoria/audio; flash libre no demuestra RAM libre.
 
+## Red y arranque
+
+- Incidencia de 2-11-2026: conexión recuperada al corregir el host de la entrada ESPHome. No confundir con una confirmación física de salida de START/menú si ésta no está documentada.
+- Reserva DHCP recomendada para dirección estable: no estaba aplicada en el cierre y esta publicación no configura el router. Investigar por separado el descubrimiento automático que no actualizó la dirección; no asumir que cualquier cambio de IP falla. [Procedimiento de recuperación](SOLUCION-START-IP.md).
+
 ## Distribución
 
 - Transformar los snapshots con rutas sustituidas en paquetes configurables sin debilitar allowlists, guards, identidad ni permisos.

@@ -14,6 +14,10 @@ HA² conecta una **XiaoZhi Ball V2**, **Home Assistant** y **Hermes Agent** para
 
 Este repositorio documenta y conserva una **copia saneada del trabajo existente**, no un producto listo para instalar ni una copia de seguridad de la vivienda. La configuración privada se ha omitido o sustituido por ejemplos. Las adaptaciones de publicación **no se han desplegado** en los equipos operativos.
 
+### ¿La Ball no sale de START?
+
+Si el GIF START se repite y la pulsación de **1 segundo** no abre el menú, comprueba la IP actual y la conexión de la entrada **ESPHome** antes de resetear o reflashear. [Guía de recuperación y prevención](docs/SOLUCION-START-IP.md). Se recomienda **reserva DHCP en el router** para una dirección estable; esta guía no la aplica ni garantiza resolver todas las causas de START.
+
 ### Activación por voz: «Okey Hermes»
 
 **«Okey Hermes» está integrado y funciona en las pruebas físicas de RUYMANIA tanto hablando en español como en inglés.** Confirmación bilingüe: **1 de noviembre de 2026**. La integración corresponde a firmware **1.3.2**, instalado el 29 de octubre de 2026.
@@ -70,6 +74,10 @@ El título del proyecto utiliza **Assistant**, como ha solicitado RUYMANIA. Algu
 ## English
 
 HA² links a **XiaoZhi Ball V2**, **Home Assistant**, and **Hermes Agent** to provide voice interaction, an animated circular display, and coordinated notifications. Hermes handles conversations, tools, and task results. Home Assistant owns notification rules and delivery coordination. The Ball provides the local user interface.
+
+### Ball stuck on START?
+
+If START keeps looping and a **1-second press** does not open the menu, check the current IP and the existing **ESPHome** connection before resetting or reflashing. [Recovery and prevention guide](docs/SOLUCION-START-IP.md) (Spanish). A **router DHCP reservation** is recommended for a stable address; the guide does not apply it or claim to fix every possible START issue.
 
 ### Voice activation: “Okey Hermes”
 

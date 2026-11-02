@@ -28,6 +28,10 @@
 
 Para `<prefix>`: sensores `card_status`, `ui_status`, `ui_night`; binario `card_active`; media player; assist_satellite y selector de asistente. Las acciones ESPHome de tarjeta deben existir con el mismo prefijo. La UI heredada conserva un selector de idioma fijo: consultar README de Home Assistant, no anunciar soporte multidispositivo genérico.
 
+## Dirección estable y recuperación de START
+
+Para la Ball se recomienda una **reserva DHCP en el router**, asociada a su MAC Wi-Fi y sin conflictos de dirección, antes que introducir una IP manual en el firmware sólo para mitigar cambios de concesión. No se configura automáticamente ni evita otros fallos de arranque. Si después de reiniciar queda el GIF START continuo y no abre el menú con 1 segundo, [recupera primero la conexión de la entrada ESPHome existente](SOLUCION-START-IP.md), sin borrar el dispositivo ni reflashear como primera medida.
+
 ## Actualización, recuperación y desinstalación
 
 Verificar versión, identidad, hashes y salud propios antes y después. Respaldar únicamente lo que se modifica; no congelar/restaurar checkpoints de un observador vivo ni registros globales HA como atajo. Una diferencia de configuración global no se declara benigna sin baseline.
