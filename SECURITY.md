@@ -2,14 +2,14 @@
 
 ## Alcance del repositorio
 
-Archivo privado de fuentes y recursos seleccionados. No sustituye al respaldo privado de configuración y no contiene las credenciales necesarias para conectar con una vivienda real.
+Archivo saneado de fuentes y recursos seleccionados para publicación abierta. No sustituye al respaldo privado de configuración y no contiene las credenciales necesarias para conectar con una vivienda real.
 
 ## Exclusiones obligatorias
 
 - Secretos Wi-Fi, API ESPHome, OTA, tokens HA/Hermes, llavero y autenticación GitHub.
 - Bases de datos, config entries, `.storage`, perfiles, sesiones, transcripciones, reglas domésticas y registros de voz.
 - Backups, snapshots de hardware/HA, recibos de instalación con identidades y herramientas de operación ligadas a la vivienda.
-- OTA, factory y ELF de la instalación original: se detectó configuración privada incrustada en el OTA; no se publica aunque el repositorio sea privado.
+- OTA, factory y ELF de la instalación original: se detectó configuración privada incrustada en el OTA; no debe publicarse en ninguna revisión, independientemente de la visibilidad del repositorio.
 
 Las direcciones `192.0.2.10`, las MAC nulas y `/path/to/user` son sustituciones documentales, **no datos de conexión funcionales**. Los identificadores técnicos heredados del dispositivo se conservan como ejemplos; no representan inventario de una instalación destinataria.
 

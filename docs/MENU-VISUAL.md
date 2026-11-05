@@ -83,6 +83,6 @@ Salir del menú, reiniciar y acceder al test de animaciones.
 - Las dos fotografías de volumen llevan una máscara opaca sobre los valores IP y Wi-Fi, además de la ocultación que ya tenían los originales.
 - Se han eliminado los metadatos EXIF/XMP/IPTC/comentarios de las copias publicadas; los originales permanecen intactos.
 - El manifiesto de imágenes contiene hashes de origen/copia y describe las transformaciones, sin rutas personales.
-- Las fotos se incorporan al archivo privado del proyecto por petición de RUYMANIA. Se mantiene la política de derechos del repositorio; no se cambia su visibilidad.
+- Las fotos aportadas por RUYMANIA se incorporaron primero al archivo privado. RUYMANIA autoriza su proyecto abierto bajo MIT el 5 de noviembre de 2026; se conservan la autoría y los avisos de terceros, sin publicar valores de red ni metadatos privados.
 
 Las imágenes ilustran aspecto y controles, **no sustituyen las pruebas físicas de funcionamiento** pendientes en [Estado y pruebas](ESTADO-Y-PRUEBAS.md).

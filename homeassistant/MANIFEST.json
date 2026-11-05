@@ -1004,8 +1004,8 @@
     },
     {
       "path": "README.md",
-      "sha256": "6572e08e80bb51977ddb5d322c03f8bf834040c16a7087dbe4b22790da456088",
-      "bytes": 3761
+      "sha256": "2a7d58b8b481c30c23b614a651656b9bb3a07f22a1930de13fbf792e57e08a2b",
+      "bytes": 3651
     },
     {
       "path": "SNAPSHOT.md",
@@ -1024,8 +1024,8 @@
     },
     {
       "path": "THIRD_PARTY/README.md",
-      "sha256": "97754367b9cd93ac555ef64adca8f9620846a7b876f65322d7481c1e3a8f9344",
-      "bytes": 2107
+      "sha256": "82dcab965ca6d1b2331d26068951dcfd2343e7e4d7f76aed0abe38715549fbd0",
+      "bytes": 2283
     },
     {
       "path": "UPDATE-20261101.md",
@@ -1130,5 +1130,11 @@
         }
       ]
     }
-  ]
+  ],
+  "public_distribution_notice": {
+    "date": "2026-11-05",
+    "original_contributions": "MIT; upstream notices preserved",
+    "functional_sources_changed": false,
+    "previous_test_results": "Historical; not rerun by this documentation/license update"
+  }
 }

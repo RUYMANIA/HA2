@@ -4,7 +4,7 @@
   <img src="firmware/assets/hermes-avatar/casita_idle.gif" alt="Hermes en reposo, parpadeando / Hermes idle, blinking" width="240" height="240">
 </p>
 
-**Un proyecto de RUYMANIA · Archivo privado de desarrollo · Validación física parcial**
+**Un proyecto de RUYMANIA · Código propio MIT · Okey Hermes fuera de MIT · Validación física parcial**
 
 [Español](#español) · [English](#english)
 
@@ -18,11 +18,15 @@ Este repositorio documenta y conserva una **copia saneada del trabajo existente*
 
 Si el GIF START se repite y la pulsación de **1 segundo** no abre el menú, comprueba la IP actual y la conexión de la entrada **ESPHome** antes de resetear o reflashear. [Guía de recuperación y prevención](docs/SOLUCION-START-IP.md). Se recomienda **reserva DHCP en el router** para una dirección estable; esta guía no la aplica ni garantiza resolver todas las causas de START.
 
+En la instalación de referencia, RUYMANIA confirmó la reserva DHCP el **3 de noviembre de 2026**. Si la palabra clave se detecta pero aparece después el GIF de error, consulta la [incidencia distinta de STT/puente Hermes](docs/SOLUCION-STT-PUENTE.md): se recuperaron los servicios ese día, sin una conversación física nueva acreditada después. No se afirma que ese estado histórico sea el estado vivo actual.
+
 ### Activación por voz: «Okey Hermes»
 
 **«Okey Hermes» está integrado y funciona en las pruebas físicas de RUYMANIA tanto hablando en español como en inglés.** Confirmación bilingüe: **1 de noviembre de 2026**. La integración corresponde a firmware **1.3.2**, instalado el 29 de octubre de 2026.
 
 Se incluyen [los pesos y el manifiesto ESPHome originales](firmware/models/okey-hermes/). El modelo se entrenó en español (`trained_languages: [es]`); la prueba de uso en ambos idiomas no cambia esos metadatos ni supone un benchmark bilingüe. No debe confundirse con el modelo anterior **Hey Hermes**. [Detalles y alcance de la validación](docs/OKEY-HERMES.md).
+
+**Excepción de licencia:** los pesos de **Okey Hermes no están bajo MIT**. Se incluyen como referencia, **sin licencia abierta alternativa ni permiso comercial concedidos**; no se debe interpretar como permiso general de reutilización, tampoco no comercial. [Condiciones, procedencia y límites del modelo](firmware/models/okey-hermes/LICENSE.md). El código propio de HA² sí se ofrece bajo MIT con las excepciones y avisos documentados.
 
 ### Menú de la Ball: mantén pulsado 1 segundo
 
@@ -67,7 +71,7 @@ Estas fotografías muestran la interfaz en **español**. Pulsa una imagen para v
 3. [Instalación y dependencias](docs/INSTALACION.md): guía de ingeniería, **no instalador automático**.
 4. [Estado, pruebas y aceptación pendiente](docs/ESTADO-Y-PRUEBAS.md).
 5. [Seguridad y límites del archivo](SECURITY.md).
-6. [Procedencia y derechos](THIRD_PARTY.md). **No hay una licencia abierta global elegida para el código propio ni para todos los recursos creativos.**
+6. [Licencia MIT](LICENSE) para el código y las aportaciones originales no excluidas, con permiso de uso, modificación y distribución, incluso comercial, conservando los avisos. **Okey Hermes queda fuera de MIT**, sin licencia abierta alternativa concedida: [ámbito y excepciones](LICENSE.md). Software **sin garantía**, según el texto de la licencia. [Procedencia y condiciones de terceros](THIRD_PARTY.md).
 
 El título del proyecto utiliza **Assistant**, como ha solicitado RUYMANIA. Algunas fuentes instaladas y recursos históricos conservan **Assitant**. No se han cambiado esos textos ni identificadores técnicos como efecto lateral del archivo.
 
@@ -79,11 +83,15 @@ HA² links a **XiaoZhi Ball V2**, **Home Assistant**, and **Hermes Agent** to pr
 
 If START keeps looping and a **1-second press** does not open the menu, check the current IP and the existing **ESPHome** connection before resetting or reflashing. [Recovery and prevention guide](docs/SOLUCION-START-IP.md) (Spanish). A **router DHCP reservation** is recommended for a stable address; the guide does not apply it or claim to fix every possible START issue.
 
+RUYMANIA confirmed the reference installation's DHCP reservation on **3 November 2026**. An error GIF after successful wake-word detection was a [separate STT/Hermes bridge incident](docs/SOLUCION-STT-PUENTE.md) (Spanish): services were recovered that day, with a new hands-on conversation still unverified afterward. This is a historical observation, not a claim about current live service health.
+
 ### Voice activation: “Okey Hermes”
 
 **“Okey Hermes” is integrated and works in RUYMANIA's hands-on tests when speaking both Spanish and English.** Bilingual confirmation: **1 November 2026**. It is included in firmware **1.3.2**, installed on 29 October 2026.
 
 The [original weights and ESPHome manifest](firmware/models/okey-hermes/) are included. The model was trained in Spanish (`trained_languages: [es]`); successful use in both languages does not change its training metadata or constitute a bilingual benchmark. It is distinct from the earlier **Hey Hermes** model. [Technical details and validation scope](docs/OKEY-HERMES.md) (Spanish).
+
+**Licence exception:** the **Okey Hermes weights are not MIT-licensed**. They are included as a reference artifact, **without an alternative open licence or a commercial-use permission being granted**; this is not a general reuse permission, including for non-commercial use. See [the model's specific notice](firmware/models/okey-hermes/LICENSE.md) (Spanish). Original HA² code is MIT-licensed within the documented scope and exceptions.
 
 ### Ball menu: press and hold for 1 second
 
@@ -101,7 +109,7 @@ These photographs show the **English** interface. Click an image for a larger vi
 
 [Open the full visual guide with paired ES/EN photos](docs/MENU-VISUAL.md) (explanations in Spanish).
 
-This is a **private, sanitized development snapshot**, not a turnkey release or a backup of a household installation. Private configuration is omitted or replaced with examples. Publication changes have **not** been deployed to the running systems.
+This is a **public, sanitized development snapshot with MIT-licensed original code and an explicit model exception**, not a turnkey release or a backup of a household installation. Private configuration is omitted or replaced with examples. Publication changes have **not** been deployed to the running systems.
 
 The documented baseline is firmware **1.3.2** and HA² Notifications **0.3.0 with deployed updates from 27–29 October 2026**. These include the unified Activity Log and short proactive openers. Proactive mode has RUYMANIA's approval, is no longer labelled BETA, and is recorded as active in the later deployment records. This repository update does not change its live configuration or claim a new automatic delivery test. Okey Hermes has the separate hands-on Spanish/English confirmation described above.
 
@@ -109,4 +117,4 @@ See [`firmware/`](firmware/), [`homeassistant/`](homeassistant/), and [`hermes/`
 
 Do not flash compiled binaries from the original household installation, commit credentials, or run deployment/live test scripts against production. Original OTA/ELF binaries, sessions, private rules, databases and logs are deliberately excluded. Preserved tests are not all portable; each snapshot describes its prerequisites and verified subset.
 
-Third-party notices remain applicable. No blanket open-source license has been selected for original HA² code or all artwork/audio. Keeping an asset in this private archive does not certify that it is cleared for public redistribution. The display spelling **Assitant** in historical resources is preserved; the repository title is **HA² (Home Hermes Agent Assistant)**.
+Original HA² code and contributions not expressly excluded are licensed under the **[MIT License](LICENSE)**: use, modification and redistribution, including commercial use, are permitted while retaining the copyright and licence notices. **Okey Hermes weights are excluded**, with no alternative open licence granted; see [scope and exceptions](LICENSE.md) and [the model notice](firmware/models/okey-hermes/LICENSE.md). The software is provided **as is, without warranty**, under the terms of that licence. Existing third-party licences and notices remain applicable; see [THIRD_PARTY.md](THIRD_PARTY.md). The display spelling **Assitant** in historical resources is preserved; the repository title is **HA² (Home Hermes Agent Assistant)**.

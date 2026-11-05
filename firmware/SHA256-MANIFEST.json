@@ -656,14 +656,14 @@
     },
     {
       "path": "README.md",
-      "copy_sha256": "839bba55db9caa699767bd053094c97f710237b981e60a9ed9bfe576220848de",
-      "copy_bytes": 4222,
+      "copy_sha256": "43b1c9b90bcd29546a4ab490164f0ff6caa9726548810ee73f02b8fcb85d28d6",
+      "copy_bytes": 4744,
       "origin": "generated_documentation_or_retrieved_upstream_license"
     },
     {
       "path": "SNAPSHOT.md",
-      "copy_sha256": "674c9fed0d6637c083c57636fde74a79a6839a2cdc790dc119c362d6f1da7f5c",
-      "copy_bytes": 2594,
+      "copy_sha256": "0ce19d2de3ffb8a8805c2e29aa2ace728af16e95f5ca681c7a84ecb3558696d5",
+      "copy_bytes": 2990,
       "origin": "generated_documentation_or_retrieved_upstream_license"
     },
     {
@@ -674,8 +674,8 @@
     },
     {
       "path": "THIRD_PARTY/PROVENANCE.md",
-      "copy_sha256": "bbe5c681b4921476f6500907b7980a61447df3ddb69ce670fa34ce0c0e5d9c26",
-      "copy_bytes": 2095,
+      "copy_sha256": "0159224070859e9d88419c80a16481c0d57e381ba45660b5025c9e27d8238900",
+      "copy_bytes": 2428,
       "origin": "generated_documentation_or_retrieved_upstream_license"
     },
     {
@@ -692,8 +692,8 @@
     },
     {
       "path": "models/okey-hermes/README.md",
-      "copy_sha256": "c6127c0e30388ea9af198a9e2a085562b393ad09d8eaccb3aabcce9fb01526c2",
-      "copy_bytes": 3091,
+      "copy_sha256": "94c86d5039348819cf8038cf0c8efd9409f8a741efe127bb56066191c7fd7e60",
+      "copy_bytes": 3677,
       "origin": "generated_documentation_or_retrieved_upstream_license"
     },
     {
@@ -707,10 +707,30 @@
       "copy_sha256": "3b65cb1179ac8cbfc3692d62b26f24c6bbabfd16dd124b32c5f69c871fe0eb62",
       "copy_bytes": 321,
       "origin": "generated_documentation_or_retrieved_upstream_license"
+    },
+    {
+      "path": "THIRD_PARTY/NousResearch-hermes-agent-LICENSE",
+      "copy_sha256": "821556e6336796450ab852d375117b48a4887e71d255794fd6318d99982a5ab6",
+      "copy_bytes": 1070,
+      "origin": "retrieved_upstream_license",
+      "source_url": "https://raw.githubusercontent.com/NousResearch/hermes-agent/bd312c903ea42763a535a5ac034ef132fad1a5d2/LICENSE"
+    },
+    {
+      "path": "models/okey-hermes/LICENSE.md",
+      "copy_sha256": "0562b277af75126ff84545c987907fec40aa5c190e74601f8eae0b6a1eadf5b7",
+      "copy_bytes": 3658,
+      "origin": "explicit_model_exclusion_not_an_open_weight_license"
     }
   ],
   "notes": [
     "Production sources updated to installed 1.3.2 freeze; unchanged resources and archived test sources retain per-file historical provenance.",
     "Physical Spanish/English use confirmed by RUYMANIA 2026-11-01; training metadata remains es. No deployment by this publication."
-  ]
+  ],
+  "public_distribution_notice": {
+    "date": "2026-11-05",
+    "original_code": "MIT subject to documented scope and upstream notices",
+    "okey_hermes_weights": "Included; excluded from MIT; no alternative open license or additional reuse permission granted",
+    "functional_sources_changed": false,
+    "original_weight_bytes_changed": false
+  }
 }

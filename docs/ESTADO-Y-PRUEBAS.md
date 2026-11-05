@@ -36,6 +36,13 @@ Las pruebas puras deben usar fixtures sin hardware y temporales aislados. Tests 
 - Superficie Hermes: 39 fuentes de origen contrastadas sin cambios frente al archivo previo; no se modifica runtime/companion/plugin para publicar esta actualización.
 - Aceptación humana Okey Hermes: uso correcto en español e inglés confirmado por RUYMANIA; entrenamiento conservado en español. No se inventan pruebas acústicas adicionales.
 
+## Actualización documental y apertura pública — 5 de noviembre de 2026
+
+- Código original bajo MIT con licencias de terceros preservadas; Okey Hermes **incluido fuera de MIT, sin licencia abierta alternativa ni permiso comercial concedidos**. No se declara que los pesos hereden automáticamente CC BY-NC.
+- Reserva DHCP confirmada por el usuario el 3-11; no inspección nueva del router.
+- Recuperación STT/puente del 3-11 documentada por separado: servicios saludables y entradas HA cargadas en ese readback, **sin conversación física nueva acreditada después**. No es una lectura del estado vivo del 5-11.
+- La actualización es editorial/de derechos: no cambia las fuentes funcionales ni los pesos, no repite tests acústicos ni despliegues. Las comprobaciones nuevas de integridad, privacidad y enlaces se registran en `public-opening-verification.json`; los resultados de `publication-verification.json` conservan su fecha y alcance históricos.
+
 ## Fallo heredado reproducido
 
 El ejecutable autónomo `firmware/tests/temporary_cards_test.cpp` aborta en la aserción de la línea 26 tanto en la fuente original de 1.3.1 como en la copia saneada. Compila con ASAN/UBSAN en ambos casos; ambos retornan `-6`. Se conserva el fallo y no se cambia producción ni el test para obtener un PASS. Es un pendiente del conjunto histórico, no una regresión introducida por sustituir la IP. El runner histórico aplicaba adaptaciones que no forman parte de este ejecutable autónomo; no se ha reejecutado ese runner ni se atribuye aquí una causa raíz más detallada.

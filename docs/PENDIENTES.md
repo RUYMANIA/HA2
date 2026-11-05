@@ -1,4 +1,4 @@
-# Pendientes y puertas antes de distribución pública
+# Pendientes técnicos y mantenimiento
 
 ## Funcionales
 
@@ -11,7 +11,8 @@
 ## Red y arranque
 
 - Incidencia de 2-11-2026: conexión recuperada al corregir el host de la entrada ESPHome. No confundir con una confirmación física de salida de START/menú si ésta no está documentada.
-- Reserva DHCP recomendada para dirección estable: no estaba aplicada en el cierre y esta publicación no configura el router. Investigar por separado el descubrimiento automático que no actualizó la dirección; no asumir que cualquier cambio de IP falla. [Procedimiento de recuperación](SOLUCION-START-IP.md).
+- Reserva DHCP **confirmada por RUYMANIA el 3-11-2026**. No se mantiene su creación como pendiente ni se afirma una inspección nueva del router. Investigar por separado el descubrimiento automático que no actualizó la dirección; no asumir que cualquier cambio de IP falla. [Procedimiento de recuperación](SOLUCION-START-IP.md).
+- Error `stt-provider-missing` del 3-11: servicios Whisper/puente recuperados y entradas HA recargadas. **Pendiente conversación física nueva posterior**, sin reabrir la aceptación del detector. Arranque/recuperación automática siguen desactivados por decisión del usuario, no son una tarea autorizada pendiente. [Diagnóstico separado](SOLUCION-STT-PUENTE.md).
 
 ## Distribución
 
@@ -24,12 +25,13 @@
 
 ## Editorial y derechos
 
-- Decidir licencia del código propio con RUYMANIA.
-- Consolidar derechos de logo/GIF, QR, voz y mezcla musical antes de apertura pública.
-- Revisar dependencias descargadas (fuentes, sonidos y modelos stock) si se redistribuyen; conservar separada la política de derechos del modelo propio Okey Hermes sin aplicarle la MIT del modelo Hey Hermes.
+- Licencia propia decidida por RUYMANIA el 5 de noviembre de 2026: **MIT**, con avisos de terceros conservados. La licencia no convierte el snapshot en una distribución instalable validada.
+- Logo/GIF identificados con base Nous Research y aviso MIT conservado; Cori/Bryce Beattie, QR y composición procedural documentados en [procedencia](../THIRD_PARTY.md). No conceder derechos de marca ni atribuir a RUYMANIA las bases de terceros.
+- **Okey Hermes incluido fuera de MIT, sin licencia abierta alternativa ni permiso comercial concedidos.** Completar trazabilidad/derechos de entrenamiento antes de conceder permisos más amplios sobre sus pesos; no deducir una licencia automáticamente del corpus. [Aviso del modelo](../firmware/models/okey-hermes/LICENSE.md).
+- Revisar dependencias descargadas (fuentes, sonidos y modelos stock) si se redistribuyen; no están vendorizadas como una distribución completa.
 - Aprobar documentación y después traducir al inglés la parte técnica.
 - Decidir si corregir «Assitant» en una **nueva** revisión funcional; no modificar retrospectivamente fuentes instaladas como parte de documentación.
 
 ## Seguridad y publicación
 
-Revisión completa de secretos/datos e historial, pruebas en copia, manifiestos verificables y confirmación explícita antes de cambiar visibilidad. El carácter privado es una decisión vigente, no una fase con fecha automática de apertura.
+Mantener revisión de secretos/datos e historial, pruebas en copia y manifiestos verificables antes de cada publicación. RUYMANIA ha autorizado expresamente la apertura pública y MIT el 5 de noviembre de 2026; no publicar configuración doméstica ni presentar las pruebas pendientes como completadas.

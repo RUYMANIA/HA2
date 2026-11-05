@@ -1,0 +1,73 @@
+{
+  "base_commit": "c433802532b9a0c5587231c48fccd50700a3d87e",
+  "history": {
+    "commits": 4,
+    "reachable_objects": 337,
+    "unique_history_blobs": 266,
+    "history_blob_bytes": 4883114,
+    "findings": [],
+    "metadata_findings": []
+  },
+  "working_tree_findings": [],
+  "known_secret_sources_read": 4,
+  "known_secret_values_compared": 9,
+  "reviewed_non_secret_settings": [
+    {
+      "key": "HERMES_API_SESSION_KEY",
+      "reason": "Public routing default in config.py; Bearer authentication uses a different setting"
+    }
+  ],
+  "manifests": [
+    {
+      "manifest": "firmware/SHA256-MANIFEST.json",
+      "entries_verified": 82,
+      "mismatches": []
+    },
+    {
+      "manifest": "homeassistant/MANIFEST.json",
+      "entries_verified": 69,
+      "mismatches": []
+    },
+    {
+      "manifest": "hermes/manifest.json",
+      "entries_verified": 45,
+      "mismatches": []
+    }
+  ],
+  "python_sources_ast_parsed_without_import": 82,
+  "json_files_parsed": 16,
+  "changed_document_relative_links_checked": 119,
+  "broken_links": [],
+  "okey_hermes_weight_and_manifest_sha256_unchanged": true,
+  "changed_functional_sources_or_assets": [],
+  "caveat": "Heuristic patterns plus exact known values; not exhaustive proof of absence. No services, hardware, imports or inference tested.",
+  "files_scanned_before_this_report_was_written": 234,
+  "verified_at_utc": "2026-11-05T18:37:42.104602+00:00",
+  "purpose": "Pre-publication integrity/privacy checks for an explicitly authorized public source archive; not a deployable release certificate",
+  "policy": {
+    "original_code": "MIT subject to scope and upstream notices",
+    "okey_hermes_weights": "Included, expressly excluded from MIT; no alternative open license or additional reuse permission granted",
+    "historic_reports": "Preserved with their original dates and scope; not rerun or relabelled as fresh test results",
+    "history_rewritten": false
+  },
+  "remote_surfaces_read": {
+    "main_branches": 1,
+    "tags": 0,
+    "releases": 0,
+    "issues_including_prs": 0,
+    "actions_runs": 0,
+    "actions_artifacts": 0,
+    "forks": 0,
+    "wiki_enabled": false,
+    "pages_enabled": false
+  },
+  "new_runtime_or_hardware_tests_executed": false,
+  "live_services_accessed": false,
+  "not_certified": [
+    "Installer portability",
+    "Unrestricted commercial use of Okey Hermes weights",
+    "Current live health of STT/bridge",
+    "New acoustic or touchscreen acceptance",
+    "Resolution of the historical standalone C++ assertion failure"
+  ]
+}

@@ -30,4 +30,6 @@ No se necesitan el entrenador ni los datasets para detectar la frase en el dispo
 
 ## Derechos y límites
 
-Pesos entrenados localmente para el proyecto y conservados en su archivo **privado** por petición de RUYMANIA. No se ha elegido licencia abierta propia ni se aplica automáticamente la licencia MIT del modelo Hey Hermes o del firmware upstream. Consolidar derechos y procedencia del entrenamiento antes de distribución pública. No incluye OTA/ELF/factory: los binarios del hogar contienen configuración privada.
+**Incluido públicamente, pero expresamente fuera de MIT.** RUYMANIA no concede una licencia abierta alternativa ni permiso comercial para estos pesos; tampoco una autorización general de reutilización no comercial. Véase [LICENSE.md](LICENSE.md), con el ámbito exacto, los derechos que se conservan, las atribuciones y las incertidumbres. La disponibilidad en GitHub no equivale a que todo uso esté autorizado.
+
+Se han identificado negativos de entrenamiento de un corpus **CC BY-NC 4.0**. La receta de síntesis contempla generadores con pesos NC, sin trazabilidad suficiente para atribuir su uso efectivo en esta corrida. No se concluye que esas condiciones se transmitan automáticamente al detector ni se les asigna automáticamente CC BY-NC. La licencia del código de HA² no elimina derechos de terceros. No se publican el entrenador, datasets, grabaciones o checkpoints; tampoco OTA/ELF/factory del hogar. Pesos y manifiesto se conservan byte-idénticos, sin tocar el detector instalado.

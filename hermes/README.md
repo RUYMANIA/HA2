@@ -49,4 +49,4 @@ El verificador compila todos los `.py` **en memoria**, usa HOME/HERMES_HOME/TMPD
 
 ## Licencias y procedencia
 
-Ver `THIRD_PARTY.md`, `companion/LICENSE` (MIT Bailey Dixon 2026, revisión upstream exacta) y `plugin/LICENSE` (MIT Nous Research 2026). Se conservan modificaciones locales y sus límites; **no se asigna licencia propia**. Snapshot preparado sin git add, commit ni push.
+Ver `THIRD_PARTY.md`, `companion/LICENSE` (MIT Bailey Dixon 2026, revisión upstream exacta) y `plugin/LICENSE` (MIT Nous Research 2026). Se conservan modificaciones locales y sus límites. **MIT para las aportaciones originales de RUYMANIA**, autorizada el 5 de noviembre de 2026; véase `../LICENSE`. Las licencias y avisos upstream siguen vigentes. Las referencias de preparación inicial no constituyen un estado de publicación actual.

@@ -90,7 +90,9 @@ Una reserva DHCP permite mantener el firmware usando DHCP y administrar en el ro
 4. Guarda y lee de nuevo la reserva. Si el cambio requiere renovar la concesión o reconectar, hazlo de forma controlada y con el equipo desocupado; no reinicies el router ni desconectes a otros clientes como atajo.
 5. Alinea la entrada ESPHome y los clientes auxiliares con la dirección reservada y vuelve a comprobar conectividad/identidad.
 
-**En el cierre del incidente no se había configurado esta reserva. Esta publicación sólo la recomienda: no la aplica al router.** Una reserva no corrige por sí sola una entrada de HA que ya apunta a otra IP, ni un problema de Wi-Fi, alimentación, cifrado, mDNS, audio o firmware.
+**Actualización del 3 de noviembre de 2026:** RUYMANIA confirmó que la reserva DHCP por MAC **ya está configurada** en el router. Es confirmación del usuario, no una nueva inspección ni modificación del router por Hermes. La ausencia de reserva en el cierre del día 2 es un dato histórico, no un pendiente vigente. Para otras instalaciones, los pasos anteriores siguen siendo una recomendación general.
+
+Una reserva no corrige por sí sola una entrada de HA que ya apunta a otra IP, ni un problema de Wi-Fi, alimentación, cifrado, mDNS, audio o firmware. El posterior GIF de error tras Okey Hermes se diagnosticó como **`stt-provider-missing`**, con recuperación de servicios sin cambio de IP/detector: [guía separada de STT y puente](SOLUCION-STT-PUENTE.md).
 
 ### Alternativa avanzada: IP estática en ESPHome
 
@@ -133,4 +135,4 @@ Consultadas el **2 de noviembre de 2026**:
 - [Flujo ESPHome en Home Assistant 2026.7.2, versión de referencia del proyecto](https://github.com/home-assistant/core/blob/2026.7.2/homeassistant/components/esphome/config_flow.py).
 - Fuentes archivadas del proyecto: [guarda del menú](../firmware/system_menu.h), [eventos de conexión y arranque](../firmware/config/core.yaml), [apertura local](../firmware/config/system_menu.yaml).
 
-El caso se ha redactado a partir del cierre privado de diagnóstico, sin exportar sus recibos, direcciones o claves. Los enlaces oficiales respaldan el procedimiento general; no constituyen una prueba adicional del dispositivo ni de que la reserva DHCP ya esté aplicada.
+El caso se ha redactado a partir del cierre privado de diagnóstico y la confirmación posterior del usuario, sin exportar recibos, direcciones o claves. Los enlaces oficiales respaldan el procedimiento general; no constituyen una prueba adicional del dispositivo ni una inspección del router. La confirmación de reserva del 3 de noviembre se atribuye expresamente a RUYMANIA.

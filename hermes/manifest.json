@@ -333,7 +333,7 @@
       "origin": null,
       "copy": "README.md",
       "source_sha256": null,
-      "copy_sha256": "6eff54a1239b9bb2e236a02584dadf345a273d8df08690f84e289759478665fa",
+      "copy_sha256": "7eb2b5aad2a3ab0486c350753bf0fd0351f35dd71382789d74aa0ff7a5b73243",
       "changes": {
         "generated_snapshot_documentation_or_verification": true
       }
@@ -342,7 +342,7 @@
       "origin": null,
       "copy": "THIRD_PARTY.md",
       "source_sha256": null,
-      "copy_sha256": "b7f74dc358ce1bd16a25eeebc51699509a14e640b728cbc2abfcd848491b9c97",
+      "copy_sha256": "f13c57611080c8c560a4fbfff104459c9041627b8b71d982a93aa4bdf99f22ac",
       "changes": {
         "generated_snapshot_documentation_or_verification": true
       }
@@ -382,5 +382,10 @@
     "No own license assigned; upstream notices do not settle licensing of local additions.",
     "String-literal-only AST comparison passed for every copied Python source; no structural code edits. UTC fixture expectations updated with generic timezone."
   ],
-  "manifest_self_hash": "Excluded to avoid self-reference; all other snapshot files enumerated."
+  "manifest_self_hash": "Excluded to avoid self-reference; all other snapshot files enumerated.",
+  "public_distribution_notice": {
+    "date": "2026-11-05",
+    "original_contributions": "MIT; upstream notices preserved",
+    "functional_sources_changed": false
+  }
 }

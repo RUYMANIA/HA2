@@ -1,4 +1,4 @@
-# HA² — Home Assistant: snapshot privado
+# HA² — Home Assistant: snapshot saneado
 
 **Archivo de fuentes, no distribución portable ni candidato de despliegue. No ejecutar en producción.** Este directorio conserva la base `ha2-notifications-0.3.0` y cuatro fuentes seleccionadas por SHA instalado en cierres del 27 y 29 de octubre de 2026, con saneamiento mínimo en la copia y sin modificar los originales. Sincronización documental del **1 de noviembre de 2026**: véase `UPDATE-20261101.md`. No contiene firmware ni el runtime/companion Hermes completo.
 
@@ -27,6 +27,6 @@ Las direcciones `192.0.2.10`, `/path/to/user` y `00:00:00:00:00:00` son reemplaz
 
 ## Derechos y límites de publicación
 
-No se elige ni se aplica una licencia global o propia. Los derechos del código y recursos propios quedan reservados hasta decisión expresa. El audio generado del proyecto `static/proactive-three-notes.wav` se incluye por autorización para **archivo privado**; sus derechos siguen pendientes antes de cualquier publicación pública. No inferir permiso público a partir de esta inclusión.
+RUYMANIA autoriza **MIT** para sus aportaciones originales y el aviso procedural original `static/proactive-three-notes.wav`. Se conservan las licencias upstream y sus avisos; la licencia propia no se infiere de la inclusión de terceros. Véanse `../LICENSE` y `../THIRD_PARTY.md`.
 
 La MIT de Codename-11 se conserva únicamente para el material upstream correspondiente, con la atribución de Bailey Dixon 2026; no extiende una licencia a todo HA². Véase `THIRD_PARTY/README.md`. Los recursos de marca tampoco implican concesión de derechos de marca.

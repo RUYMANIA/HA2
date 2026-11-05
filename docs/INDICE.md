@@ -10,5 +10,7 @@ Esta documentación está en español por decisión del propietario. El README p
 6. [Pendientes y puertas de publicación](PENDIENTES.md).
 7. [Seguridad](../SECURITY.md), [procedencia](../THIRD_PARTY.md) y [derechos](../LICENSE.md).
 8. [Solución de problemas: START persistente, menú inaccesible y cambio de IP](SOLUCION-START-IP.md).
+9. [Solución de problemas: error STT/puente después de Okey Hermes](SOLUCION-STT-PUENTE.md).
+10. [Exclusión de licencia de los pesos Okey Hermes](../firmware/models/okey-hermes/LICENSE.md).
 
 Los README y SNAPSHOT de cada superficie detallan lo que se conserva y lo que no es todavía portable. Un procedimiento descrito no significa que se haya ejecutado durante esta publicación.
